@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <Router>
+      <Router basename="/ICU-Clinical-Trials-Dashboard">
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
