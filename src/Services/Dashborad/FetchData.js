@@ -73,9 +73,9 @@ function computeSection1Data(data) {
 }
 function computeSection2Data(data) {
   // Placeholder for Section 2 data computation logic
-  //   console.log("Computing Section 2 Data", data);
+  console.log("Computing Section 2 Data", data);
 }
 function computeSection3Data(data) {
   // Placeholder for Section 3 data computation logic
-  //   console.log("Computing Section 3 Data", data);
+  console.log("Computing Section 3 Data", data);
 }

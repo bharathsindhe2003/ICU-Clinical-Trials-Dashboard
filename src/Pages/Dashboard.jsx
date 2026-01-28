@@ -4,7 +4,10 @@ import FetchDatafromFB from "../Services/Dashborad/FetchData";
 
 // MUI Imports
 import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
+import Section1 from "../Components/Section1";
+import Section2 from "../Components/Section2";
+import Section3 from "../Components/Section3";
 export default function Dashboard() {
   // const [excelData, setExcelData] = useState([]);
 
@@ -25,117 +28,18 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <>
+    <Box sx={{ p: 2 }}>
       {/* section 0: heading*/}
-      <Box sx={{ textAlign: "center" }}>
-        <Typography variant="h5" component="div" gutterBottom>
-          Dashboard
-        </Typography>
-      </Box>
+
+      <Typography sx={{ textAlign: "center" }} variant="h5" component="div" gutterBottom>
+        Dashboard
+      </Typography>
       {/* section 1 */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          p: 2,
-        }}>
-        {/* Row 0: heading */}
-        <Box sx={{ textAlign: "center" }}>
-          <Typography variant="h5" component="div" gutterBottom>
-            Vital Data Points
-          </Typography>
-        </Box>
-        {/* Row 1: single pie chart */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
-          <Box sx={{ width: "100%", alignItems: "center" }}>
-            <h2>Completion of Trial</h2>
-            <Box
-              id="VDPCOT"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 200, sm: 240 },
-              }}
-            />
-          </Box>
-        </Box>
-
-        {/* Row 2: single bar chart */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}>
-          <Box sx={{ width: "100%" }}>
-            <h2>Vital Collection</h2>
-            <Box
-              id="VDPVC"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 200, sm: 240 },
-              }}
-            />
-          </Box>
-        </Box>
-
-        {/* Row 3: four pie charts */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "stretch",
-          }}>
-          <Box sx={{ textAlign: "center", mb: 1 }}>
-            <h2>For HR, SPO2, RR, BP</h2>
-          </Box>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "repeat(2, minmax(0, 1fr))", // 2 per row on mobile
-                sm: "repeat(4, minmax(0, 1fr))", // 4 per row on larger screens
-              },
-              gap: 1.5,
-            }}>
-            <Box
-              id="VDPHR"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 140, sm: 160 },
-              }}
-            />
-            <Box
-              id="VDPSPO2"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 140, sm: 160 },
-              }}
-            />
-            <Box
-              id="VDPRR"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 140, sm: 160 },
-              }}
-            />
-            <Box
-              id="VDPBP"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 140, sm: 160 },
-              }}
-            />
-          </Box>
-        </Box>
-      </Box>
-      <Box sx={{ p: 2 }}></Box>
-      <Box sx={{ p: 2 }}></Box>
-    </>
+      <Section1></Section1>
+      {/* section 2 */}
+      <Section2></Section2>
+      {/* section 3 */}
+      <Section3></Section3>
+    </Box>
   );
 }
