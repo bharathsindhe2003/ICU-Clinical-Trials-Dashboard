@@ -1,6 +1,7 @@
 import { database } from "../Firebase/config";
 import { ref, query, limitToLast, get } from "firebase/database";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
+import { plotPCDNOP, plotPCDADMF } from "./Echarts/PCD/PlotPCDcharts.js";
 export default async function FetchDatafromFB() {
   try {
     const dashStatsRef = ref(database, "/dash_stats");
@@ -32,7 +33,7 @@ function computeSection1Data(data) {
   plotVDPCOT(main_pie, { tgt, min_c });
 
   const main_bar = document.getElementById("VDPVC");
-  plotVDPVC(main_bar, { tgt, time_dist });
+  plotVDPVC(main_bar, { time_dist });
 
   const data_hr = {
     Normal: data?.v_cats?.hr?.norm, // count of normal heart rate readings
@@ -74,6 +75,32 @@ function computeSection1Data(data) {
 function computeSection2Data(data) {
   // Placeholder for Section 2 data computation logic
   console.log("Computing Section 2 Data", data);
+  const data_nop = {
+    Male: data?.cohort?.m_count,
+    Female: data?.cohort?.f_count,
+    Total: data?.cohort?.m_count + data?.cohort?.f_count,
+  };
+  const main_pie = document.getElementById("PCDNOP");
+  plotPCDNOP(main_pie, data_nop);
+
+  const data_adm = {
+    "<40": data?.cohort?.age_dist?.m?.g1, // count of males under 40
+    "40-49": data?.cohort?.age_dist?.m?.g2, //  count of males 40-49
+    "50-59": data?.cohort?.age_dist?.m?.g3, // count of males 50-59
+    "60-69": data?.cohort?.age_dist?.m?.g4, // count of males 60-69
+    "70-79": data?.cohort?.age_dist?.m?.g5, // count of males 70-79
+    ">79": data?.cohort?.age_dist?.m?.g6, // count of males over 79
+  };
+  const data_adf = {
+    "<40": data?.cohort?.age_dist?.f?.g1, // count of females under 40
+    "40-49": data?.cohort?.age_dist?.f?.g2, // count of females 40-49
+    "50-59": data?.cohort?.age_dist?.f?.g3, // count of females 50-59
+    "60-69": data?.cohort?.age_dist?.f?.g4, // count of females 60-69
+    "70-79": data?.cohort?.age_dist?.f?.g5, // count of females 70-79
+    ">79": data?.cohort?.age_dist?.f?.g6, // count of females over 79
+  };
+  const main_bar = document.getElementById("PCDADMF");
+  plotPCDADMF(main_bar, data_adm, data_adf);
 }
 function computeSection3Data(data) {
   // Placeholder for Section 3 data computation logic

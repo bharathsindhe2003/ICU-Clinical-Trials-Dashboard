@@ -58,7 +58,7 @@ function plotVDPCOT(main_pie, { tgt, min_c }) {
 
   chart.setOption(option, true);
 }
-function plotVDPVC(main_bar, { tgt, time_dist }) {
+function plotVDPVC(main_bar, { time_dist }) {
   if (!main_bar || !time_dist) return;
 
   const weekKeys = Object.keys(time_dist).sort((a, b) => {
