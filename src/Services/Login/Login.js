@@ -26,5 +26,7 @@ export default async function handleLogin(username, password, rememberMe, naviga
     }
   } catch (error) {
     console.error("Error during login:", error);
+    if (error.code === "auth/invalid-credential") toast.error("Invalid Credentials");
+    else toast.error(error.code);
   }
 }
