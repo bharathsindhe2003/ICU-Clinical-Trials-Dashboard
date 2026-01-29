@@ -1,22 +1,14 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-// Custom Service Imports
 import FetchExcel from "../Services/Dashborad/FetchExcel";
 import FetchDatafromFB from "../Services/Dashborad/FetchData";
 
 // MUI Imports
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import Section1 from "../Components/Section1";
 import Section2 from "../Components/Section2";
 import Section3 from "../Components/Section3";
-import FadeInSection from "../Components/UI/FadeInSection";
-
 import Navbar from "../Components/UI/Navbar";
-
 export default function Dashboard() {
   // const [excelData, setExcelData] = useState([]);
 
@@ -29,41 +21,19 @@ export default function Dashboard() {
   // }, []); // run only once when the component mounts
 
   const [vdaMetrics, setVdaMetrics] = useState(null);
-  const [selectedVital, setSelectedVital] = useState("HR");
-  const [isLoading, setIsLoading] = useState(true);
+  const [slectedVital, setSelectedVital] = useState("HR");
   const [lastUpdated, setLastUpdated] = useState(null);
-  const navigate = useNavigate();
   useEffect(() => {
-    async function getFBData() {
-      try {
-        await FetchDatafromFB(setVdaMetrics, setLastUpdated);
-      } catch (error) {
-        console.error("Error fetching data from Firebase:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    async function getExcelData() {
+      const result = await FetchDatafromFB(setVdaMetrics, setLastUpdated);
+      console.log("result", result);
     }
-    getFBData();
+    getExcelData();
   }, []);
 
   const handleVitalChange = (event) => {
     setSelectedVital(event.target.value);
   };
-
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
-        }}>
-        <CircularProgress />
-      </Box>
-    );
-  }
   return (
     <Box
       sx={{
@@ -72,20 +42,15 @@ export default function Dashboard() {
         minHeight: "100vh",
         background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
       }}>
-      {/* top navigation bar */}
-      <Navbar navigate={navigate} />
+      {/* section 0: heading*/}
+
+      <Navbar />
       {/* section 1 */}
-      <FadeInSection>
-        <Section1 lastUpdated={lastUpdated} />
-      </FadeInSection>
+      <Section1 lastUpdated={lastUpdated} />
       {/* section 2 */}
-      <FadeInSection>
-        <Section2 lastUpdated={lastUpdated} />
-      </FadeInSection>
+      <Section2 lastUpdated={lastUpdated} />
       {/* section 3 */}
-      <FadeInSection>
-        <Section3 selectedVital={selectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
-      </FadeInSection>
+      <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
     </Box>
   );
 }

@@ -1,3 +1,3 @@
-export default function Logout(navigator) {
-  navigator("/");
+export default function Logout(navigate) {
+  navigate("/");
 }

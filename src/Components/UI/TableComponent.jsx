@@ -10,7 +10,7 @@ export default function TableComponent({ data }) {
   const rows = data ? Object.entries(data) : [];
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} fullwidth>
       <Table sx={{ width: "100%" }} size="small" aria-label="vitals accuracy table">
         <TableHead>
           <TableRow>

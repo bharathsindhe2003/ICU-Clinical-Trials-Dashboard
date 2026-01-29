@@ -4,7 +4,7 @@ import * as echarts from "echarts";
 // data: { pts: [{ x: avg_val, y: diff_val }, ...] }
 function plotVDA1(plot, data) {
   try {
-    if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) console.warn("plotVDA1: Invalid plot or data");
+    //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
     const points = data.pts.filter((p) => p != null && typeof p.x === "number" && typeof p.y === "number").map((p) => [p.x, p.y]);
 
     if (points.length === 0) return;
@@ -123,7 +123,8 @@ function plotVDA1(plot, data) {
 // data: { pts: [{ x: ref_val, y: meas_val }, ...] }
 function plotVDA2(plot, data) {
   try {
-    if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) console.warn("plotVDA2: Invalid plot or data");
+    //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
+
     const points = data.pts.filter((p) => p != null && typeof p.x === "number" && typeof p.y === "number").map((p) => [p.x, p.y]);
 
     if (points.length === 0) return;
@@ -202,7 +203,7 @@ function plotVDA2(plot, data) {
 // data: { bins: [...], vals: [...] }
 function plotVDA3(plot, data) {
   try {
-    if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) console.warn("plotVDA3: Invalid plot or data");
+    //   if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
 
     const bins = data.bins;
     const vals = data.vals.map((v) => Number(v) || 0);
@@ -256,7 +257,7 @@ function plotVDA3(plot, data) {
 // data: { bins: [...], vals: [...] }
 function plotVDA4(plot, data) {
   try {
-    if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) console.warn("plotVDA4: Invalid plot or data");
+    //   if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
 
     const bins = data.bins;
     const vals = data.vals.map((v) => Number(v) || 0);

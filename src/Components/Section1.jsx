@@ -1,5 +1,7 @@
-import Heading from "./UI/Heading";
+// MUI Imports
 import Box from "@mui/material/Box";
+// Custom Components
+import Heading from "./UI/Heading";
 import LastUpdated from "./UI/LastUpdated";
 export default function Section1({ lastUpdated }) {
   return (
@@ -78,7 +80,6 @@ export default function Section1({ lastUpdated }) {
           </Box>
         </Box>
       </Box>
-
       {/* Row 3: four pie charts */}
       <Box
         sx={{
@@ -135,7 +136,7 @@ export default function Section1({ lastUpdated }) {
             }}
           />
         </Box>
-      </Box>
+      </Box>{" "}
       <LastUpdated lastUpdated={lastUpdated} />
     </Box>
   );
