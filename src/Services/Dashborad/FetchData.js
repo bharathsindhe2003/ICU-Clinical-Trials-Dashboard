@@ -112,94 +112,98 @@ function computeSection2Data(data) {
   }
 }
 function computeSection3Data(data, selectedVital, setSelectedVital) {
-  // Plot table data for selected vital
-  const VDA_HR = {
-    Mean: data?.acc_metrics?.hr?.table?.me,
-    "Standard deviation σ": data?.acc_metrics?.hr?.table?.sd,
-    "Confidence Interval (for mean error)": data?.acc_metrics?.hr?.table?.ci,
-    "P value": data?.acc_metrics?.hr?.table?.pv,
-  };
-  const VDA_SPO2 = {
-    Mean: data?.acc_metrics?.spo2?.table?.me,
-    "Standard deviation σ": data?.acc_metrics?.spo2?.table?.sd,
-    "Confidence Interval (for mean error)": data?.acc_metrics?.spo2?.table?.ci,
-    "P value": data?.acc_metrics?.spo2?.table?.pv,
-  };
-  const VDA_RR = {
-    Mean: data?.acc_metrics?.rr?.table?.me,
-    "Standard deviation σ": data?.acc_metrics?.rr?.table?.sd,
-    "Confidence Interval (for mean error)": data?.acc_metrics?.rr?.table?.ci,
-    "P value": data?.acc_metrics?.rr?.table?.pv,
-  };
-  const VDA_SBP = {
-    Mean: data?.acc_metrics?.sbp?.table?.me,
-    "Standard deviation σ": data?.acc_metrics?.sbp?.table?.sd,
-    "Confidence Interval (for mean error)": data?.acc_metrics?.sbp?.table?.ci,
-    "P value": data?.acc_metrics?.sbp?.table?.pv,
-  };
-  const VDA_DBP = {
-    Mean: data?.acc_metrics?.dbp?.table?.me,
-    "Standard deviation σ": data?.acc_metrics?.dbp?.table?.sd,
-    "Confidence Interval (for mean error)": data?.acc_metrics?.dbp?.table?.ci,
-    "P value": data?.acc_metrics?.dbp?.table?.pv,
-  };
+  try {
+    // Plot table data for selected vital
+    const VDA_HR = {
+      Mean: data?.acc_metrics?.hr?.table?.me,
+      "Standard deviation σ": data?.acc_metrics?.hr?.table?.sd,
+      "Confidence Interval (for mean error)": data?.acc_metrics?.hr?.table?.ci,
+      "P value": data?.acc_metrics?.hr?.table?.pv,
+    };
+    const VDA_SPO2 = {
+      Mean: data?.acc_metrics?.spo2?.table?.me,
+      "Standard deviation σ": data?.acc_metrics?.spo2?.table?.sd,
+      "Confidence Interval (for mean error)": data?.acc_metrics?.spo2?.table?.ci,
+      "P value": data?.acc_metrics?.spo2?.table?.pv,
+    };
+    const VDA_RR = {
+      Mean: data?.acc_metrics?.rr?.table?.me,
+      "Standard deviation σ": data?.acc_metrics?.rr?.table?.sd,
+      "Confidence Interval (for mean error)": data?.acc_metrics?.rr?.table?.ci,
+      "P value": data?.acc_metrics?.rr?.table?.pv,
+    };
+    const VDA_SBP = {
+      Mean: data?.acc_metrics?.sbp?.table?.me,
+      "Standard deviation σ": data?.acc_metrics?.sbp?.table?.sd,
+      "Confidence Interval (for mean error)": data?.acc_metrics?.sbp?.table?.ci,
+      "P value": data?.acc_metrics?.sbp?.table?.pv,
+    };
+    const VDA_DBP = {
+      Mean: data?.acc_metrics?.dbp?.table?.me,
+      "Standard deviation σ": data?.acc_metrics?.dbp?.table?.sd,
+      "Confidence Interval (for mean error)": data?.acc_metrics?.dbp?.table?.ci,
+      "P value": data?.acc_metrics?.dbp?.table?.pv,
+    };
 
-  setSelectedVital({
-    HR: VDA_HR,
-    SPO2: VDA_SPO2,
-    RR: VDA_RR,
-    SBP: VDA_SBP,
-    DBP: VDA_DBP,
-  });
-  // Plot charts
+    setSelectedVital({
+      HR: VDA_HR,
+      SPO2: VDA_SPO2,
+      RR: VDA_RR,
+      SBP: VDA_SBP,
+      DBP: VDA_DBP,
+    });
+    // Plot charts
 
-  // HR
-  const vda_chart_hr1 = document.getElementById("VDAHR1");
-  const vda_chart_hr2 = document.getElementById("VDAHR2");
-  const vda_chart_hr3 = document.getElementById("VDAHR3");
-  const vda_chart_hr4 = document.getElementById("VDAHR4");
-  plotVDA1(vda_chart_hr1, data?.acc_metrics?.hr?.plots?.ba);
-  plotVDA2(vda_chart_hr2, data?.acc_metrics?.hr?.plots?.corr);
-  plotVDA3(vda_chart_hr3, data?.acc_metrics?.hr?.plots?.ed);
-  plotVDA4(vda_chart_hr4, data?.acc_metrics?.hr?.plots?.eh);
+    // HR
+    const vda_chart_hr1 = document.getElementById("VDAHR1");
+    const vda_chart_hr2 = document.getElementById("VDAHR2");
+    const vda_chart_hr3 = document.getElementById("VDAHR3");
+    const vda_chart_hr4 = document.getElementById("VDAHR4");
+    plotVDA1(vda_chart_hr1, data?.acc_metrics?.hr?.plots?.ba);
+    plotVDA2(vda_chart_hr2, data?.acc_metrics?.hr?.plots?.corr);
+    plotVDA3(vda_chart_hr3, data?.acc_metrics?.hr?.plots?.ed);
+    plotVDA4(vda_chart_hr4, data?.acc_metrics?.hr?.plots?.eh);
 
-  // SPO2
-  const vda_chart_spo21 = document.getElementById("VDASPO21");
-  const vda_chart_spo22 = document.getElementById("VDASPO22");
-  const vda_chart_spo23 = document.getElementById("VDASPO23");
-  const vda_chart_spo24 = document.getElementById("VDASPO24");
-  plotVDA1(vda_chart_spo21, data?.acc_metrics?.spo2?.plots?.ba);
-  plotVDA2(vda_chart_spo22, data?.acc_metrics?.spo2?.plots?.corr);
-  plotVDA3(vda_chart_spo23, data?.acc_metrics?.spo2?.plots?.ed);
-  plotVDA4(vda_chart_spo24, data?.acc_metrics?.spo2?.plots?.eh);
+    // SPO2
+    const vda_chart_spo21 = document.getElementById("VDASPO21");
+    const vda_chart_spo22 = document.getElementById("VDASPO22");
+    const vda_chart_spo23 = document.getElementById("VDASPO23");
+    const vda_chart_spo24 = document.getElementById("VDASPO24");
+    plotVDA1(vda_chart_spo21, data?.acc_metrics?.spo2?.plots?.ba);
+    plotVDA2(vda_chart_spo22, data?.acc_metrics?.spo2?.plots?.corr);
+    plotVDA3(vda_chart_spo23, data?.acc_metrics?.spo2?.plots?.ed);
+    plotVDA4(vda_chart_spo24, data?.acc_metrics?.spo2?.plots?.eh);
 
-  // RR
-  const vda_chart_rr1 = document.getElementById("VDARR1");
-  const vda_chart_rr2 = document.getElementById("VDARR2");
-  const vda_chart_rr3 = document.getElementById("VDARR3");
-  const vda_chart_rr4 = document.getElementById("VDARR4");
-  plotVDA1(vda_chart_rr1, data?.acc_metrics?.rr?.plots?.ba);
-  plotVDA2(vda_chart_rr2, data?.acc_metrics?.rr?.plots?.corr);
-  plotVDA3(vda_chart_rr3, data?.acc_metrics?.rr?.plots?.ed);
-  plotVDA4(vda_chart_rr4, data?.acc_metrics?.rr?.plots?.eh);
+    // RR
+    const vda_chart_rr1 = document.getElementById("VDARR1");
+    const vda_chart_rr2 = document.getElementById("VDARR2");
+    const vda_chart_rr3 = document.getElementById("VDARR3");
+    const vda_chart_rr4 = document.getElementById("VDARR4");
+    plotVDA1(vda_chart_rr1, data?.acc_metrics?.rr?.plots?.ba);
+    plotVDA2(vda_chart_rr2, data?.acc_metrics?.rr?.plots?.corr);
+    plotVDA3(vda_chart_rr3, data?.acc_metrics?.rr?.plots?.ed);
+    plotVDA4(vda_chart_rr4, data?.acc_metrics?.rr?.plots?.eh);
 
-  // SBP
-  const vda_chart_sbp1 = document.getElementById("VDASBP1");
-  const vda_chart_sbp2 = document.getElementById("VDASBP2");
-  const vda_chart_sbp3 = document.getElementById("VDASBP3");
-  const vda_chart_sbp4 = document.getElementById("VDASBP4");
-  plotVDA1(vda_chart_sbp1, data?.acc_metrics?.sbp?.plots?.ba);
-  plotVDA2(vda_chart_sbp2, data?.acc_metrics?.sbp?.plots?.corr);
-  plotVDA3(vda_chart_sbp3, data?.acc_metrics?.sbp?.plots?.ed);
-  plotVDA4(vda_chart_sbp4, data?.acc_metrics?.sbp?.plots?.eh);
+    // SBP
+    const vda_chart_sbp1 = document.getElementById("VDASBP1");
+    const vda_chart_sbp2 = document.getElementById("VDASBP2");
+    const vda_chart_sbp3 = document.getElementById("VDASBP3");
+    const vda_chart_sbp4 = document.getElementById("VDASBP4");
+    plotVDA1(vda_chart_sbp1, data?.acc_metrics?.sbp?.plots?.ba);
+    plotVDA2(vda_chart_sbp2, data?.acc_metrics?.sbp?.plots?.corr);
+    plotVDA3(vda_chart_sbp3, data?.acc_metrics?.sbp?.plots?.ed);
+    plotVDA4(vda_chart_sbp4, data?.acc_metrics?.sbp?.plots?.eh);
 
-  // DBP
-  const vda_chart_dbp1 = document.getElementById("VDADBP1");
-  const vda_chart_dbp2 = document.getElementById("VDADBP2");
-  const vda_chart_dbp3 = document.getElementById("VDADBP3");
-  const vda_chart_dbp4 = document.getElementById("VDADBP4");
-  plotVDA1(vda_chart_dbp1, data?.acc_metrics?.dbp?.plots?.ba);
-  plotVDA2(vda_chart_dbp2, data?.acc_metrics?.dbp?.plots?.corr);
-  plotVDA3(vda_chart_dbp3, data?.acc_metrics?.dbp?.plots?.ed);
-  plotVDA4(vda_chart_dbp4, data?.acc_metrics?.dbp?.plots?.eh);
+    // DBP
+    const vda_chart_dbp1 = document.getElementById("VDADBP1");
+    const vda_chart_dbp2 = document.getElementById("VDADBP2");
+    const vda_chart_dbp3 = document.getElementById("VDADBP3");
+    const vda_chart_dbp4 = document.getElementById("VDADBP4");
+    plotVDA1(vda_chart_dbp1, data?.acc_metrics?.dbp?.plots?.ba);
+    plotVDA2(vda_chart_dbp2, data?.acc_metrics?.dbp?.plots?.corr);
+    plotVDA3(vda_chart_dbp3, data?.acc_metrics?.dbp?.plots?.ed);
+    plotVDA4(vda_chart_dbp4, data?.acc_metrics?.dbp?.plots?.eh);
+  } catch (error) {
+    console.error("Error in computeSection3Data:", error);
+  }
 }

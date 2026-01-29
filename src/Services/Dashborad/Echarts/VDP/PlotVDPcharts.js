@@ -1,288 +1,308 @@
 import * as echarts from "echarts";
 
 function plotVDPCOT(main_pie, { tgt, min_c }) {
-  if (!main_pie) return;
+  try {
+    if (!main_pie) return;
 
-  const target = Number(tgt) || 0;
-  const completedRaw = Number(min_c) || 0;
-  const completed = target > 0 ? Math.min(completedRaw, target) : completedRaw;
-  const remaining = target > 0 ? Math.max(target - completed, 0) : 0;
-  const percent = target > 0 ? Math.round((completed / target) * 100) : 0;
+    const target = Number(tgt) || 0;
+    const completedRaw = Number(min_c) || 0;
+    const completed = target > 0 ? Math.min(completedRaw, target) : completedRaw;
+    const remaining = target > 0 ? Math.max(target - completed, 0) : 0;
+    const percent = target > 0 ? Math.round((completed / target) * 100) : 0;
 
-  const chart = echarts.getInstanceByDom(main_pie) || echarts.init(main_pie, null, { renderer: "canvas" });
+    const chart = echarts.getInstanceByDom(main_pie) || echarts.init(main_pie, null, { renderer: "canvas" });
 
-  const option = {
-    title: {
-      text: `${percent}%`,
-      subtext: "Completion of Trials",
-      left: "center",
-      top: "center",
-      textStyle: {
-        fontSize: 24,
-        fontWeight: "bold",
-      },
-      subtextStyle: {
-        fontSize: 12,
-      },
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: "{b}: {c} ({d}%)",
-    },
-    series: [
-      {
-        name: "Completion",
-        type: "pie",
-        radius: ["60%", "85%"],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: "center",
+    const option = {
+      title: {
+        text: `${percent}%`,
+        subtext: "Completion of Trials",
+        left: "center",
+        top: "center",
+        textStyle: {
+          fontSize: 24,
+          fontWeight: "bold",
         },
-        labelLine: {
-          show: false,
+        subtextStyle: {
+          fontSize: 12,
         },
-        data: [
-          {
-            value: completed,
-            name: "Completed",
-          },
-          {
-            value: remaining,
-            name: "Remaining",
-          },
-        ],
       },
-    ],
-  };
+      tooltip: {
+        trigger: "item",
+        formatter: "{b}: {c} ({d}%)",
+      },
+      series: [
+        {
+          name: "Completion",
+          type: "pie",
+          radius: ["60%", "85%"],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: "center",
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [
+            {
+              value: completed,
+              name: "Completed",
+            },
+            {
+              value: remaining,
+              name: "Remaining",
+            },
+          ],
+        },
+      ],
+    };
 
-  chart.setOption(option, true);
+    chart.setOption(option, true);
+  } catch (error) {
+    console.error("Error in plotVDPCOT:", error);
+  }
 }
 function plotVDPVC(main_bar, { time_dist }) {
-  if (!main_bar || !time_dist) return;
+  try {
+    if (!main_bar || !time_dist) return;
 
-  const weekKeys = Object.keys(time_dist).sort((a, b) => {
-    const na = parseInt(a.replace(/\D/g, ""), 10) || 0;
-    const nb = parseInt(b.replace(/\D/g, ""), 10) || 0;
-    return na - nb;
-  });
+    const weekKeys = Object.keys(time_dist).sort((a, b) => {
+      const na = parseInt(a.replace(/\D/g, ""), 10) || 0;
+      const nb = parseInt(b.replace(/\D/g, ""), 10) || 0;
+      return na - nb;
+    });
 
-  const weekLabels = weekKeys.map((k) => {
-    const n = parseInt(k.replace(/\D/g, ""), 10) || 0;
-    return n ? `Week ${n}` : k;
-  });
+    const weekLabels = weekKeys.map((k) => {
+      const n = parseInt(k.replace(/\D/g, ""), 10) || 0;
+      return n ? `Week ${n}` : k;
+    });
 
-  const values = weekKeys.map((w) => Number(time_dist[w]) || 0);
+    const values = weekKeys.map((w) => Number(time_dist[w]) || 0);
 
-  const chart = echarts.getInstanceByDom(main_bar) || echarts.init(main_bar, null, { renderer: "canvas" });
+    const chart = echarts.getInstanceByDom(main_bar) || echarts.init(main_bar, null, { renderer: "canvas" });
 
-  const option = {
-    title: {
-      text: "Vitals Collected Over Weeks",
-      left: "center",
-    },
-    tooltip: {
-      trigger: "axis",
-      axisPointer: {
-        type: "shadow",
+    const option = {
+      title: {
+        text: "Vitals Collected Over Weeks",
+        left: "center",
       },
-    },
-    xAxis: {
-      type: "category",
-      name: "Week",
-      data: weekLabels,
-      axisTick: { alignWithLabel: true },
-    },
-    yAxis: {
-      type: "value",
-      name: "Data Points",
-      min: 0,
-    },
-    series: [
-      {
-        name: "Data Points",
-        type: "bar",
-        data: values,
-        itemStyle: {
-          color: "#5470C6",
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "shadow",
         },
       },
-    ],
-  };
+      xAxis: {
+        type: "category",
+        name: "Week",
+        data: weekLabels,
+        axisTick: { alignWithLabel: true },
+      },
+      yAxis: {
+        type: "value",
+        name: "Data Points",
+        min: 0,
+      },
+      series: [
+        {
+          name: "Data Points",
+          type: "bar",
+          data: values,
+          itemStyle: {
+            color: "#5470C6",
+          },
+        },
+      ],
+    };
 
-  chart.setOption(option, true);
+    chart.setOption(option, true);
+  } catch (error) {
+    console.error("Error in plotVDPVC:", error);
+  }
 }
 function plotVDPHR(small_pie_hr, data_hr) {
-  if (!small_pie_hr || !data_hr) return;
+  try {
+    if (!small_pie_hr || !data_hr) return;
 
-  const normal = Number(data_hr.Normal) || 0;
-  const brady = Number(data_hr.Bradycardia) || 0;
-  const tachy = Number(data_hr.Tachycardia) || 0;
+    const normal = Number(data_hr.Normal) || 0;
+    const brady = Number(data_hr.Bradycardia) || 0;
+    const tachy = Number(data_hr.Tachycardia) || 0;
 
-  const chart = echarts.getInstanceByDom(small_pie_hr) || echarts.init(small_pie_hr, null, { renderer: "canvas" });
+    const chart = echarts.getInstanceByDom(small_pie_hr) || echarts.init(small_pie_hr, null, { renderer: "canvas" });
 
-  const option = {
-    title: {
-      text: "Heart Rate",
-      left: "center",
-      top: 5,
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: "{b}: {c} ({d}%)",
-    },
-    legend: {
-      orient: "vertical",
-      left: "left",
-      top: "middle",
-      itemWidth: 10,
-      itemHeight: 10,
-      textStyle: {
-        fontSize: 10,
-      },
-      data: ["Normal (60-100)", "Bradycardia (<60)", "Tachycardia (>100)"],
-    },
-    series: [
-      {
-        name: "Heart Rate",
-        type: "pie",
-        radius: ["45%", "75%"],
-        center: ["65%", "55%"],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: "center",
+    const option = {
+      title: {
+        text: "Heart Rate",
+        left: "center",
+        top: 5,
+        textStyle: {
+          fontSize: 12,
         },
-        labelLine: {
-          show: false,
-        },
-        data: [
-          { value: normal, name: "Normal (60-100)" },
-          { value: brady, name: "Bradycardia (<60)" },
-          { value: tachy, name: "Tachycardia (>100)" },
-        ],
       },
-    ],
-  };
+      tooltip: {
+        trigger: "item",
+        formatter: "{b}: {c} ({d}%)",
+      },
+      legend: {
+        orient: "vertical",
+        left: "left",
+        top: "middle",
+        itemWidth: 10,
+        itemHeight: 10,
+        textStyle: {
+          fontSize: 10,
+        },
+        data: ["Normal (60-100)", "Bradycardia (<60)", "Tachycardia (>100)"],
+      },
+      series: [
+        {
+          name: "Heart Rate",
+          type: "pie",
+          radius: ["45%", "75%"],
+          center: ["65%", "55%"],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: "center",
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [
+            { value: normal, name: "Normal (60-100)" },
+            { value: brady, name: "Bradycardia (<60)" },
+            { value: tachy, name: "Tachycardia (>100)" },
+          ],
+        },
+      ],
+    };
 
-  chart.setOption(option, true);
+    chart.setOption(option, true);
+  } catch (error) {
+    console.error("Error in plotVDPHR:", error);
+  }
 }
 function plotVDPSPO2(small_pie_spo2, data_spo2) {
-  if (!small_pie_spo2 || !data_spo2) return;
+  try {
+    if (!small_pie_spo2 || !data_spo2) return;
 
-  const normal = Number(data_spo2.Normal) || 0;
-  const low = Number(data_spo2.Low) || 0;
+    const normal = Number(data_spo2.Normal) || 0;
+    const low = Number(data_spo2.Low) || 0;
 
-  const chart = echarts.getInstanceByDom(small_pie_spo2) || echarts.init(small_pie_spo2, null, { renderer: "canvas" });
+    const chart = echarts.getInstanceByDom(small_pie_spo2) || echarts.init(small_pie_spo2, null, { renderer: "canvas" });
 
-  const option = {
-    title: {
-      text: "SpO₂",
-      left: "center",
-      top: 5,
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: "{b}: {c} ({d}%)",
-    },
-    legend: {
-      orient: "vertical",
-      left: "left",
-      top: "middle",
-      itemWidth: 10,
-      itemHeight: 10,
-      textStyle: {
-        fontSize: 10,
-      },
-      data: ["Normal (≥95%)", "Low (<95%)"],
-    },
-    series: [
-      {
-        name: "SpO₂",
-        type: "pie",
-        radius: ["45%", "75%"],
-        center: ["65%", "55%"],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: "center",
+    const option = {
+      title: {
+        text: "SpO₂",
+        left: "center",
+        top: 5,
+        textStyle: {
+          fontSize: 12,
         },
-        labelLine: {
-          show: false,
-        },
-        data: [
-          { value: normal, name: "Normal (≥95%)" },
-          { value: low, name: "Low (<95%)" },
-        ],
       },
-    ],
-  };
+      tooltip: {
+        trigger: "item",
+        formatter: "{b}: {c} ({d}%)",
+      },
+      legend: {
+        orient: "vertical",
+        left: "left",
+        top: "middle",
+        itemWidth: 10,
+        itemHeight: 10,
+        textStyle: {
+          fontSize: 10,
+        },
+        data: ["Normal (≥95%)", "Low (<95%)"],
+      },
+      series: [
+        {
+          name: "SpO₂",
+          type: "pie",
+          radius: ["45%", "75%"],
+          center: ["65%", "55%"],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: "center",
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [
+            { value: normal, name: "Normal (≥95%)" },
+            { value: low, name: "Low (<95%)" },
+          ],
+        },
+      ],
+    };
 
-  chart.setOption(option, true);
+    chart.setOption(option, true);
+  } catch (error) {
+    console.error("Error in plotVDPSPO2:", error);
+  }
 }
 function plotVDPRR(small_pie_rr, data_rr) {
-  if (!small_pie_rr || !data_rr) return;
+  try {
+    if (!small_pie_rr || !data_rr) return;
 
-  const eupnea = Number(data_rr.Eupnea) || 0;
-  const brady = Number(data_rr.Bradypnea) || 0;
-  const tachy = Number(data_rr.Tachypnea) || 0;
+    const eupnea = Number(data_rr.Eupnea) || 0;
+    const brady = Number(data_rr.Bradypnea) || 0;
+    const tachy = Number(data_rr.Tachypnea) || 0;
 
-  const chart = echarts.getInstanceByDom(small_pie_rr) || echarts.init(small_pie_rr, null, { renderer: "canvas" });
+    const chart = echarts.getInstanceByDom(small_pie_rr) || echarts.init(small_pie_rr, null, { renderer: "canvas" });
 
-  const option = {
-    title: {
-      text: "Respiration Rate",
-      left: "center",
-      top: 5,
-      textStyle: {
-        fontSize: 12,
-      },
-    },
-    tooltip: {
-      trigger: "item",
-      formatter: "{b}: {c} ({d}%)",
-    },
-    legend: {
-      orient: "vertical",
-      left: "left",
-      top: "middle",
-      itemWidth: 10,
-      itemHeight: 10,
-      textStyle: {
-        fontSize: 10,
-      },
-      data: ["Eupnea (12-20)", "Bradypnea (<12)", "Tachypnea (>20)"],
-    },
-    series: [
-      {
-        name: "Respiration Rate",
-        type: "pie",
-        radius: ["45%", "75%"],
-        center: ["65%", "55%"],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: "center",
+    const option = {
+      title: {
+        text: "Respiration Rate",
+        left: "center",
+        top: 5,
+        textStyle: {
+          fontSize: 12,
         },
-        labelLine: {
-          show: false,
-        },
-        data: [
-          { value: eupnea, name: "Eupnea (12-20)" },
-          { value: brady, name: "Bradypnea (<12)" },
-          { value: tachy, name: "Tachypnea (>20)" },
-        ],
       },
-    ],
-  };
+      tooltip: {
+        trigger: "item",
+        formatter: "{b}: {c} ({d}%)",
+      },
+      legend: {
+        orient: "vertical",
+        left: "left",
+        top: "middle",
+        itemWidth: 10,
+        itemHeight: 10,
+        textStyle: {
+          fontSize: 10,
+        },
+        data: ["Eupnea (12-20)", "Bradypnea (<12)", "Tachypnea (>20)"],
+      },
+      series: [
+        {
+          name: "Respiration Rate",
+          type: "pie",
+          radius: ["45%", "75%"],
+          center: ["65%", "55%"],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: "center",
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [
+            { value: eupnea, name: "Eupnea (12-20)" },
+            { value: brady, name: "Bradypnea (<12)" },
+            { value: tachy, name: "Tachypnea (>20)" },
+          ],
+        },
+      ],
+    };
 
-  chart.setOption(option, true);
+    chart.setOption(option, true);
+  } catch (error) {
+    console.error("Error in plotVDPRR:", error);
+  }
 }
 function plotVDPBP(small_pie_bp, data_bp) {
   if (!small_pie_bp || !data_bp) return;
