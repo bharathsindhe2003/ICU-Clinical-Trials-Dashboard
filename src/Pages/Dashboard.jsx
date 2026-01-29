@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Custom Service Imports
 import FetchExcel from "../Services/Dashborad/FetchExcel";
@@ -29,12 +29,12 @@ export default function Dashboard() {
   // }, []); // run only once when the component mounts
 
   const [vdaMetrics, setVdaMetrics] = useState(null);
-  const [slectedVital, setSelectedVital] = useState("HR");
+  const [selectedVital, setSelectedVital] = useState("HR");
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    async function getExcelData() {
+    async function getFBData() {
       try {
         await FetchDatafromFB(setVdaMetrics, setLastUpdated);
       } catch (error) {
@@ -43,7 +43,7 @@ export default function Dashboard() {
         setIsLoading(false);
       }
     }
-    getExcelData();
+    getFBData();
   }, []);
 
   const handleVitalChange = (event) => {
@@ -73,7 +73,7 @@ export default function Dashboard() {
         background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
       }}>
       {/* top navigation bar */}
-      <Navbar />
+      <Navbar navigate={navigate} />
       {/* section 1 */}
       <FadeInSection>
         <Section1 lastUpdated={lastUpdated} />
@@ -84,7 +84,7 @@ export default function Dashboard() {
       </FadeInSection>
       {/* section 3 */}
       <FadeInSection>
-        <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
+        <Section3 selectedVital={selectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
       </FadeInSection>
     </Box>
   );

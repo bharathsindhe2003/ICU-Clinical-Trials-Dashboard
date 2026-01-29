@@ -6,7 +6,7 @@ import Logout from "../../Services/Login/Logout";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-export default function Navbar() {
+export default function Navbar({ navigate }) {
   return (
     <Box
       sx={{
@@ -48,7 +48,7 @@ export default function Navbar() {
       <Button
         variant="outlined"
         color="inherit"
-        onClick={Logout}
+        onClick={() => Logout(navigate)}
         sx={{
           borderColor: "#ffffff",
           color: "#ffffff",
