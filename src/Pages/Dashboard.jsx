@@ -51,6 +51,17 @@ export default function Dashboard() {
       <Section2 lastUpdated={lastUpdated} />
       {/* section 3 */}
       <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 8,
+          right: 16,
+          color: "text.secondary",
+          backgroundColor: "rgba(255,255,255,0.9)",
+          p: "5px",
+        }}>
+        <Typography variant="caption">Version 0.1.0</Typography>
+      </Box>
     </Box>
   );
 }
