@@ -12,7 +12,6 @@ export default async function FetchDatafromFB(setSelectedVital, setLastUpdated) 
     const snapshot = await get(dashStatsQuery);
     const snapshotVal = snapshot.val();
     const maxKey = Object.keys(snapshotVal)[0]; // since we limited to last 1, this is the only key
-    console.log("Fetched data key from Firebase:", maxKey);
     const data = snapshotVal[maxKey];
 
     // Firebase key looks like a Unix timestamp in seconds (e.g., 1769587560)
@@ -67,13 +66,9 @@ function setupChartsResizeListener() {
 
 function computeSection1Data(data) {
   try {
-    console.log("Computing Section 1 Data", data);
     const tgt = data?.ovr?.tgt ?? 2000; // target value (defaults to 2000)
     const min_c = data?.ovr?.min_c; // min completion value for least-complete vital
     const time_dist = data?.ovr?.time_dist; // time distribution data perweek
-
-    console.log("tgt:", tgt, "min_c:", min_c);
-
     const main_pie = document.getElementById("VDPCOT");
     plotVDPCOT(main_pie, { tgt, min_c });
 
@@ -123,7 +118,6 @@ function computeSection1Data(data) {
 function computeSection2Data(data) {
   try {
     // Placeholder for Section 2 data computation logic
-    console.log("Computing Section 2 Data", data);
     const data_nop = {
       Male: data?.cohort?.m_count,
       Female: data?.cohort?.f_count,
