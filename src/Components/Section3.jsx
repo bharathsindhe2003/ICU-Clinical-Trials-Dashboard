@@ -40,6 +40,7 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics }) {
             }}
           />
           {/* Render all vitals' plots so their DOM nodes always exist; toggle visibility via selectedVital */}
+
           <PLotVDA id={"VDAHR"} data={vdaMetrics?.HR} isVisible={selectedVital === "HR"} />
           <PLotVDA id={"VDASPO2"} data={vdaMetrics?.SPO2} isVisible={selectedVital === "SPO2"} />
           <PLotVDA id={"VDARR"} data={vdaMetrics?.RR} isVisible={selectedVital === "RR"} />

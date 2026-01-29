@@ -1,6 +1,23 @@
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import TableComponent from "./TableComponent";
+import * as echarts from "echarts";
+
 export default function PLotVDA({ id, data, isVisible = true }) {
+  useEffect(() => {
+    if (!isVisible) return;
+
+    for (let i = 1; i <= 4; i += 1) {
+      const el = document.getElementById(id + i);
+      if (!el) continue;
+
+      const chart = echarts.getInstanceByDom(el);
+      if (chart) {
+        chart.resize();
+      }
+    }
+  }, [id, isVisible]);
+
   return (
     <Box
       id={id}
