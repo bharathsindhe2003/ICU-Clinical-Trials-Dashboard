@@ -7,14 +7,14 @@ function plotPCDNOP(main_pie, data_nop) {
     const male = Number(data_nop.Male) || 0;
     const female = Number(data_nop.Female) || 0;
 
-    const total = male + female;
+    // const total = male + female;
 
     const chart = echarts.getInstanceByDom(main_pie) || echarts.init(main_pie, null, { renderer: "canvas" });
 
     const option = {
       title: {
         text: "Patients by Sex",
-        subtext: total ? `Total: ${total}` : "",
+        // subtext: total ? `Total: ${total}` : "",
         left: "center",
         top: 5,
         textStyle: {
@@ -43,7 +43,8 @@ function plotPCDNOP(main_pie, data_nop) {
         {
           name: "Patients",
           type: "pie",
-          radius: ["45%", "75%"],
+          // Match Section 1 main pie size
+          radius: ["60%", "85%"],
           center: ["65%", "55%"],
           avoidLabelOverlap: false,
           label: {
@@ -54,8 +55,8 @@ function plotPCDNOP(main_pie, data_nop) {
             show: false,
           },
           data: [
-            { value: male, name: "Male" },
-            { value: female, name: "Female" },
+            { value: male, name: "Male", itemStyle: { color: "#03A3FF" } },
+            { value: female, name: "Female", itemStyle: { color: "#EC49A7" } },
           ],
         },
       ],
@@ -112,7 +113,7 @@ function plotPCDADMF(main_bar, data_adm, data_adf) {
           type: "bar",
           data: maleValues,
           itemStyle: {
-            color: "#5470C6",
+            color: "#03A3FF",
           },
           barGap: 0,
         },
@@ -121,7 +122,7 @@ function plotPCDADMF(main_bar, data_adm, data_adf) {
           type: "bar",
           data: femaleValues,
           itemStyle: {
-            color: "#EE6666",
+            color: "#EC49A7",
           },
         },
       ],

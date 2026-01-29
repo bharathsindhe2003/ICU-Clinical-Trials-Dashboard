@@ -5,19 +5,29 @@ export default function Section2({ lastUpdated }) {
   return (
     <Box
       sx={{
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         gap: 2,
         p: 2,
+        pt: 4,
         mb: 2,
         background: "linear-gradient(135deg, #ffffff 0%, #e3f2fd 60%, #ffffff 100%)",
-
-        border: 0,
+        border: 1,
+        borderColor: "#b2dfdb",
         borderRadius: 2,
         boxShadow: 4,
       }}>
-      {/* Row 0: heading */}
-      <Box sx={{ textAlign: "center" }}>
+      {/* Section heading on top border */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          px: 1.5,
+          bgcolor: "background.paper",
+        }}>
         <Heading text="Section 2: Patient Cohort Details" />
       </Box>
       {/* Row 1 & 2: side by side (30% / 70%) */}
@@ -30,18 +40,32 @@ export default function Section2({ lastUpdated }) {
         {/* First: 30% width */}
         <Box
           sx={{
-            flexBasis: { xs: "100%", md: "30%" },
+            flexBasis: { xs: "100%", md: "20%" },
             flexGrow: 0,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            border: 1,
-            borderColor: "#b2dfdb",
-            borderRadius: 2,
-            p: 2,
           }}>
-          <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-            <Heading text="Number of Patients" />
+          <Box
+            sx={{
+              position: "relative",
+              border: 1,
+              borderColor: "#b2dfdb",
+              borderRadius: 2,
+              p: 2,
+              pt: 4,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                px: 1.5,
+                bgcolor: "background.paper",
+              }}>
+              <Heading text="Number of Patients" />
+            </Box>
             <Box
               id="PCDNOP"
               className="echart-container"
@@ -56,19 +80,33 @@ export default function Section2({ lastUpdated }) {
         {/* Second: 70% width */}
         <Box
           sx={{
-            flexBasis: { xs: "100%", md: "70%" },
+            flexBasis: { xs: "100%", md: "80%" },
             flexGrow: 0,
             minWidth: 0,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            border: 1,
-            borderColor: "#b2dfdb",
-            borderRadius: 2,
-            p: 2,
           }}>
-          <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-            <Heading text="Age Distribution for Male & Female" />
+          <Box
+            sx={{
+              position: "relative",
+              border: 1,
+              borderColor: "#b2dfdb",
+              borderRadius: 2,
+              p: 2,
+              pt: 4,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                px: 1.5,
+                bgcolor: "background.paper",
+              }}>
+              <Heading text="Age Distribution for Male & Female" />
+            </Box>
             <Box
               id="PCDADMF"
               className="echart-container"

@@ -10,6 +10,44 @@ function plotVDPCOT(main_pie, { tgt, min_c }) {
     const remaining = target > 0 ? Math.max(target - completed, 0) : 0;
     const percent = target > 0 ? Math.round((completed / target) * 100) : 0;
 
+    // Palette used to color the completed portion by percent buckets (5% per bucket)
+    const RANK_PALETTE = [
+      "#C01919",
+      "#BC211B",
+      "#B9291D",
+      "#B5311F",
+      "#B23920",
+      "#AE4122",
+      "#AA4924",
+      "#A75126",
+      "#A35828",
+      "#A0602A",
+      "#9C682C",
+      "#99702D",
+      "#95782F",
+      "#918031",
+      "#8E8833",
+      "#8A9035",
+      "#879837",
+      "#83A039",
+      "#7FA83B",
+      "#7CB03C",
+      "#78B83E",
+      "#75C040",
+      "#71C742",
+      "#6ECF44",
+      "#6AD746",
+      "#66DF48",
+      "#63E749",
+      "#5FEF4B",
+      "#5CF74D",
+      "#58FF4F",
+    ];
+
+    const bucketSize = 5; // percent per bucket
+    const colorIndex = Math.min(Math.floor(percent / bucketSize), RANK_PALETTE.length - 1);
+    const completedColor = RANK_PALETTE[colorIndex] || "#26a69a";
+
     const chart = echarts.getInstanceByDom(main_pie) || echarts.init(main_pie, null, { renderer: "canvas" });
 
     const option = {
@@ -47,7 +85,7 @@ function plotVDPCOT(main_pie, { tgt, min_c }) {
             {
               value: completed,
               name: "Completed",
-              itemStyle: { color: "#26a69a" }, // teal
+              itemStyle: { color: completedColor },
             },
             {
               value: remaining,
@@ -136,7 +174,7 @@ function plotVDPHR(small_pie_hr, data_hr) {
       title: {
         text: "Heart Rate",
         left: "center",
-        top: 5,
+        top: 0,
         textStyle: {
           fontSize: 12,
         },
@@ -148,7 +186,7 @@ function plotVDPHR(small_pie_hr, data_hr) {
       legend: {
         orient: "vertical",
         left: "left",
-        top: "middle",
+        top: "bottom",
         itemWidth: 10,
         itemHeight: 10,
         textStyle: {
@@ -160,8 +198,8 @@ function plotVDPHR(small_pie_hr, data_hr) {
         {
           name: "Heart Rate",
           type: "pie",
-          radius: ["45%", "75%"],
-          center: ["65%", "55%"],
+          radius: ["60%", "85%"],
+          // center: ["65%", "55%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -172,7 +210,7 @@ function plotVDPHR(small_pie_hr, data_hr) {
           },
           data: [
             { value: normal, name: "Normal (60-100)", itemStyle: { color: "#26a69a" } },
-            { value: brady, name: "Bradycardia (<60)", itemStyle: { color: "#ffa726" } },
+            { value: brady, name: "Bradycardia (<60)", itemStyle: { color: "#90caf9" } },
             { value: tachy, name: "Tachycardia (>100)", itemStyle: { color: "#ef5350" } },
           ],
         },
@@ -197,7 +235,7 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
       title: {
         text: "SpO₂",
         left: "center",
-        top: 5,
+        top: 0,
         textStyle: {
           fontSize: 12,
         },
@@ -209,7 +247,7 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
       legend: {
         orient: "vertical",
         left: "left",
-        top: "middle",
+        top: "bottom",
         itemWidth: 10,
         itemHeight: 10,
         textStyle: {
@@ -221,8 +259,8 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
         {
           name: "SpO₂",
           type: "pie",
-          radius: ["45%", "75%"],
-          center: ["65%", "55%"],
+          radius: ["60%", "85%"],
+          // center: ["65%", "55%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -232,8 +270,8 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
             show: false,
           },
           data: [
-            { value: normal, name: "Normal (≥95%)", itemStyle: { color: "#42a5f5" } },
-            { value: low, name: "Low (<95%)", itemStyle: { color: "#ef5350" } },
+            { value: normal, name: "Normal (≥95%)", itemStyle: { color: "#26a69a" } },
+            { value: low, name: "Low (<95%)", itemStyle: { color: "#90caf9" } },
           ],
         },
       ],
@@ -258,7 +296,7 @@ function plotVDPRR(small_pie_rr, data_rr) {
       title: {
         text: "Respiration Rate",
         left: "center",
-        top: 5,
+        top: 0,
         textStyle: {
           fontSize: 12,
         },
@@ -270,7 +308,7 @@ function plotVDPRR(small_pie_rr, data_rr) {
       legend: {
         orient: "vertical",
         left: "left",
-        top: "middle",
+        top: "bottom",
         itemWidth: 10,
         itemHeight: 10,
         textStyle: {
@@ -282,8 +320,8 @@ function plotVDPRR(small_pie_rr, data_rr) {
         {
           name: "Respiration Rate",
           type: "pie",
-          radius: ["45%", "75%"],
-          center: ["65%", "55%"],
+          radius: ["60%", "85%"],
+          // center: ["65%", "55%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -293,9 +331,9 @@ function plotVDPRR(small_pie_rr, data_rr) {
             show: false,
           },
           data: [
-            { value: eupnea, name: "Eupnea (12-20)" },
-            { value: brady, name: "Bradypnea (<12)" },
-            { value: tachy, name: "Tachypnea (>20)" },
+            { value: eupnea, name: "Eupnea (12-20)", itemStyle: { color: "#26a69a" } },
+            { value: brady, name: "Bradypnea (<12)", itemStyle: { color: "#90caf9" } },
+            { value: tachy, name: "Tachypnea (>20)", itemStyle: { color: "#ef5350" } },
           ],
         },
       ],
@@ -321,7 +359,7 @@ function plotVDPBP(small_pie_bp, data_bp) {
     title: {
       text: "Blood Pressure",
       left: "center",
-      top: 5,
+      top: 0,
       textStyle: {
         fontSize: 12,
       },
@@ -333,7 +371,7 @@ function plotVDPBP(small_pie_bp, data_bp) {
     legend: {
       orient: "vertical",
       left: "left",
-      top: "middle",
+      top: "bottom",
       itemWidth: 10,
       itemHeight: 10,
       textStyle: {
@@ -345,8 +383,8 @@ function plotVDPBP(small_pie_bp, data_bp) {
       {
         name: "Blood Pressure",
         type: "pie",
-        radius: ["45%", "75%"],
-        center: ["65%", "55%"],
+        radius: ["60%", "85%"],
+        // center: ["65%", "55%"],
         avoidLabelOverlap: false,
         label: {
           show: false,
