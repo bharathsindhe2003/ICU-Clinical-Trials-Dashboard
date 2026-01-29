@@ -24,7 +24,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function getExcelData() {
-      const result = await FetchDatafromFB(vdaMetrics, setVdaMetrics);
+      const result = await FetchDatafromFB(setVdaMetrics);
       console.log("result", result);
     }
     getExcelData();
@@ -34,7 +34,7 @@ export default function Dashboard() {
     setSelectedVital(event.target.value);
   };
   return (
-    <Box sx={{ p: 2, g: 2 }}>
+    <Box sx={{ p: 2, g: 2, backgroundColor: "#efeff0" }}>
       {/* section 0: heading*/}
 
       <Typography sx={{ textAlign: "center" }} variant="h5" component="div" gutterBottom>

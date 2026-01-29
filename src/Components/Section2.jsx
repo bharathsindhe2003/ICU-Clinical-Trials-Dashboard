@@ -9,6 +9,7 @@ export default function Section2() {
         gap: 2,
         p: 2,
         mb: 2,
+        backgroundColor: "#FFFFFF",
 
         border: 3,
         borderRadius: 2,
@@ -17,47 +18,60 @@ export default function Section2() {
       <Box sx={{ textAlign: "center" }}>
         <Heading text="Section 2: Patient Cohort Details" />
       </Box>
-      {/* Row 1: single pie chart */}
+      {/* Row 1 & 2: side by side (30% / 70%) */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: 1,
-          borderRadius: 2,
-          p: 2,
+          flexDirection: { xs: "column", md: "row" },
+          gap: 2,
         }}>
-        <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <Heading text="Number of Patients" />
-          <Box
-            id="PCDNOP"
-            sx={{
-              width: "100%",
-              minHeight: { xs: 200, sm: 240 },
-            }}
-          />
+        {/* First: 30% width */}
+        <Box
+          sx={{
+            flexBasis: { xs: "100%", md: "30%" },
+            flexGrow: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: 1,
+            borderRadius: 2,
+            p: 2,
+          }}>
+          <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
+            <Heading text="Number of Patients" />
+            <Box
+              id="PCDNOP"
+              sx={{
+                width: "100%",
+                minHeight: { xs: 200, sm: 240 },
+              }}
+            />
+          </Box>
         </Box>
-      </Box>
 
-      {/* Row 2: single bar chart */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: 1,
-          borderRadius: 2,
-          p: 2,
-        }}>
-        <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <Heading text="Age Distribution for Male & Female" />
-          <Box
-            id="PCDADMF"
-            sx={{
-              width: "100%",
-              minHeight: { xs: 200, sm: 240 },
-            }}
-          />
+        {/* Second: 70% width */}
+        <Box
+          sx={{
+            flexBasis: { xs: "100%", md: "70%" },
+            flexGrow: 0,
+            minWidth: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: 1,
+            borderRadius: 2,
+            p: 2,
+          }}>
+          <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
+            <Heading text="Age Distribution for Male & Female" />
+            <Box
+              id="PCDADMF"
+              sx={{
+                width: "100%",
+                minHeight: { xs: 200, sm: 240 },
+              }}
+            />
+          </Box>
         </Box>
       </Box>
     </Box>

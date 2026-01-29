@@ -3,7 +3,7 @@ import { ref, query, limitToLast, get } from "firebase/database";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
 import { plotPCDNOP, plotPCDADMF } from "./Echarts/PCD/PlotPCDcharts.js";
 import { plotVDA1, plotVDA2, plotVDA3, plotVDA4 } from "./Echarts/VCA/PlotVDAChart.js";
-export default async function FetchDatafromFB(slectedVital, setSelectedVital) {
+export default async function FetchDatafromFB(setSelectedVital) {
   try {
     const dashStatsRef = ref(database, "/dash_stats");
     const dashStatsQuery = query(dashStatsRef, limitToLast(1));
@@ -13,7 +13,7 @@ export default async function FetchDatafromFB(slectedVital, setSelectedVital) {
     const data = snapshotVal[Object.keys(snapshotVal)[0]];
     computeSection1Data(data);
     computeSection2Data(data);
-    computeSection3Data(data, slectedVital, setSelectedVital);
+    computeSection3Data(data, setSelectedVital);
 
     return data;
   } catch (error) {
@@ -111,7 +111,7 @@ function computeSection2Data(data) {
     console.error("Error in computeSection2Data:", error);
   }
 }
-function computeSection3Data(data, selectedVital, setSelectedVital) {
+function computeSection3Data(data, setSelectedVital) {
   try {
     // Plot table data for selected vital
     const VDA_HR = {

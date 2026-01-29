@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Heading from "./UI/Heading";
 export default function Section1() {
-  
   return (
     <Box
       sx={{
@@ -11,53 +10,67 @@ export default function Section1() {
         p: 2,
         mb: 2,
         border: 3,
+        boxShadow: 100,
         borderRadius: 2,
+        backgroundColor: "#FFFFFF",
       }}>
       {/* Row 0: heading */}
       <Box sx={{ textAlign: "center" }}>
         <Heading text="Section 1: Vital Data Points" />
       </Box>
-      {/* Row 1: single pie chart */}
+      {/* Row 1 & 2: side by side (30% / 70%) */}
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: 1,
-          borderRadius: 2,
-          p: 2,
+          flexDirection: { xs: "column", md: "row" },
+          gap: 2,
         }}>
-        <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <Heading text="Completion of Trial" />
-          <Box
-            id="VDPCOT"
-            sx={{
-              width: "100%",
-              minHeight: { xs: 200, sm: 240 },
-            }}
-          />
+        {/* First: 30% width */}
+        <Box
+          sx={{
+            flexBasis: { xs: "100%", md: "30%" },
+            flexGrow: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: 1,
+            borderRadius: 2,
+            p: 2,
+          }}>
+          <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
+            <Heading text="Completion of Trial" />
+            <Box
+              id="VDPCOT"
+              sx={{
+                width: "100%",
+                minHeight: { xs: 200, sm: 240 },
+              }}
+            />
+          </Box>
         </Box>
-      </Box>
 
-      {/* Row 2: single bar chart */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: 1,
-          borderRadius: 2,
-          p: 2,
-        }}>
-        <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <Heading text="Vital Collection" />
-          <Box
-            id="VDPVC"
-            sx={{
-              width: "100%",
-              minHeight: { xs: 200, sm: 240 },
-            }}
-          />
+        {/* Second: 70% width */}
+        <Box
+          sx={{
+            flexBasis: { xs: "100%", md: "70%" },
+            flexGrow: 0,
+            minWidth: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: 1,
+            borderRadius: 2,
+            p: 2,
+          }}>
+          <Box sx={{ textAlign: "center", alignItems: "center", width: "100%" }}>
+            <Heading text="Vital Collection" />
+            <Box
+              id="VDPVC"
+              sx={{
+                minHeight: { xs: 200, sm: 240 },
+              }}
+            />
+          </Box>
         </Box>
       </Box>
 
@@ -81,7 +94,7 @@ export default function Section1() {
               xs: "repeat(2, minmax(0, 1fr))", // 2 per row on mobile
               sm: "repeat(4, minmax(0, 1fr))", // 4 per row on larger screens
             },
-            gap: 1.5,
+            // gap: 1.5,
           }}>
           <Box
             id="VDPHR"
