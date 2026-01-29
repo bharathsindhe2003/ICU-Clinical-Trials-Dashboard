@@ -4,14 +4,33 @@ import * as echarts from "echarts";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
 import { plotPCDNOP, plotPCDADMF } from "./Echarts/PCD/PlotPCDcharts.js";
 import { plotVDA1, plotVDA2, plotVDA3, plotVDA4 } from "./Echarts/VCA/PlotVDAChart.js";
-export default async function FetchDatafromFB(setSelectedVital) {
+export default async function FetchDatafromFB(setSelectedVital, setLastUpdated) {
   try {
     const dashStatsRef = ref(database, "/dash_stats");
     const dashStatsQuery = query(dashStatsRef, limitToLast(1));
 
     const snapshot = await get(dashStatsQuery);
     const snapshotVal = snapshot.val();
-    const data = snapshotVal[Object.keys(snapshotVal)[0]];
+    const maxKey = Object.keys(snapshotVal)[0]; // since we limited to last 1, this is the only key
+    console.log("Fetched data key from Firebase:", maxKey);
+    const data = snapshotVal[maxKey];
+
+    // Firebase key looks like a Unix timestamp in seconds (e.g., 1769587560)
+    const tsSeconds = Number(maxKey);
+    let formatted = String(maxKey);
+
+    if (!Number.isNaN(tsSeconds)) {
+      const dateTime = new Date(tsSeconds * 1000); // convert seconds to ms
+      const pad = (n) => String(n).padStart(2, "0");
+      const day = pad(dateTime.getDate());
+      const month = pad(dateTime.getMonth() + 1);
+      const year = String(dateTime.getFullYear()).slice(-2);
+      const hours = pad(dateTime.getHours());
+      const minutes = pad(dateTime.getMinutes());
+      formatted = `${day}-${month}-${year} ${hours}:${minutes}`;
+    }
+
+    setLastUpdated(formatted);
     computeSection1Data(data);
     computeSection2Data(data);
     computeSection3Data(data, setSelectedVital);

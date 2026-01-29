@@ -1,6 +1,7 @@
-import Box from "@mui/material/Box";
 import Heading from "./UI/Heading";
-export default function Section1() {
+import Box from "@mui/material/Box";
+import LastUpdated from "./UI/LastUpdated";
+export default function Section1({ lastUpdated }) {
   return (
     <Box
       sx={{
@@ -135,6 +136,7 @@ export default function Section1() {
           />
         </Box>
       </Box>
+      <LastUpdated lastUpdated={lastUpdated} />
     </Box>
   );
 }

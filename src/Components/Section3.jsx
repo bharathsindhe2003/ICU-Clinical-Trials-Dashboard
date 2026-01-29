@@ -3,8 +3,8 @@ import Dropdown from "./UI/DropDown";
 import Heading from "./UI/Heading";
 import PLotVDA from "./UI/PlotVDA";
 import TableComponent from "./UI/TableComponent";
-
-export default function Section3({ selectedVital, onVitalChange, vdaMetrics }) {
+import LastUpdated from "./UI/LastUpdated";
+export default function Section3({ selectedVital, onVitalChange, vdaMetrics, lastUpdated }) {
   const vitals = ["HR", "SPO2", "RR", "SBP", "DBP"];
   return (
     <Box
@@ -81,7 +81,8 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics }) {
           <PLotVDA id={"VDASBP"} isVisible={selectedVital === "SBP"} />
           <PLotVDA id={"VDADBP"} isVisible={selectedVital === "DBP"} />
         </Box>
-      </Box>
+      </Box>{" "}
+      <LastUpdated lastUpdated={lastUpdated} />
     </Box>
   );
 }
