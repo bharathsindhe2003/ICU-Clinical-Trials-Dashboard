@@ -14,9 +14,10 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics }) {
         gap: 2,
         p: 2,
         mb: 2,
-        border: 3,
-        backgroundColor: "#FFFFFF",
+        border: 0,
+        background: "linear-gradient(135deg, #ffffff 0%, #e0f7fa 60%, #ffffff 100%)",
 
+        boxShadow: 4,
         borderRadius: 2,
       }}>
       {/* Row 0: heading */}
@@ -32,6 +33,7 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics }) {
           justifyContent: "center",
           alignItems: "center",
           border: 1,
+          borderColor: "#b3e5fc",
           borderRadius: 2,
           p: 2,
         }}>

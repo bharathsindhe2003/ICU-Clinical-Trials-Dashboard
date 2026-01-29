@@ -9,10 +9,10 @@ export default function Section1() {
         gap: 2,
         p: 2,
         mb: 2,
-        border: 3,
-        boxShadow: 100,
+        border: 0,
+        boxShadow: 4,
         borderRadius: 2,
-        backgroundColor: "#FFFFFF",
+        background: "linear-gradient(135deg, #ffffff 0%, #e8f4ff 50%, #ffffff 100%)",
       }}>
       {/* Row 0: heading */}
       <Box sx={{ textAlign: "center" }}>
@@ -34,6 +34,7 @@ export default function Section1() {
             justifyContent: "center",
             alignItems: "center",
             border: 1,
+            borderColor: "#bbdefb",
             borderRadius: 2,
             p: 2,
           }}>
@@ -60,6 +61,7 @@ export default function Section1() {
             justifyContent: "center",
             alignItems: "center",
             border: 1,
+            borderColor: "#bbdefb",
             borderRadius: 2,
             p: 2,
           }}>
@@ -83,6 +85,7 @@ export default function Section1() {
           flexDirection: "column",
           alignItems: "stretch",
           border: 1,
+          borderColor: "#bbdefb",
           borderRadius: 2,
           p: 2,
         }}>

@@ -34,10 +34,26 @@ export default function Dashboard() {
     setSelectedVital(event.target.value);
   };
   return (
-    <Box sx={{ p: 2, g: 2, backgroundColor: "#efeff0" }}>
+    <Box
+      sx={{
+        p: 2,
+        g: 2,
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
+      }}>
       {/* section 0: heading*/}
 
-      <Typography sx={{ textAlign: "center" }} variant="h5" component="div" gutterBottom>
+      <Typography
+        sx={{
+          textAlign: "center",
+          mb: 3,
+          color: "#0d47a1",
+          fontWeight: 600,
+          letterSpacing: 0.5,
+        }}
+        variant="h5"
+        component="div"
+        gutterBottom>
         Dashboard
       </Typography>
       {/* section 1 */}

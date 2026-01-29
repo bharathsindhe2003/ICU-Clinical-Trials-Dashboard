@@ -47,10 +47,12 @@ function plotVDPCOT(main_pie, { tgt, min_c }) {
             {
               value: completed,
               name: "Completed",
+              itemStyle: { color: "#26a69a" }, // teal
             },
             {
               value: remaining,
               name: "Remaining",
+              itemStyle: { color: "#e0f2f1" }, // very light teal
             },
           ],
         },
@@ -109,7 +111,7 @@ function plotVDPVC(main_bar, { time_dist }) {
           type: "bar",
           data: values,
           itemStyle: {
-            color: "#5470C6",
+            color: "#1e88e5",
           },
         },
       ],
@@ -169,9 +171,9 @@ function plotVDPHR(small_pie_hr, data_hr) {
             show: false,
           },
           data: [
-            { value: normal, name: "Normal (60-100)" },
-            { value: brady, name: "Bradycardia (<60)" },
-            { value: tachy, name: "Tachycardia (>100)" },
+            { value: normal, name: "Normal (60-100)", itemStyle: { color: "#26a69a" } },
+            { value: brady, name: "Bradycardia (<60)", itemStyle: { color: "#ffa726" } },
+            { value: tachy, name: "Tachycardia (>100)", itemStyle: { color: "#ef5350" } },
           ],
         },
       ],
@@ -230,8 +232,8 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
             show: false,
           },
           data: [
-            { value: normal, name: "Normal (≥95%)" },
-            { value: low, name: "Low (<95%)" },
+            { value: normal, name: "Normal (≥95%)", itemStyle: { color: "#42a5f5" } },
+            { value: low, name: "Low (<95%)", itemStyle: { color: "#ef5350" } },
           ],
         },
       ],
@@ -337,7 +339,7 @@ function plotVDPBP(small_pie_bp, data_bp) {
       textStyle: {
         fontSize: 10,
       },
-      data: ["Lower than normal", "Normal", "Elevated", "High (1)", "High (2)"],
+        data: ["Lower than normal", "Normal", "Elevated", "High (1)", "High (2)"],
     },
     series: [
       {
@@ -353,13 +355,13 @@ function plotVDPBP(small_pie_bp, data_bp) {
         labelLine: {
           show: false,
         },
-        data: [
-          { value: low, name: "Lower than normal" },
-          { value: normal, name: "Normal" },
-          { value: elev, name: "Elevated" },
-          { value: high1, name: "High (1)" },
-          { value: high2, name: "High (2)" },
-        ],
+          data: [
+            { value: low, name: "Lower than normal", itemStyle: { color: "#90caf9" } },
+            { value: normal, name: "Normal", itemStyle: { color: "#26a69a" } },
+            { value: elev, name: "Elevated", itemStyle: { color: "#ffb74d" } },
+            { value: high1, name: "High (1)", itemStyle: { color: "#ef5350" } },
+            { value: high2, name: "High (2)", itemStyle: { color: "#c62828" } },
+          ],
       },
     ],
   };

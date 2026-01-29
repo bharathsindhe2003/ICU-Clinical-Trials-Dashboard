@@ -68,7 +68,7 @@ function plotVDA1(plot, data) {
           symbolSize: 6,
           data: points,
           itemStyle: {
-            color: "#5470C6",
+            color: "#1e88e5",
           },
         },
         {
@@ -81,7 +81,7 @@ function plotVDA1(plot, data) {
           showSymbol: false,
           lineStyle: {
             type: "solid",
-            color: "#91CC75",
+            color: "#26a69a",
           },
         },
         {
@@ -94,7 +94,7 @@ function plotVDA1(plot, data) {
           showSymbol: false,
           lineStyle: {
             type: "dashed",
-            color: "#EE6666",
+            color: "#ef5350",
           },
         },
         {
@@ -107,7 +107,7 @@ function plotVDA1(plot, data) {
           showSymbol: false,
           lineStyle: {
             type: "dashed",
-            color: "#EE6666",
+            color: "#ef5350",
           },
         },
       ],
@@ -174,7 +174,7 @@ function plotVDA2(plot, data) {
           symbolSize: 6,
           data: points,
           itemStyle: {
-            color: "#5470C6",
+            color: "#1e88e5",
           },
         },
         {
@@ -238,7 +238,7 @@ function plotVDA3(plot, data) {
           smooth: true,
           data: vals,
           itemStyle: {
-            color: "#5470C6",
+            color: "#1e88e5",
           },
           areaStyle: {
             opacity: 0.1,
@@ -294,7 +294,7 @@ function plotVDA4(plot, data) {
           type: "bar",
           data: vals,
           itemStyle: {
-            color: "#EE6666",
+            color: "#ef5350",
           },
         },
       ],
