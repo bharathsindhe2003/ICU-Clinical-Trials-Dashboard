@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <>
-      <ToastContainer />
+      <ToastContainer position="top-center" />
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />

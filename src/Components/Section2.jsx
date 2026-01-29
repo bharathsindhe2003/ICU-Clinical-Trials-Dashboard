@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Heading from "./UI/Heading";
 export default function Section2() {
   return (
     <Box
@@ -8,14 +8,14 @@ export default function Section2() {
         flexDirection: "column",
         gap: 2,
         p: 2,
+        mb: 2,
+
         border: 3,
         borderRadius: 2,
       }}>
       {/* Row 0: heading */}
       <Box sx={{ textAlign: "center" }}>
-        <Typography variant="h5" component="div" gutterBottom>
-          Patient Cohort Details
-        </Typography>
+        <Heading text="Section 2: Patient Cohort Details" />
       </Box>
       {/* Row 1: single pie chart */}
       <Box
@@ -28,7 +28,7 @@ export default function Section2() {
           p: 2,
         }}>
         <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <h2>Number of Patients</h2>
+          <Heading text="Number of Patients" />
           <Box
             id="PCDNOP"
             sx={{
@@ -50,7 +50,7 @@ export default function Section2() {
           p: 2,
         }}>
         <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <h2>Age Distribution for Male & Female</h2>
+          <Heading text="Age Distribution for Male & Female" />
           <Box
             id="PCDADMF"
             sx={{

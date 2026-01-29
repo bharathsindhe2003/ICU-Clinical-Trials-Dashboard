@@ -19,16 +19,22 @@ export default function Dashboard() {
   //   loadData();
   // }, []); // run only once when the component mounts
 
+  const [vdaMetrics, setVdaMetrics] = useState(null);
+  const [slectedVital, setSelectedVital] = useState("HR");
+
   useEffect(() => {
     async function getExcelData() {
-      const result = await FetchDatafromFB();
+      const result = await FetchDatafromFB(vdaMetrics, setVdaMetrics);
       console.log("result", result);
     }
     getExcelData();
   }, []);
 
+  const handleVitalChange = (event) => {
+    setSelectedVital(event.target.value);
+  };
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 2, g: 2 }}>
       {/* section 0: heading*/}
 
       <Typography sx={{ textAlign: "center" }} variant="h5" component="div" gutterBottom>
@@ -39,7 +45,7 @@ export default function Dashboard() {
       {/* section 2 */}
       <Section2></Section2>
       {/* section 3 */}
-      <Section3></Section3>
+      <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics}></Section3>
     </Box>
   );
 }

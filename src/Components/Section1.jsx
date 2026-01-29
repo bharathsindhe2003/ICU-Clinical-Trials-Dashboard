@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Heading from "./UI/Heading";
 export default function Section1() {
+  
   return (
     <Box
       sx={{
@@ -8,14 +9,13 @@ export default function Section1() {
         flexDirection: "column",
         gap: 2,
         p: 2,
+        mb: 2,
         border: 3,
         borderRadius: 2,
       }}>
       {/* Row 0: heading */}
       <Box sx={{ textAlign: "center" }}>
-        <Typography variant="h5" component="div" gutterBottom>
-          Vital Data Points
-        </Typography>
+        <Heading text="Section 1: Vital Data Points" />
       </Box>
       {/* Row 1: single pie chart */}
       <Box
@@ -28,7 +28,7 @@ export default function Section1() {
           p: 2,
         }}>
         <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <h2>Completion of Trial</h2>
+          <Heading text="Completion of Trial" />
           <Box
             id="VDPCOT"
             sx={{
@@ -50,7 +50,7 @@ export default function Section1() {
           p: 2,
         }}>
         <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
-          <h2>Vital Collection</h2>
+          <Heading text="Vital Collection" />
           <Box
             id="VDPVC"
             sx={{
@@ -72,7 +72,7 @@ export default function Section1() {
           p: 2,
         }}>
         <Box sx={{ textAlign: "center", mb: 1 }}>
-          <h2>For HR, SPO2, RR, BP</h2>
+          <Heading text="For HR, SPO2, RR, BP" />
         </Box>
         <Box
           sx={{
