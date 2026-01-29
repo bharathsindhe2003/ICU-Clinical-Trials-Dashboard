@@ -79,7 +79,7 @@ export default function Section2({ lastUpdated }) {
             />
           </Box>
         </Box>
-      </Box>
+      </Box>{" "}
       <LastUpdated lastUpdated={lastUpdated} />
     </Box>
   );

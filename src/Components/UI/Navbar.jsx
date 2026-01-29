@@ -1,12 +1,13 @@
 import logo from "../../assets/logo2.png";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Logout from "../../Services/Login/Logout";
-
+import { useNavigate } from "react-router-dom";
 // MUI Imports
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-export default function Navbar({ navigate }) {
+export default function Navbar() {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -48,7 +49,9 @@ export default function Navbar({ navigate }) {
       <Button
         variant="outlined"
         color="inherit"
-        onClick={() => Logout(navigate)}
+        onClick={() => {
+          Logout(navigate);
+        }}
         sx={{
           borderColor: "#ffffff",
           color: "#ffffff",

@@ -1,10 +1,5 @@
-// Custom Imports
-import logo from "../assets/logo2.png";
 import handleLogin from "../Services/Login/Login";
-// React Imports
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-// MUI Imports
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
@@ -16,9 +11,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
+import { useNavigate } from "react-router-dom";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PersonIcon from "@mui/icons-material/Person";
+import logo from "../assets/logo2.png";
 
 export default function Login() {
   const [userEmail, setUserEmail] = useState("");

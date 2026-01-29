@@ -13,7 +13,7 @@ export default async function FetchDatafromFB(setSelectedVital, setLastUpdated) 
     const snapshotVal = snapshot.val();
     const maxKey = Object.keys(snapshotVal)[0]; // since we limited to last 1, this is the only key
     const data = snapshotVal[maxKey];
-    console.log("Fetched data from Firebase:", data);
+
     // Firebase key looks like a Unix timestamp in seconds (e.g., 1769587560)
     const tsSeconds = Number(maxKey);
     let formatted = String(maxKey);
