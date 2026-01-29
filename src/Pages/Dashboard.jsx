@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Section1 from "../Components/Section1";
 import Section2 from "../Components/Section2";
 import Section3 from "../Components/Section3";
+import FadeInSection from "../Components/UI/FadeInSection";
 export default function Dashboard() {
   // const [excelData, setExcelData] = useState([]);
 
@@ -57,11 +58,17 @@ export default function Dashboard() {
         Dashboard
       </Typography>
       {/* section 1 */}
-      <Section1></Section1>
+      <FadeInSection>
+        <Section1 />
+      </FadeInSection>
       {/* section 2 */}
-      <Section2></Section2>
+      <FadeInSection>
+        <Section2 />
+      </FadeInSection>
       {/* section 3 */}
-      <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics}></Section3>
+      <FadeInSection>
+        <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} />
+      </FadeInSection>
     </Box>
   );
 }
