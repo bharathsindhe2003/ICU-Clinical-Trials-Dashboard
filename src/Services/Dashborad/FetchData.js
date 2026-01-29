@@ -1,5 +1,6 @@
 import { database } from "../Firebase/config";
 import { ref, query, limitToLast, get } from "firebase/database";
+import * as echarts from "echarts";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
 import { plotPCDNOP, plotPCDADMF } from "./Echarts/PCD/PlotPCDcharts.js";
 import { plotVDA1, plotVDA2, plotVDA3, plotVDA4 } from "./Echarts/VCA/PlotVDAChart.js";
@@ -15,11 +16,34 @@ export default async function FetchDatafromFB(setSelectedVital) {
     computeSection2Data(data);
     computeSection3Data(data, setSelectedVital);
 
+    // Ensure charts stay responsive on window resize
+    setupChartsResizeListener();
+
     return data;
   } catch (error) {
     console.error("Error fetching data from Firebase:", error);
     return;
   }
+}
+
+function setupChartsResizeListener() {
+  // Attach only once per page load
+  if (window.__echartsResizeListenerAttached) return;
+  window.__echartsResizeListenerAttached = true;
+
+  const handleResize = () => {
+    const containers = document.querySelectorAll(".echart-container");
+    containers.forEach((el) => {
+      const chart = echarts.getInstanceByDom(el);
+      if (chart) {
+        chart.resize();
+      }
+    });
+  };
+
+  window.addEventListener("resize", handleResize);
+  // Trigger once so charts fit initial layout after render
+  handleResize();
 }
 
 function computeSection1Data(data) {

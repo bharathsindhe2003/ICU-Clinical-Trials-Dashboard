@@ -41,6 +41,7 @@ export default function Section1() {
             <Heading text="Completion of Trial" />
             <Box
               id="VDPCOT"
+              className="echart-container"
               sx={{
                 width: "100%",
                 minHeight: { xs: 200, sm: 240 },
@@ -66,6 +67,7 @@ export default function Section1() {
             <Heading text="Vital Collection" />
             <Box
               id="VDPVC"
+              className="echart-container"
               sx={{
                 minHeight: { xs: 200, sm: 240 },
               }}
@@ -98,6 +100,7 @@ export default function Section1() {
           }}>
           <Box
             id="VDPHR"
+            className="echart-container"
             sx={{
               width: "100%",
               minHeight: { xs: 140, sm: 160 },
@@ -105,6 +108,7 @@ export default function Section1() {
           />
           <Box
             id="VDPSPO2"
+            className="echart-container"
             sx={{
               width: "100%",
               minHeight: { xs: 140, sm: 160 },
@@ -112,6 +116,7 @@ export default function Section1() {
           />
           <Box
             id="VDPRR"
+            className="echart-container"
             sx={{
               width: "100%",
               minHeight: { xs: 140, sm: 160 },
@@ -119,6 +124,7 @@ export default function Section1() {
           />
           <Box
             id="VDPBP"
+            className="echart-container"
             sx={{
               width: "100%",
               minHeight: { xs: 140, sm: 160 },

@@ -41,6 +41,7 @@ export default function Section2() {
             <Heading text="Number of Patients" />
             <Box
               id="PCDNOP"
+              className="echart-container"
               sx={{
                 width: "100%",
                 minHeight: { xs: 200, sm: 240 },
@@ -66,6 +67,7 @@ export default function Section2() {
             <Heading text="Age Distribution for Male & Female" />
             <Box
               id="PCDADMF"
+              className="echart-container"
               sx={{
                 width: "100%",
                 minHeight: { xs: 200, sm: 240 },

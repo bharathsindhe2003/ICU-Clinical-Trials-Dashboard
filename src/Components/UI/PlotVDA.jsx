@@ -4,17 +4,28 @@ import * as echarts from "echarts";
 
 export default function PLotVDA({ id, isVisible = true }) {
   useEffect(() => {
-    if (!isVisible) return;
+    function resizeCharts() {
+      if (!isVisible) return;
 
-    for (let i = 1; i <= 4; i += 1) {
-      const el = document.getElementById(id + i);
-      if (!el) continue;
+      for (let i = 1; i <= 4; i += 1) {
+        const el = document.getElementById(id + i);
+        if (!el) continue;
 
-      const chart = echarts.getInstanceByDom(el);
-      if (chart) {
-        chart.resize();
+        const chart = echarts.getInstanceByDom(el);
+        if (chart) {
+          chart.resize();
+        }
       }
     }
+
+    // Initial sizing when becoming visible
+    resizeCharts();
+
+    // Resize on window size changes
+    window.addEventListener("resize", resizeCharts);
+    return () => {
+      window.removeEventListener("resize", resizeCharts);
+    };
   }, [id, isVisible]);
 
   return (
@@ -31,6 +42,7 @@ export default function PLotVDA({ id, isVisible = true }) {
         }}>
         <Box
           id={id + "1"}
+          className="echart-container"
           sx={{
             // width: "100%",
             minWidth: 0,
@@ -45,6 +57,7 @@ export default function PLotVDA({ id, isVisible = true }) {
           }}></Box>
         <Box
           id={id + "2"}
+          className="echart-container"
           sx={{
             // width: "100%",
             minWidth: 0,
@@ -58,6 +71,7 @@ export default function PLotVDA({ id, isVisible = true }) {
           }}></Box>
         <Box
           id={id + "3"}
+          className="echart-container"
           sx={{
             // width: "100%",
             minWidth: 0,
@@ -68,9 +82,10 @@ export default function PLotVDA({ id, isVisible = true }) {
             border: 1,
             borderRadius: 2,
             p: 2,
-          }}></Box> 
+          }}></Box>
         <Box
           id={id + "4"}
+          className="echart-container"
           sx={{
             // width: "100%",
             minWidth: 0,
