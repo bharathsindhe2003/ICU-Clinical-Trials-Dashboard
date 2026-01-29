@@ -339,7 +339,7 @@ function plotVDPBP(small_pie_bp, data_bp) {
       textStyle: {
         fontSize: 10,
       },
-        data: ["Lower than normal", "Normal", "Elevated", "High (1)", "High (2)"],
+      data: ["Lower than normal", "Normal", "Elevated", "High (1)", "High (2)"],
     },
     series: [
       {
@@ -355,13 +355,13 @@ function plotVDPBP(small_pie_bp, data_bp) {
         labelLine: {
           show: false,
         },
-          data: [
-            { value: low, name: "Lower than normal", itemStyle: { color: "#90caf9" } },
-            { value: normal, name: "Normal", itemStyle: { color: "#26a69a" } },
-            { value: elev, name: "Elevated", itemStyle: { color: "#ffb74d" } },
-            { value: high1, name: "High (1)", itemStyle: { color: "#ef5350" } },
-            { value: high2, name: "High (2)", itemStyle: { color: "#c62828" } },
-          ],
+        data: [
+          { value: low, name: "Lower than normal", itemStyle: { color: "#90caf9" } },
+          { value: normal, name: "Normal", itemStyle: { color: "#26a69a" } },
+          { value: elev, name: "Elevated", itemStyle: { color: "#ffb74d" } },
+          { value: high1, name: "High (1)", itemStyle: { color: "#ef5350" } },
+          { value: high2, name: "High (2)", itemStyle: { color: "#c62828" } },
+        ],
       },
     ],
   };
