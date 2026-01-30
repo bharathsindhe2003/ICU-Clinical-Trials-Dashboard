@@ -12,7 +12,7 @@ export default function Section2({ lastUpdated }) {
         gap: 2,
         p: 2,
         pt: 4,
-        mb: 2,
+        mb: 4,
         background: "linear-gradient(135deg, #ffffff 0%, #e3f2fd 60%, #ffffff 100%)",
         border: 1,
         borderColor: "#b2dfdb",
@@ -32,6 +32,7 @@ export default function Section2({ lastUpdated }) {
         }}>
         <Heading text="Trial Cohort" size="h5" />
       </Box>
+      <Box sx={{ mb: 0.5 }} />
       {/* Row 1 & 2: side by side (30% / 70%) */}
       <Box
         sx={{
@@ -51,8 +52,8 @@ export default function Section2({ lastUpdated }) {
               border: 1,
               borderColor: "#b2dfdb",
               borderRadius: 2,
-              p: 2,
-              pt: 4,
+              // p: 2,
+              pt: 2,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -93,8 +94,8 @@ export default function Section2({ lastUpdated }) {
               border: 1,
               borderColor: "#b2dfdb",
               borderRadius: 2,
-              p: 2,
-              pt: 4,
+              // p: 2,
+              pt: 2,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -121,7 +122,7 @@ export default function Section2({ lastUpdated }) {
             />
           </Box>
         </Box>
-      </Box>{" "}
+      </Box>
       <LastUpdated lastUpdated={lastUpdated} />
     </Box>
   );

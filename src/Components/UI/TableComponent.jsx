@@ -10,12 +10,26 @@ export default function TableComponent({ data }) {
   const rows = data ? Object.entries(data) : [];
 
   return (
-    <TableContainer component={Paper} fullwidth>
+    <TableContainer component={Paper}>
       <Table sx={{ width: "100%" }} size="small" aria-label="vitals accuracy table">
         <TableHead>
-          <TableRow>
-            <TableCell>Metric</TableCell>
-            <TableCell align="right">Value</TableCell>
+          <TableRow
+            sx={{
+              backgroundColor: "gray",
+            }}>
+            <TableCell
+              sx={{
+                color: "white",
+              }}>
+              Metric
+            </TableCell>
+            <TableCell
+              sx={{
+                color: "white",
+              }}
+              align="right">
+              Value
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

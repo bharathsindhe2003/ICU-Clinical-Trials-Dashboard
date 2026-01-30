@@ -29,7 +29,15 @@ export default function PLotVDA({ id, data, isVisible = true }) {
 
   return (
     <Box id={id} sx={{ display: "block" }}>
-      <TableComponent data={data} />
+      <Box
+        sx={{
+          width: "30%",
+          marginLeft: "auto",
+          marginRight: "auto",
+          mb: 2,
+        }}>
+        <TableComponent data={data} />
+      </Box>
       <Box
         sx={{
           display: "grid",
@@ -49,7 +57,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
             alignItems: "center",
             border: 1,
             borderRadius: 2,
-            p: 2,
+            // p: 2,
           }}></Box>
         <Box
           id={id + "2"}
@@ -63,7 +71,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
             alignItems: "center",
             border: 1,
             borderRadius: 2,
-            p: 2,
+            // p: 2,
           }}></Box>
         <Box
           id={id + "3"}
@@ -77,7 +85,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
             alignItems: "center",
             border: 1,
             borderRadius: 2,
-            p: 2,
+            // p: 2,
           }}></Box>
         <Box
           id={id + "4"}
@@ -91,7 +99,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
             alignItems: "center",
             border: 1,
             borderRadius: 2,
-            p: 2,
+            // p: 2,
           }}></Box>
       </Box>
     </Box>

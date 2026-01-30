@@ -44,11 +44,10 @@ export default function Dashboard() {
         background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
       }}>
       {/* section 0: heading*/}
-
       <Navbar />
       {/* section 1 */}
       <Section1 lastUpdated={lastUpdated} />
-      {/* section 2 */}
+      {/* section 2 */} 
       <Section2 lastUpdated={lastUpdated} />
       {/* section 3 */}
       <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />

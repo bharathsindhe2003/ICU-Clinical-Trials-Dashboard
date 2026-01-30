@@ -172,14 +172,14 @@ function plotVDPHR(small_pie_hr, data_hr) {
     const chart = echarts.getInstanceByDom(small_pie_hr) || echarts.init(small_pie_hr, null, { renderer: "canvas" });
 
     const option = {
-      title: {
-        text: "Heart Rate",
-        left: "center",
-        top: 0,
-        textStyle: {
-          fontSize: 12,
-        },
-      },
+      // title: {
+      //   text: "Heart Rate",
+      //   left: "center",
+      //   top: 0,
+      //   textStyle: {
+      //     fontSize: 12,
+      //   },
+      // },
       tooltip: {
         trigger: "item",
         formatter: "{b}: {c} ({d}%)",
@@ -193,7 +193,7 @@ function plotVDPHR(small_pie_hr, data_hr) {
         textStyle: {
           fontSize: 10,
         },
-        data: ["Normal (60-100)", "Bradycardia (<60)", "Tachycardia (>100)"],
+        data: ["Tachycardia (>100)", "Normal (60-100)", "Bradycardia (<60)"],
       },
       series: [
         {
@@ -210,8 +210,8 @@ function plotVDPHR(small_pie_hr, data_hr) {
             show: false,
           },
           data: [
-            { value: normal, name: "Normal (60-100)", itemStyle: { color: "#26a69a" } },
             { value: brady, name: "Bradycardia (<60)", itemStyle: { color: "#90caf9" } },
+            { value: normal, name: "Normal (60-100)", itemStyle: { color: "#26a69a" } },
             { value: tachy, name: "Tachycardia (>100)", itemStyle: { color: "#ef5350" } },
           ],
         },
@@ -233,14 +233,14 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
     const chart = echarts.getInstanceByDom(small_pie_spo2) || echarts.init(small_pie_spo2, null, { renderer: "canvas" });
 
     const option = {
-      title: {
-        text: "SpO₂",
-        left: "center",
-        top: 0,
-        textStyle: {
-          fontSize: 12,
-        },
-      },
+      // title: {
+      //   text: "SpO₂",
+      //   left: "center",
+      //   top: 0,
+      //   textStyle: {
+      //     fontSize: 12,
+      //   },
+      // },
       tooltip: {
         trigger: "item",
         formatter: "{b}: {c} ({d}%)",
@@ -254,7 +254,7 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
         textStyle: {
           fontSize: 10,
         },
-        data: ["Normal (≥95%)", "Low (<95%)"],
+        data: ["Low (<95%)", "Normal (≥95%)"],
       },
       series: [
         {
@@ -271,8 +271,8 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
             show: false,
           },
           data: [
-            { value: normal, name: "Normal (≥95%)", itemStyle: { color: "#26a69a" } },
             { value: low, name: "Low (<95%)", itemStyle: { color: "#90caf9" } },
+            { value: normal, name: "Normal (≥95%)", itemStyle: { color: "#26a69a" } },
           ],
         },
       ],
@@ -294,14 +294,14 @@ function plotVDPRR(small_pie_rr, data_rr) {
     const chart = echarts.getInstanceByDom(small_pie_rr) || echarts.init(small_pie_rr, null, { renderer: "canvas" });
 
     const option = {
-      title: {
-        text: "Respiration Rate",
-        left: "center",
-        top: 0,
-        textStyle: {
-          fontSize: 12,
-        },
-      },
+      // title: {
+      //   text: "Respiration Rate",
+      //   left: "center",
+      //   top: 0,
+      //   textStyle: {
+      //     fontSize: 12,
+      //   },
+      // },
       tooltip: {
         trigger: "item",
         formatter: "{b}: {c} ({d}%)",
@@ -315,7 +315,7 @@ function plotVDPRR(small_pie_rr, data_rr) {
         textStyle: {
           fontSize: 10,
         },
-        data: ["Eupnea (12-20)", "Bradypnea (<12)", "Tachypnea (>20)"],
+        data: ["Tachypnea (>20)", "Eupnea (12-20)", "Bradypnea (<12)"],
       },
       series: [
         {
@@ -357,14 +357,14 @@ function plotVDPBP(small_pie_bp, data_bp) {
   const chart = echarts.getInstanceByDom(small_pie_bp) || echarts.init(small_pie_bp, null, { renderer: "canvas" });
 
   const option = {
-    title: {
-      text: "Blood Pressure",
-      left: "center",
-      top: 0,
-      textStyle: {
-        fontSize: 12,
-      },
-    },
+    // title: {
+    //   text: "Blood Pressure",
+    //   left: "center",
+    //   top: 0,
+    //   textStyle: {
+    //     fontSize: 12,
+    //   },
+    // },
     tooltip: {
       trigger: "item",
       formatter: "{b}: {c} ({d}%)",
@@ -378,7 +378,7 @@ function plotVDPBP(small_pie_bp, data_bp) {
       textStyle: {
         fontSize: 10,
       },
-      data: ["Lower than normal", "Normal", "Elevated", "High (1)", "High (2)"],
+      data: ["High (2)", "High (1)", "Elevated", "Normal", "Lower than normal"],
     },
     series: [
       {

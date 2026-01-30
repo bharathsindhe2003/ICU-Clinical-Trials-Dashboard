@@ -14,7 +14,7 @@ export default function Section1({ lastUpdated }) {
         gap: 2,
         p: 2,
         pt: 4,
-        mb: 2,
+        mb: 4,
         border: 1,
         borderColor: "#bbdefb",
         boxShadow: 4,
@@ -34,6 +34,7 @@ export default function Section1({ lastUpdated }) {
         }}>
         <Heading text="Clinical Trial Progress" size="h5" />
       </Box>
+      <Box sx={{ mb: 0.5 }} />
       {/* Row 1 & 2: side by side (30% / 70%) */}
       <Box
         sx={{
@@ -53,8 +54,8 @@ export default function Section1({ lastUpdated }) {
               border: 1,
               borderColor: "#bbdefb",
               borderRadius: 2,
-              p: 2,
-              pt: 4,
+              // p: 2,
+              pt: 2,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -95,8 +96,8 @@ export default function Section1({ lastUpdated }) {
               border: 1,
               borderColor: "#bbdefb",
               borderRadius: 2,
-              p: 2,
-              pt: 4,
+              // p: 2,
+              pt: 2,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -124,6 +125,7 @@ export default function Section1({ lastUpdated }) {
           </Box>
         </Box>
       </Box>
+      <Box sx={{ mb: 0.5 }} />
       {/* Row 3: four pie charts in a single box with centered legend-style heading */}
       <Box
         sx={{
@@ -161,38 +163,121 @@ export default function Section1({ lastUpdated }) {
               },
               gap: 2,
             }}>
-            <Box
-              id="VDPHR"
-              className="echart-container"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 200, sm: 240 },
-              }}
-            />
-            <Box
-              id="VDPSPO2"
-              className="echart-container"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 200, sm: 240 },
-              }}
-            />
-            <Box
-              id="VDPRR"
-              className="echart-container"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 200, sm: 240 },
-              }}
-            />
-            <Box
-              id="VDPBP"
-              className="echart-container"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 200, sm: 240 },
-              }}
-            />
+            <Box sx={{ width: "100%" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  border: 1,
+                  borderColor: "#bbdefb",
+                  borderRadius: 2,
+                  // p: 2,
+                  pt: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    px: 1.5,
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                  }}>
+                  <Heading text="Heart Rate" size="h6" />
+                </Box>
+                <Box id="VDPHR" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
+              </Box>
+            </Box>
+
+            <Box sx={{ width: "100%" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  border: 1,
+                  borderColor: "#bbdefb",
+                  borderRadius: 2,
+                  // p: 2,
+                  pt: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    px: 1.5,
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                  }}>
+                  <Heading text="SpO2" size="h6" />
+                </Box>
+                <Box id="VDPSPO2" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
+              </Box>
+            </Box>
+
+            <Box sx={{ width: "100%" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  border: 1,
+                  borderColor: "#bbdefb",
+                  borderRadius: 2,
+                  // p: 2,
+                  pt: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    px: 1.5,
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                  }}>
+                  <Heading text="Respiratory Rate" size="h6" />
+                </Box>
+                <Box id="VDPRR" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
+              </Box>
+            </Box>
+
+            <Box sx={{ width: "100%" }}>
+              <Box
+                sx={{
+                  position: "relative",
+                  border: 1,
+                  borderColor: "#bbdefb",
+                  borderRadius: 2,
+                  // p: 2,
+                  pt: 2,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    px: 1.5,
+                    bgcolor: "background.paper",
+                    borderRadius: 2,
+                  }}>
+                  <Heading text="Blood Pressure" size="h6" />
+                </Box>
+                <Box id="VDPBP" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
+              </Box>
+            </Box>
           </Box>
         </Box>
       </Box>
