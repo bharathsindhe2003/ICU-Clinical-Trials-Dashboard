@@ -36,7 +36,7 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics, las
           borderRadius: 2,
         }}>
         {/* First box: heading */}
-        <Heading text="Vitals accuracy" size="h6" />
+        <Heading text="Vitals accuracy" size="h5" type="main" />
       </Box>
       {/* Row 1: single pie chart */}
       <Box

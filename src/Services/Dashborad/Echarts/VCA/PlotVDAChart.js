@@ -5,7 +5,19 @@ import * as echarts from "echarts";
 function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
   try {
     //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
-    const points = data.pts.filter((p) => p != null && typeof p.x === "number" && typeof p.y === "number").map((p) => [p.x, p.y]);
+    const points = data.pts
+      .filter((p) => p != null && p.x != null && p.y != null)
+      .flatMap((p) => {
+        const x = Number(p.x);
+        if (!Number.isFinite(x)) return [];
+
+        const yValues = String(p.y)
+          .split(",")
+          .map((v) => Number(v.trim()))
+          .filter(Number.isFinite); // keeps +ve, -ve, ignores junk
+
+        return yValues.map((y) => [x, y]);
+      });
 
     if (points.length === 0) return;
 
@@ -130,7 +142,19 @@ function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
   try {
     //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
 
-    const points = data.pts.filter((p) => p != null && typeof p.x === "number" && typeof p.y === "number").map((p) => [p.x, p.y]);
+    const points = data.pts
+      .filter((p) => p != null && p.x != null && p.y != null)
+      .flatMap((p) => {
+        const x = Number(p.x);
+        if (!Number.isFinite(x)) return [];
+
+        const yValues = String(p.y)
+          .split(",")
+          .map((v) => Number(v.trim()))
+          .filter(Number.isFinite); // keeps +ve, -ve, ignores junk
+
+        return yValues.map((y) => [x, y]);
+      });
 
     if (points.length === 0) return;
 
@@ -246,6 +270,8 @@ function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
     const option = {
       tooltip: {
         trigger: "axis",
+        textAlign: "left",
+        extraCssText: "text-align:left;",
         axisPointer: {
           type: "shadow",
         },
@@ -254,8 +280,8 @@ function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
           const idx = params[0].dataIndex;
           const bin = bins[idx];
           const v = data.vals[idx];
-          let me = v && typeof v === "object" ? v.me : v;
-          let sd = v && typeof v === "object" ? v.sd : undefined;
+          let me = v.me ? v.me : "-";
+          let sd = v.sd ? v.sd : "-";
           let txt = `Category ${bin}`;
           txt += `<br/><span style='color:#1976d2'>Mean</span>: ${me}`;
           txt += `<br/><span style='color:#ff9800'>Standard Deviation</span>: ${sd}`;
@@ -297,15 +323,15 @@ function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
         {
           name: "Mean",
           type: "bar",
-          label: {
-            show: true,
-            position: "right",
-            color: "#1976d2",
-            formatter: function (params) {
-              const v = data.vals[params.dataIndex];
-              return v && typeof v === "object" ? v.me : v;
-            },
-          },
+          // label: {
+          //   show: true,
+          //   position: "right",
+          //   color: "#1976d2",
+          //   formatter: function (params) {
+          //     const v = data.vals[params.dataIndex];
+          //     return v && typeof v === "object" ? v.me : v;
+          //   },
+          // },
           data: meData,
           itemStyle: {
             color: "#1976d2",
@@ -314,15 +340,15 @@ function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
         {
           name: "Standard Deviation",
           type: "bar",
-          label: {
-            show: true,
-            position: "right",
-            color: "#ff9800",
-            formatter: function (params) {
-              const v = data.vals[params.dataIndex];
-              return v && typeof v === "object" ? v.sd : "";
-            },
-          },
+          // label: {
+          //   show: true,
+          //   position: "right",
+          //   color: "#ff9800",
+          //   formatter: function (params) {
+          //     const v = data.vals[params.dataIndex];
+          //     return v && typeof v === "object" ? v.sd : "";
+          //   },
+          // },
           data: sdData,
           itemStyle: {
             color: "#ff9800",
@@ -365,8 +391,8 @@ function plotVDA4(plot, data, xAxisLabel, yAxisLabel) {
         top: "15%",
         left: "5%",
         right: "3%",
-        bottom: "3%",
-        containLabel: true,
+        bottom: "10%",
+        // containLabel: true,
       },
       xAxis: {
         type: "category",

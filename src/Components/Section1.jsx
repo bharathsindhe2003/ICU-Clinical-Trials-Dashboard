@@ -32,7 +32,7 @@ export default function Section1({ lastUpdated }) {
           bgcolor: "background.paper",
           borderRadius: 2,
         }}>
-        <Heading text="Clinical Trial Progress" size="h5" />
+        <Heading text="Clinical Trial Progress" size="h5" type="main" />
       </Box>
       <Box sx={{ mb: 0.5 }} />
       {/* Row 1 & 2: side by side (30% / 70%) */}
@@ -70,7 +70,7 @@ export default function Section1({ lastUpdated }) {
                 px: 1.5,
                 bgcolor: "background.paper",
               }}>
-              <Heading text="Trial Completion Status" size="h6" />
+              <Heading text="Trial Completion Status" size="subtitle1" type="normal" />
             </Box>
             <Box
               id="VDPCOT"
@@ -112,7 +112,7 @@ export default function Section1({ lastUpdated }) {
                 bgcolor: "background.paper",
                 borderRadius: 2,
               }}>
-              <Heading text="Trial Progression" size="h6" />
+              <Heading text="Trial Progression" size="subtitle1" type="normal" />
             </Box>
             <Box
               id="VDPVC"
@@ -152,7 +152,7 @@ export default function Section1({ lastUpdated }) {
               bgcolor: "background.paper",
               borderRadius: 2,
             }}>
-            <Heading text="Vitals distribution" size="h6" />
+            <Heading text="Vitals distribution" size="subtitle1" type="normal" />
           </Box>
           <Box
             sx={{
@@ -186,7 +186,7 @@ export default function Section1({ lastUpdated }) {
                     bgcolor: "background.paper",
                     borderRadius: 2,
                   }}>
-                  <Heading text="Heart Rate" size="h6" />
+                  <Heading text="Heart Rate" size="subtitle1" type="normal" />
                 </Box>
                 <Box id="VDPHR" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
               </Box>
@@ -215,7 +215,7 @@ export default function Section1({ lastUpdated }) {
                     bgcolor: "background.paper",
                     borderRadius: 2,
                   }}>
-                  <Heading text="SpO2" size="h6" />
+                  <Heading text="SpO2" size="subtitle1" type="normal" />
                 </Box>
                 <Box id="VDPSPO2" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
               </Box>
@@ -244,7 +244,7 @@ export default function Section1({ lastUpdated }) {
                     bgcolor: "background.paper",
                     borderRadius: 2,
                   }}>
-                  <Heading text="Respiratory Rate" size="h6" />
+                  <Heading text="Respiratory Rate" size="subtitle1" type="normal" />
                 </Box>
                 <Box id="VDPRR" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
               </Box>
@@ -273,7 +273,7 @@ export default function Section1({ lastUpdated }) {
                     bgcolor: "background.paper",
                     borderRadius: 2,
                   }}>
-                  <Heading text="Blood Pressure" size="h6" />
+                  <Heading text="Blood Pressure" size="subtitle1" type="normal" />
                 </Box>
                 <Box id="VDPBP" className="echart-container" sx={{ width: "100%", minHeight: { xs: 200, sm: 240 } }} />
               </Box>

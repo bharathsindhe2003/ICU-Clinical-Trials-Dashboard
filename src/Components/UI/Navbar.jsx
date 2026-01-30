@@ -141,7 +141,8 @@ export default function Navbar() {
               color: "#00458b",
             }),
           }}>
-          Vitals
+          Accuracy
+
         </Button>
       </Box>
       <Button

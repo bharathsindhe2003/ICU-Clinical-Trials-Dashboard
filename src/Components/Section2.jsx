@@ -30,7 +30,7 @@ export default function Section2({ lastUpdated }) {
           bgcolor: "background.paper",
           borderRadius: 2,
         }}>
-        <Heading text="Trial Cohort" size="h5" />
+        <Heading text="Trial Cohort" size="h5" type="main" />
       </Box>
       <Box sx={{ mb: 0.5 }} />
       {/* Row 1 & 2: side by side (30% / 70%) */}
@@ -68,7 +68,7 @@ export default function Section2({ lastUpdated }) {
                 bgcolor: "background.paper",
                 borderRadius: 2,
               }}>
-              <Heading text="Cohort size" size="h6" />
+              <Heading text="Cohort size" size="subtitle1" type="normal" />
             </Box>
             <Box
               id="PCDNOP"
@@ -110,7 +110,7 @@ export default function Section2({ lastUpdated }) {
                 bgcolor: "background.paper",
                 borderRadius: 2,
               }}>
-              <Heading text="Cohort age distribution" size="h6" />
+              <Heading text="Cohort age distribution" size="subtitle1" type="normal" />
             </Box>
             <Box
               id="PCDADMF"

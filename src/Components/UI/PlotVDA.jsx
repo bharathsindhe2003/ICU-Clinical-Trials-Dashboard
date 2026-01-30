@@ -63,7 +63,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
                 bgcolor: "background.paper",
                 borderRadius: 2,
               }}>
-              <Heading text={item.name} size="h6" />
+              <Heading text={item.name} size="subtitle1" type="normal" />
             </Box>
             <Box
               id={id + item.idNumber}
