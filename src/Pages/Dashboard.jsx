@@ -10,7 +10,6 @@ import Section2 from "../Components/Section2";
 import Section3 from "../Components/Section3";
 import Navbar from "../Components/UI/Navbar";
 import Footer from "../Components/UI/Footer";
-import LoadingScreen from "../Components/UI/LoadingScreen";
 export default function Dashboard() {
   // const [excelData, setExcelData] = useState([]);
 
@@ -25,17 +24,9 @@ export default function Dashboard() {
   const [vdaMetrics, setVdaMetrics] = useState(null);
   const [slectedVital, setSelectedVital] = useState("HR");
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function getExcelData() {
-      try {
-        setIsLoading(true);
-        const result = await FetchDatafromFB(setVdaMetrics, setLastUpdated);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      await FetchDatafromFB(setVdaMetrics, setLastUpdated);
     }
     getExcelData();
   }, []);
@@ -44,28 +35,22 @@ export default function Dashboard() {
     setSelectedVital(event.target.value);
   };
   return (
-    <>
-      {isLoading ? (
-        <LoadingScreen />
-      ) : (
-        <Box
-          sx={{
-            p: 2,
-            g: 2,
-            minHeight: "100vh",
-            background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
-          }}>
-          {/* section 0: heading*/}
-          <Navbar />
-          {/* section 1 */}
-          <Section1 lastUpdated={lastUpdated} />
-          {/* section 2 */}
-          <Section2 lastUpdated={lastUpdated} />
-          {/* section 3 */}
-          <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
-          <Footer />
-        </Box>
-      )}
-    </>
+    <Box
+      sx={{
+        p: 2,
+        g: 2,
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
+      }}>
+      {/* section 0: heading*/}
+      <Navbar />
+      {/* section 1 */}
+      <Section1 lastUpdated={lastUpdated} />
+      {/* section 2 */}
+      <Section2 lastUpdated={lastUpdated} />
+      {/* section 3 */}
+      <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
+      <Footer />
+    </Box>
   );
 }
