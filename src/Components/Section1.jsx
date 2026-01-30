@@ -6,6 +6,7 @@ import LastUpdated from "./UI/LastUpdated";
 export default function Section1({ lastUpdated }) {
   return (
     <Box
+      id="section1"
       sx={{
         position: "relative",
         display: "flex",
