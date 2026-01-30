@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import * as echarts from "echarts";
 import TableComponent from "./TableComponent";
-
+import Heading from "./Heading";
 export default function PLotVDA({ id, data, isVisible = true }) {
   useEffect(() => {
     function resizeCharts() {
@@ -26,7 +26,12 @@ export default function PLotVDA({ id, data, isVisible = true }) {
       window.removeEventListener("resize", resizeCharts);
     };
   }, [id, isVisible]);
-
+  const layout = [
+    { name: "Bland-Altman Plot", idNumber: 1 },
+    { name: "Correlation Plot", idNumber: 2 },
+    { name: "Error Distribution", idNumber: 3 },
+    { name: "Error Histogram", idNumber: 4 },
+  ];
   return (
     <Box id={id} sx={{ display: "block" }}>
       <Box
@@ -44,63 +49,34 @@ export default function PLotVDA({ id, data, isVisible = true }) {
           gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" },
           gap: 2,
         }}>
-        <Box
-          id={id + "1"}
-          className="echart-container"
-          sx={{
-            // width: "100%",
-            minWidth: 0,
-            minHeight: { xs: 200, sm: 240 },
-
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            border: 1,
-            borderRadius: 2,
-            // p: 2,
-          }}></Box>
-        <Box
-          id={id + "2"}
-          className="echart-container"
-          sx={{
-            // width: "100%",
-            minWidth: 0,
-            minHeight: { xs: 200, sm: 240 },
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            border: 1,
-            borderRadius: 2,
-            // p: 2,
-          }}></Box>
-        <Box
-          id={id + "3"}
-          className="echart-container"
-          sx={{
-            // width: "100%",
-            minWidth: 0,
-            minHeight: { xs: 200, sm: 240 },
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            border: 1,
-            borderRadius: 2,
-            // p: 2,
-          }}></Box>
-        <Box
-          id={id + "4"}
-          className="echart-container"
-          sx={{
-            // width: "100%",
-            minWidth: 0,
-            minHeight: { xs: 200, sm: 240 },
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            border: 1,
-            borderRadius: 2,
-            // p: 2,
-          }}></Box>
+        {layout.map((item) => (
+          <Box
+            key={item.idNumber}
+            sx={{ position: "relative", minWidth: 0, minHeight: { xs: 200, sm: 240 }, border: 1, borderRadius: 2, borderColor: "#bbdefb", mb: item.idNumber === 1 || item.idNumber === 2 ? 1 : 0 }}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                px: 1.5,
+                bgcolor: "background.paper",
+                borderRadius: 2,
+              }}>
+              <Heading text={item.name} size="h6" />
+            </Box>
+            <Box
+              id={id + item.idNumber}
+              className="echart-container"
+              sx={{
+                width: "100%",
+                height: { xs: 280, sm: 300 },
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}></Box>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

@@ -133,6 +133,13 @@ function plotVDPVC(main_bar, { time_dist }) {
           type: "shadow",
         },
       },
+      grid: {
+        // top: "3%",
+        left: "1%",
+        right: "5%",
+        bottom: "3%",
+        containLabel: true,
+      },
       xAxis: {
         type: "category",
         name: "Week",

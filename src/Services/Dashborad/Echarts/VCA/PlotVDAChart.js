@@ -2,7 +2,7 @@ import * as echarts from "echarts";
 
 // Bland-Altman Plot
 // data: { pts: [{ x: avg_val, y: diff_val }, ...] }
-function plotVDA1(plot, data) {
+function plotVDA1(plot, data, xAxisLabel, yAxisLabel) {
   try {
     //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
     const points = data.pts.filter((p) => p != null && typeof p.x === "number" && typeof p.y === "number").map((p) => [p.x, p.y]);
@@ -34,10 +34,10 @@ function plotVDA1(plot, data) {
     const chart = echarts.getInstanceByDom(plot) || echarts.init(plot, null, { renderer: "canvas" });
 
     const option = {
-      title: {
-        text: "Bland-Altman Plot",
-        left: "center",
-      },
+      // title: {
+      //   text: "",
+      //   left: "center",
+      // },
       tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -49,15 +49,22 @@ function plotVDA1(plot, data) {
           return `Avg: ${pt.value[0]}<br/>Diff: ${pt.value[1]}`;
         },
       },
+      grid: {
+        top: "15%",
+        left: "5%",
+        right: "3%",
+        bottom: "3%",
+        containLabel: true,
+      },
       xAxis: {
         type: "value",
-        name: "Average of Methods",
+        name: xAxisLabel,
         nameLocation: "middle",
         nameGap: 30,
       },
       yAxis: {
         type: "value",
-        name: "Difference (Meas - Ref)",
+        name: yAxisLabel,
         nameLocation: "middle",
         nameGap: 40,
       },
@@ -121,7 +128,7 @@ function plotVDA1(plot, data) {
 
 // Correlation Plot
 // data: { pts: [{ x: ref_val, y: meas_val }, ...] }
-function plotVDA2(plot, data) {
+function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
   try {
     //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
 
@@ -136,10 +143,10 @@ function plotVDA2(plot, data) {
     const chart = echarts.getInstanceByDom(plot) || echarts.init(plot, null, { renderer: "canvas" });
 
     const option = {
-      title: {
-        text: "Correlation Plot",
-        left: "center",
-      },
+      // title: {
+      //   text: "Correlation Plot",
+      //   left: "center",
+      // },
       tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -151,9 +158,16 @@ function plotVDA2(plot, data) {
           return `Ref: ${pt.value[0]}<br/>Meas: ${pt.value[1]}`;
         },
       },
+      grid: {
+        top: "15%",
+        left: "5%",
+        right: "3%",
+        bottom: "3%",
+        containLabel: true,
+      },
       xAxis: {
         type: "value",
-        name: "Reference",
+        name: xAxisLabel,
         nameLocation: "middle",
         nameGap: 30,
         min: minVal,
@@ -161,7 +175,7 @@ function plotVDA2(plot, data) {
       },
       yAxis: {
         type: "value",
-        name: "Measured",
+        name: yAxisLabel,
         nameLocation: "middle",
         nameGap: 40,
         min: minVal,
@@ -201,7 +215,7 @@ function plotVDA2(plot, data) {
 
 // Error Distribution (e.g. smoothed curve over error categories)
 // data: { bins: [...], vals: [...] }
-function plotVDA3(plot, data) {
+function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
   try {
     //   if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
 
@@ -212,37 +226,63 @@ function plotVDA3(plot, data) {
 
     const chart = echarts.getInstanceByDom(plot) || echarts.init(plot, null, { renderer: "canvas" });
 
+    const labelRight = {
+      position: "right",
+    };
     const option = {
-      title: {
-        text: "Error Distribution",
-        left: "center",
-      },
+      // title: {
+      //   text: "Bar Chart with Negative Value",
+      // },
       tooltip: {
         trigger: "axis",
+        axisPointer: {
+          type: "shadow",
+        },
+      },
+      grid: {
+        top: 20,
+        right: 20,
+        left: 20,
+        bottom: 30,
       },
       xAxis: {
-        type: "category",
-        name: "Error Category",
-        data: bins,
-        axisTick: { alignWithLabel: true },
+        type: "value",
+        position: "bottom",
+        splitLine: {
+          lineStyle: {
+            type: "dashed",
+          },
+        },
       },
       yAxis: {
-        type: "value",
-        name: "Count",
-        min: 0,
+        type: "category",
+        axisLine: { show: false },
+        axisLabel: { show: false },
+        axisTick: { show: false },
+        splitLine: { show: false },
+        data: ["ten", "nine", "eight", "seven", "six", "five", "four", "three", "two", "one"],
       },
       series: [
         {
-          name: "Count",
-          type: "line",
-          smooth: true,
-          data: vals,
-          itemStyle: {
-            color: "#1e88e5",
+          name: "Cost",
+          type: "bar",
+          stack: "Total",
+          label: {
+            show: true,
+            formatter: "{b}",
           },
-          areaStyle: {
-            opacity: 0.1,
-          },
+          data: [
+            { value: -0.07, label: labelRight },
+            { value: -0.09, label: labelRight },
+            0.2,
+            0.44,
+            { value: -0.23, label: labelRight },
+            0.08,
+            { value: -0.17, label: labelRight },
+            0.47,
+            { value: -0.36, label: labelRight },
+            0.18,
+          ],
         },
       ],
     };
@@ -255,7 +295,7 @@ function plotVDA3(plot, data) {
 
 // Error Histogram (bar chart over error bins)
 // data: { bins: [...], vals: [...] }
-function plotVDA4(plot, data) {
+function plotVDA4(plot, data, xAxisLabel, yAxisLabel) {
   try {
     //   if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
 
@@ -267,30 +307,40 @@ function plotVDA4(plot, data) {
     const chart = echarts.getInstanceByDom(plot) || echarts.init(plot, null, { renderer: "canvas" });
 
     const option = {
-      title: {
-        text: "Error Histogram",
-        left: "center",
-      },
+      // title: {
+      //   text: "Error Histogram",
+      //   left: "center",
+      // },
       tooltip: {
         trigger: "axis",
         axisPointer: {
           type: "shadow",
         },
       },
+      grid: {
+        top: "15%",
+        left: "5%",
+        right: "3%",
+        bottom: "3%",
+        containLabel: true,
+      },
       xAxis: {
         type: "category",
-        name: "Error Bin",
+        name: xAxisLabel,
+        nameLocation: "middle",
         data: bins,
-        axisTick: { alignWithLabel: true },
+        // axisTick: { alignWithLabel: true },
       },
       yAxis: {
         type: "value",
-        name: "Count",
+        name: yAxisLabel,
+        nameLocation: "middle",
+        nameGap: 40,
         min: 0,
       },
       series: [
         {
-          name: "Count",
+          name: yAxisLabel,
           type: "bar",
           data: vals,
           itemStyle: {

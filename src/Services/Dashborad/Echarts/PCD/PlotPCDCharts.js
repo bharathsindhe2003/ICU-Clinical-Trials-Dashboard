@@ -91,8 +91,8 @@ function plotPCDADMF(main_bar, data_adm, data_adf) {
         data: ["Male", "Female"],
       },
       grid: {
-        left: "3%",
-        right: "4%",
+        left: "1%",
+        right: "7%",
         bottom: "3%",
         containLabel: true,
       },
