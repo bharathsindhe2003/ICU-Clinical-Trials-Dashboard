@@ -2,7 +2,7 @@ import * as echarts from "echarts";
 
 // Bland-Altman Plot
 // data: { pts: [{ x: avg_val, y: diff_val }, ...] }
-function plotVDA1(plot, data, xAxisLabel, yAxisLabel) {
+function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
   try {
     //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
     const points = data.pts.filter((p) => p != null && typeof p.x === "number" && typeof p.y === "number").map((p) => [p.x, p.y]);
@@ -12,24 +12,17 @@ function plotVDA1(plot, data, xAxisLabel, yAxisLabel) {
     const yValues = points.map((p) => p[1]);
     const xValues = points.map((p) => p[0]);
 
-    const n = yValues.length;
-    const mean = yValues.reduce((s, v) => s + v, 0) / n;
-    let sd = 0;
-    if (n > 1) {
-      const variance =
-        yValues.reduce((s, v) => {
-          const d = v - mean;
-          return s + d * d;
-        }, 0) /
-        (n - 1);
-      sd = Math.sqrt(variance);
-    }
+    // const n = yValues.length;
+    const mean = otherValues["Mean"];
+    const sd = otherValues["Standard deviation σ"];
 
-    const lowerLimit = mean - 1.96 * sd;
-    const upperLimit = mean + 1.96 * sd;
+    const lowerLimit = data.clf.lloa;
+    const upperLimit = data.clf.uloa;
+    console.log("UPPER LOWER", upperLimit, lowerLimit);
 
     const minX = Math.min(...xValues);
     const maxX = Math.max(...xValues);
+    console.log("MIN MAX", minX, maxX);
 
     const chart = echarts.getInstanceByDom(plot) || echarts.init(plot, null, { renderer: "canvas" });
 
@@ -61,6 +54,11 @@ function plotVDA1(plot, data, xAxisLabel, yAxisLabel) {
         name: xAxisLabel,
         nameLocation: "middle",
         nameGap: 30,
+        min: minX,
+        max: maxX,
+        axisLine: {
+          onZero: false,
+        },
       },
       yAxis: {
         type: "value",
@@ -217,36 +215,68 @@ function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
 // data: { bins: [...], vals: [...] }
 function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
   try {
-    //   if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
+    // Validate input
+    if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
 
     const bins = data.bins;
-    const vals = data.vals.map((v) => Number(v) || 0);
+    // Each entry in vals is expected to be { me: "", sd: "" } or similar
+    // Map each bin to its corresponding value (me) and error (sd)
+    // If value > 0, bar to right; if < 0, bar to left
+    // Show category labels on y-axis
+    if (bins.length === 0 || data.vals.length === 0) return;
 
-    if (bins.length === 0 || vals.length === 0) return;
+    // Prepare bar data for 'me' (blue) and 'sd' (orange)
+    const meData = data.vals.map((v) => {
+      if (typeof v === "object" && v !== null) {
+        return Number(v.me) || 0;
+      } else {
+        return Number(v) || 0;
+      }
+    });
+    const sdData = data.vals.map((v) => {
+      if (typeof v === "object" && v !== null) {
+        return Number(v.sd) || 0;
+      } else {
+        return 0;
+      }
+    });
 
     const chart = echarts.getInstanceByDom(plot) || echarts.init(plot, null, { renderer: "canvas" });
 
-    const labelRight = {
-      position: "right",
-    };
     const option = {
-      // title: {
-      //   text: "Bar Chart with Negative Value",
-      // },
       tooltip: {
         trigger: "axis",
         axisPointer: {
           type: "shadow",
         },
+        formatter: function (params) {
+          // params is an array of series data
+          const idx = params[0].dataIndex;
+          const bin = bins[idx];
+          const v = data.vals[idx];
+          let me = v && typeof v === "object" ? v.me : v;
+          let sd = v && typeof v === "object" ? v.sd : undefined;
+          let txt = `Category ${bin}`;
+          txt += `<br/><span style='color:#1976d2'>Mean</span>: ${me}`;
+          txt += `<br/><span style='color:#ff9800'>Standard Deviation</span>: ${sd}`;
+          return txt;
+        },
+      },
+      legend: {
+        data: ["Mean", "Standard Deviation"],
+        top: 10,
+        right: 10,
+        orient: "horizontal",
       },
       grid: {
-        top: 20,
+        top: 50,
         right: 20,
-        left: 20,
+        left: 60,
         bottom: 30,
       },
       xAxis: {
         type: "value",
+        name: xAxisLabel,
         position: "bottom",
         splitLine: {
           lineStyle: {
@@ -256,33 +286,47 @@ function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
       },
       yAxis: {
         type: "category",
-        axisLine: { show: false },
-        axisLabel: { show: false },
-        axisTick: { show: false },
+        name: yAxisLabel,
+        axisLine: { show: true },
+        axisLabel: { show: true },
+        axisTick: { show: true },
         splitLine: { show: false },
-        data: ["ten", "nine", "eight", "seven", "six", "five", "four", "three", "two", "one"],
+        data: bins,
       },
       series: [
         {
-          name: "Cost",
+          name: "Mean",
           type: "bar",
-          stack: "Total",
           label: {
             show: true,
-            formatter: "{b}",
+            position: "right",
+            color: "#1976d2",
+            formatter: function (params) {
+              const v = data.vals[params.dataIndex];
+              return v && typeof v === "object" ? v.me : v;
+            },
           },
-          data: [
-            { value: -0.07, label: labelRight },
-            { value: -0.09, label: labelRight },
-            0.2,
-            0.44,
-            { value: -0.23, label: labelRight },
-            0.08,
-            { value: -0.17, label: labelRight },
-            0.47,
-            { value: -0.36, label: labelRight },
-            0.18,
-          ],
+          data: meData,
+          itemStyle: {
+            color: "#1976d2",
+          },
+        },
+        {
+          name: "Standard Deviation",
+          type: "bar",
+          label: {
+            show: true,
+            position: "right",
+            color: "#ff9800",
+            formatter: function (params) {
+              const v = data.vals[params.dataIndex];
+              return v && typeof v === "object" ? v.sd : "";
+            },
+          },
+          data: sdData,
+          itemStyle: {
+            color: "#ff9800",
+          },
         },
       ],
     };

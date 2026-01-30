@@ -175,18 +175,19 @@ function plotVDPHR(small_pie_hr, data_hr) {
     const normal = Number(data_hr.Normal) || 0;
     const brady = Number(data_hr.Bradycardia) || 0;
     const tachy = Number(data_hr.Tachycardia) || 0;
-
+    const total = Number(data_hr.Total) || 0;
     const chart = echarts.getInstanceByDom(small_pie_hr) || echarts.init(small_pie_hr, null, { renderer: "canvas" });
 
     const option = {
-      // title: {
-      //   text: "Heart Rate",
-      //   left: "center",
-      //   top: 0,
-      //   textStyle: {
-      //     fontSize: 12,
-      //   },
-      // },
+      title: {
+        text: `Total: ${total}`,
+        left: "center",
+        top: "center",
+        textStyle: {
+          fontSize: 14,
+          fontWeight: "normal",
+        },
+      },
       tooltip: {
         trigger: "item",
         formatter: "{b}: {c} ({d}%)",
@@ -236,18 +237,20 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
 
     const normal = Number(data_spo2.Normal) || 0;
     const low = Number(data_spo2.Low) || 0;
-
+    const total = Number(data_spo2.Total) || 0;
     const chart = echarts.getInstanceByDom(small_pie_spo2) || echarts.init(small_pie_spo2, null, { renderer: "canvas" });
 
     const option = {
-      // title: {
-      //   text: "SpO₂",
-      //   left: "center",
-      //   top: 0,
-      //   textStyle: {
-      //     fontSize: 12,
-      //   },
-      // },
+      title: {
+        text: `Total: ${total}`,
+        left: "center",
+        top: "center",
+
+        textStyle: {
+          fontSize: 14,
+          fontWeight: "normal",
+        },
+      },
       tooltip: {
         trigger: "item",
         formatter: "{b}: {c} ({d}%)",
@@ -297,18 +300,20 @@ function plotVDPRR(small_pie_rr, data_rr) {
     const eupnea = Number(data_rr.Eupnea) || 0;
     const brady = Number(data_rr.Bradypnea) || 0;
     const tachy = Number(data_rr.Tachypnea) || 0;
-
+    const total = Number(data_rr.Total) || 0;
     const chart = echarts.getInstanceByDom(small_pie_rr) || echarts.init(small_pie_rr, null, { renderer: "canvas" });
 
     const option = {
-      // title: {
-      //   text: "Respiration Rate",
-      //   left: "center",
-      //   top: 0,
-      //   textStyle: {
-      //     fontSize: 12,
-      //   },
-      // },
+      title: {
+        text: `Total: ${total}`,
+        left: "center",
+        top: "center",
+
+        textStyle: {
+          fontSize: 14,
+          fontWeight: "normal",
+        },
+      },
       tooltip: {
         trigger: "item",
         formatter: "{b}: {c} ({d}%)",
@@ -360,18 +365,20 @@ function plotVDPBP(small_pie_bp, data_bp) {
   const elev = Number(data_bp.Elevated) || 0;
   const high1 = Number(data_bp["High (1)"]) || 0;
   const high2 = Number(data_bp["High (2)"]) || 0;
-
+  const Total = Number(data_bp.Total) || 0;
   const chart = echarts.getInstanceByDom(small_pie_bp) || echarts.init(small_pie_bp, null, { renderer: "canvas" });
 
   const option = {
-    // title: {
-    //   text: "Blood Pressure",
-    //   left: "center",
-    //   top: 0,
-    //   textStyle: {
-    //     fontSize: 12,
-    //   },
-    // },
+    title: {
+      text: `Total: ${Total}`,
+      left: "center",
+      top: "center",
+
+      textStyle: {
+        fontSize: 14,
+        fontWeight: "normal",
+      },
+    },
     tooltip: {
       trigger: "item",
       formatter: "{b}: {c} ({d}%)",

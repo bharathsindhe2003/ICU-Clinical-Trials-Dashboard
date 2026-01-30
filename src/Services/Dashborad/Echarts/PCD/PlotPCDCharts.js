@@ -7,23 +7,19 @@ function plotPCDNOP(main_pie, data_nop) {
     const male = Number(data_nop.Male) || 0;
     const female = Number(data_nop.Female) || 0;
 
-    // const total = male + female;
+    const total = Number(data_nop.Total) || 0;
 
     const chart = echarts.getInstanceByDom(main_pie) || echarts.init(main_pie, null, { renderer: "canvas" });
 
     const option = {
-      // title: {
-      //   text: "Patients by Sex",
-      //   // subtext: total ? `Total: ${total}` : "",
-      //   left: "center",
-      //   top: 5,
-      //   textStyle: {
-      //     fontSize: 14,
-      //   },
-      //   subtextStyle: {
-      //     fontSize: 11,
-      //   },
-      // },
+      title: {
+        text: `Total: ${total}`,
+        left: "center",
+        top: "center",
+        textStyle: {
+          fontSize: 14,
+        },
+      },
       tooltip: {
         trigger: "item",
         formatter: "{b}: {c} ({d}%)",
@@ -76,7 +72,6 @@ function plotPCDADMF(main_bar, data_adm, data_adf) {
 
     const maleValues = ageBands.map((band) => Number(data_adm[band]) || 0);
     const femaleValues = ageBands.map((band) => Number(data_adf[band]) || 0);
-
     const chart = echarts.getInstanceByDom(main_bar) || echarts.init(main_bar, null, { renderer: "canvas" });
 
     const option = {
