@@ -58,7 +58,7 @@ function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
         top: "15%",
         left: "5%",
         right: "3%",
-        bottom: "3%",
+        bottom: "10%",
         containLabel: true,
       },
       xAxis: {
@@ -184,7 +184,7 @@ function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
         top: "15%",
         left: "5%",
         right: "3%",
-        bottom: "3%",
+        bottom: "10%",
         containLabel: true,
       },
       xAxis: {
