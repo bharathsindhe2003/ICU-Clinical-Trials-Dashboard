@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import * as echarts from "echarts";
+import TableComponent from "./TableComponent";
 
-export default function PLotVDA({ id, isVisible = true }) {
+export default function PLotVDA({ id, data, isVisible = true }) {
   useEffect(() => {
     function resizeCharts() {
-      if (!isVisible) return;
-
       for (let i = 1; i <= 4; i += 1) {
         const el = document.getElementById(id + i);
         if (!el) continue;
@@ -18,7 +17,7 @@ export default function PLotVDA({ id, isVisible = true }) {
       }
     }
 
-    // Initial sizing when becoming visible
+    // Initial sizing
     resizeCharts();
 
     // Resize on window size changes
@@ -29,11 +28,8 @@ export default function PLotVDA({ id, isVisible = true }) {
   }, [id, isVisible]);
 
   return (
-    <Box
-      id={id}
-      sx={{
-        display: isVisible ? "block" : "none",
-      }}>
+    <Box id={id} sx={{ display: "block" }}>
+      <TableComponent data={data} />
       <Box
         sx={{
           display: "grid",

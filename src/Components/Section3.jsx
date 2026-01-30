@@ -1,11 +1,13 @@
 import Box from "@mui/material/Box";
-import Dropdown from "./UI/DropDown";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import Heading from "./UI/Heading";
 import PLotVDA from "./UI/PlotVDA";
-import TableComponent from "./UI/TableComponent";
 import LastUpdated from "./UI/LastUpdated";
 export default function Section3({ selectedVital, onVitalChange, vdaMetrics, lastUpdated }) {
   const vitals = ["HR", "SPO2", "RR", "SBP", "DBP"];
+  const currentIndex = Math.max(0, vitals.indexOf(selectedVital));
+
   return (
     <Box
       id="section3"
@@ -23,7 +25,6 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics, las
         boxShadow: 4,
         borderRadius: 2,
       }}>
-      {/* Section heading on top border */}
       <Box
         sx={{
           position: "absolute",
@@ -34,6 +35,7 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics, las
           bgcolor: "background.paper",
           borderRadius: 2,
         }}>
+        {/* First box: heading */}
         <Heading text="Vitals accuracy" size="h6" />
       </Box>
       {/* Row 1: single pie chart */}
@@ -49,7 +51,7 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics, las
           borderRadius: 2,
           p: 2,
         }}>
-        <Box sx={{ width: "100%", textAlign: "center", alignItems: "center" }}>
+        <Box sx={{ width: "100%", textAlign: "center", alignItems: "center", position: "relative" }}>
           <Box
             sx={{
               mb: 2,
@@ -59,39 +61,67 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics, las
               alignItems: "center",
               gap: 2,
             }}>
-            <Box sx={{ flex: 1, maxWidth: "50%" }}>
-              <Dropdown selectedVital={selectedVital} onVitalChange={onVitalChange} vitals={vitals} />
-            </Box>
-            <Box sx={{ flex: 1, maxWidth: "50%" }}>
-              <TableComponent
-                data={
-                  selectedVital === "HR"
-                    ? vdaMetrics?.HR
-                    : selectedVital === "SPO2"
-                      ? vdaMetrics?.SPO2
-                      : selectedVital === "RR"
-                        ? vdaMetrics?.RR
-                        : selectedVital === "SBP"
-                          ? vdaMetrics?.SBP
-                          : selectedVital === "DBP"
-                            ? vdaMetrics?.DBP
-                            : null
-                }
-              />
-            </Box>
+            {/* spacer to keep layout stable; tabs are positioned overlapping the border */}
+            <Box sx={{ flex: 1 }} />
           </Box>
+          {/* Centered tabs overlapping the border of this inner container */}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              bgcolor: "background.paper",
+              px: 1,
+              borderRadius: 2,
+              zIndex: 3,
+              boxShadow: 0,
+            }}>
+            <Tabs
+              value={currentIndex}
+              onChange={(_, newIndex) => {
+                const val = vitals[newIndex] ?? vitals[0];
+                onVitalChange({ target: { value: val } });
+              }}
+              variant="scrollable"
+              scrollButtons="auto"
+              aria-label="Vitals Tabs">
+              {vitals.map((vital) => (
+                <Tab key={vital} label={vital} />
+              ))}
+            </Tabs>
+          </Box>
+          <Box sx={{ height: 28 }} />
           <Box
             id="VDA"
             sx={{
               width: "100%",
-            }}
-          />
-          {/* Render all vitals' plots so their DOM nodes always exist; toggle visibility via selectedVital */}
-          <PLotVDA id={"VDAHR"} isVisible={selectedVital === "HR"} />
-          <PLotVDA id={"VDASPO2"} isVisible={selectedVital === "SPO2"} />
-          <PLotVDA id={"VDARR"} isVisible={selectedVital === "RR"} />
-          <PLotVDA id={"VDASBP"} isVisible={selectedVital === "SBP"} />
-          <PLotVDA id={"VDADBP"} isVisible={selectedVital === "DBP"} />
+              overflow: "hidden",
+            }}>
+            <Box
+              sx={{
+                display: "flex",
+                width: `${vitals.length * 100}%`,
+                transform: `translateX(-${currentIndex * (100 / vitals.length)}%)`,
+                transition: "transform 350ms ease",
+              }}>
+              <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
+                <PLotVDA id={"VDAHR"} data={vdaMetrics?.HR} isVisible={selectedVital === "HR"} />
+              </Box>
+              <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
+                <PLotVDA id={"VDASPO2"} data={vdaMetrics?.SPO2} isVisible={selectedVital === "SPO2"} />
+              </Box>
+              <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
+                <PLotVDA id={"VDARR"} data={vdaMetrics?.RR} isVisible={selectedVital === "RR"} />
+              </Box>
+              <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
+                <PLotVDA id={"VDASBP"} data={vdaMetrics?.SBP} isVisible={selectedVital === "SBP"} />
+              </Box>
+              <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
+                <PLotVDA id={"VDADBP"} data={vdaMetrics?.DBP} isVisible={selectedVital === "DBP"} />
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Box>{" "}
       <LastUpdated lastUpdated={lastUpdated} />
