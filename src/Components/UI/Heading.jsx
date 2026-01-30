@@ -1,8 +1,8 @@
 import Typography from "@mui/material/Typography";
 
-export default function Heading({ text }) {
+export default function Heading({ text, size }) {
   return (
-    <Typography variant="h6" component="div" gutterBottom>
+    <Typography variant={size} component="div" gutterBottom>
       {text}
     </Typography>
   );

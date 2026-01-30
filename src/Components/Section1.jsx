@@ -29,8 +29,9 @@ export default function Section1({ lastUpdated }) {
           transform: "translate(-50%, -50%)",
           px: 1.5,
           bgcolor: "background.paper",
+          borderRadius: 2,
         }}>
-        <Heading text="Section 1: Vital Data Points" />
+        <Heading text="Clinical Trial Progress" size="h5" />
       </Box>
       {/* Row 1 & 2: side by side (30% / 70%) */}
       <Box
@@ -61,12 +62,13 @@ export default function Section1({ lastUpdated }) {
               sx={{
                 position: "absolute",
                 top: 0,
+                borderRadius: 2,
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 px: 1.5,
                 bgcolor: "background.paper",
               }}>
-              <Heading text="Completion of Trial" />
+              <Heading text="Trial Completion Status" size="h6" />
             </Box>
             <Box
               id="VDPCOT"
@@ -106,8 +108,9 @@ export default function Section1({ lastUpdated }) {
                 transform: "translate(-50%, -50%)",
                 px: 1.5,
                 bgcolor: "background.paper",
+                borderRadius: 2,
               }}>
-              <Heading text="Vital Collection" />
+              <Heading text="Trial Progression" size="h6" />
             </Box>
             <Box
               id="VDPVC"
@@ -144,8 +147,9 @@ export default function Section1({ lastUpdated }) {
               transform: "translate(-50%, -50%)",
               px: 1.5,
               bgcolor: "background.paper",
+              borderRadius: 2,
             }}>
-            <Heading text="For HR, SPO2, RR, BP" />
+            <Heading text="Vitals distribution" size="h6" />
           </Box>
           <Box
             sx={{

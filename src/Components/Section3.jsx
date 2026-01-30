@@ -9,20 +9,31 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics }) {
   return (
     <Box
       sx={{
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         gap: 2,
         p: 2,
+        pt: 4,
         mb: 2,
-        border: 0,
+        border: 1,
+        borderColor: "#b3e5fc",
         background: "linear-gradient(135deg, #ffffff 0%, #e0f7fa 60%, #ffffff 100%)",
-
         boxShadow: 4,
         borderRadius: 2,
       }}>
-      {/* Row 0: heading */}
-      <Box sx={{ textAlign: "center" }}>
-        <Heading text="Section 3: Vitals accuracy" />
+      {/* Section heading on top border */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          px: 1.5,
+          bgcolor: "background.paper",
+          borderRadius: 2,
+        }}>
+        <Heading text="Vitals accuracy" size="h6" />
       </Box>
       {/* Row 1: single pie chart */}
       <Box

@@ -73,6 +73,7 @@ function plotVDPCOT(main_pie, { tgt, min_c }) {
           name: "Completion",
           type: "pie",
           radius: ["60%", "85%"],
+          center: ["50%", "50%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -122,10 +123,10 @@ function plotVDPVC(main_bar, { time_dist }) {
     const chart = echarts.getInstanceByDom(main_bar) || echarts.init(main_bar, null, { renderer: "canvas" });
 
     const option = {
-      title: {
-        text: "Vitals Collected Over Weeks",
-        left: "center",
-      },
+      // title: {
+      //   text: "Vitals Collected Over Weeks",
+      //   left: "center",
+      // },
       tooltip: {
         trigger: "axis",
         axisPointer: {
@@ -199,7 +200,7 @@ function plotVDPHR(small_pie_hr, data_hr) {
           name: "Heart Rate",
           type: "pie",
           radius: ["60%", "85%"],
-          // center: ["65%", "55%"],
+          center: ["50%", "50%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -260,7 +261,7 @@ function plotVDPSPO2(small_pie_spo2, data_spo2) {
           name: "SpO₂",
           type: "pie",
           radius: ["60%", "85%"],
-          // center: ["65%", "55%"],
+          center: ["50%", "50%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -321,7 +322,7 @@ function plotVDPRR(small_pie_rr, data_rr) {
           name: "Respiration Rate",
           type: "pie",
           radius: ["60%", "85%"],
-          // center: ["65%", "55%"],
+          center: ["50%", "50%"],
           avoidLabelOverlap: false,
           label: {
             show: false,
@@ -384,7 +385,7 @@ function plotVDPBP(small_pie_bp, data_bp) {
         name: "Blood Pressure",
         type: "pie",
         radius: ["60%", "85%"],
-        // center: ["65%", "55%"],
+        center: ["50%", "50%"],
         avoidLabelOverlap: false,
         label: {
           show: false,

@@ -27,8 +27,9 @@ export default function Section2({ lastUpdated }) {
           transform: "translate(-50%, -50%)",
           px: 1.5,
           bgcolor: "background.paper",
+          borderRadius: 2,
         }}>
-        <Heading text="Section 2: Patient Cohort Details" />
+        <Heading text="Trial Cohort" size="h5" />
       </Box>
       {/* Row 1 & 2: side by side (30% / 70%) */}
       <Box
@@ -63,8 +64,9 @@ export default function Section2({ lastUpdated }) {
                 transform: "translate(-50%, -50%)",
                 px: 1.5,
                 bgcolor: "background.paper",
+                borderRadius: 2,
               }}>
-              <Heading text="Number of Patients" />
+              <Heading text="Cohort size" size="h6" />
             </Box>
             <Box
               id="PCDNOP"
@@ -104,8 +106,9 @@ export default function Section2({ lastUpdated }) {
                 transform: "translate(-50%, -50%)",
                 px: 1.5,
                 bgcolor: "background.paper",
+                borderRadius: 2,
               }}>
-              <Heading text="Age Distribution for Male & Female" />
+              <Heading text="Cohort age distribution" size="h6" />
             </Box>
             <Box
               id="PCDADMF"
