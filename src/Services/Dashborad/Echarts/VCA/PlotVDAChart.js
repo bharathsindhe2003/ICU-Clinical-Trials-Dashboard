@@ -61,6 +61,24 @@ function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
         bottom: "10%",
         containLabel: true,
       },
+      dataZoom: [
+        {
+          type: "inside",
+          xAxisIndex: 0,
+        },
+        {
+          type: "slider",
+          xAxisIndex: 0,
+        },
+        {
+          type: "inside",
+          yAxisIndex: 0,
+        },
+        {
+          type: "slider",
+          yAxisIndex: 0,
+        },
+      ],
       xAxis: {
         type: "value",
         name: xAxisLabel,
@@ -187,6 +205,24 @@ function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
         bottom: "10%",
         containLabel: true,
       },
+      dataZoom: [
+        {
+          type: "inside",
+          xAxisIndex: 0,
+        },
+        {
+          type: "slider",
+          xAxisIndex: 0,
+        },
+        {
+          type: "inside",
+          yAxisIndex: 0,
+        },
+        {
+          type: "slider",
+          yAxisIndex: 0,
+        },
+      ],
       xAxis: {
         type: "value",
         name: xAxisLabel,

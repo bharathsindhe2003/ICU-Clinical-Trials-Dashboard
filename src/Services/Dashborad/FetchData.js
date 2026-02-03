@@ -1,5 +1,6 @@
 import { database } from "../Firebase/config";
 import { ref, query, limitToLast, get } from "firebase/database";
+import { orderByKey } from "firebase/database";
 import * as echarts from "echarts";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
 import { plotPCDNOP, plotPCDADMF } from "./Echarts/PCD/PlotPCDcharts.js";
@@ -7,8 +8,7 @@ import { plotVDA1, plotVDA2, plotVDA3, plotVDA4 } from "./Echarts/VCA/PlotVDACha
 export default async function FetchDatafromFB(setSelectedVital, setLastUpdated) {
   try {
     const dashStatsRef = ref(database, "/dash_stats");
-    const dashStatsQuery = query(dashStatsRef, limitToLast(1));
-
+    const dashStatsQuery = query(dashStatsRef, orderByKey(), limitToLast(1));
     const snapshot = await get(dashStatsQuery);
     const snapshotVal = snapshot.val();
     const maxKey = Object.keys(snapshotVal)[0]; // since we limited to last 1, this is the only key
@@ -16,6 +16,7 @@ export default async function FetchDatafromFB(setSelectedVital, setLastUpdated) 
 
     // Firebase key looks like a Unix timestamp in seconds (e.g., 1769587560)
     const tsSeconds = Number(maxKey);
+    console.log("Timestamp Seconds:", maxKey, tsSeconds);
     let formatted = String(maxKey);
 
     if (!Number.isNaN(tsSeconds)) {

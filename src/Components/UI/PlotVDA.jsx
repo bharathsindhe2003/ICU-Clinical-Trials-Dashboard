@@ -52,7 +52,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
         {layout.map((item) => (
           <Box
             key={item.idNumber}
-            sx={{ position: "relative", minWidth: 0, minHeight: { xs: 200, sm: 240 }, border: 1, borderRadius: 2, borderColor: "#bbdefb", mb: item.idNumber === 1 || item.idNumber === 2 ? 1 : 0 }}>
+            sx={{ position: "relative", minWidth: 0, minHeight: { xs: 400, sm: 400 }, border: 1, borderRadius: 2, borderColor: "#bbdefb", mb: item.idNumber === 1 || item.idNumber === 2 ? 1 : 0 }}>
             <Box
               sx={{
                 position: "absolute",
@@ -70,7 +70,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
               className="echart-container"
               sx={{
                 width: "100%",
-                height: { xs: 280, sm: 300 },
+                height: { xs: 400, sm: 400 },
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
