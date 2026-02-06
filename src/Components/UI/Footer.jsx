@@ -19,7 +19,7 @@ export default function Footer() {
         © Copyright Samasti Health Technologies Ltd. All Rights Reserved
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        Version 0.1.4
+        Version 0.1.5
       </Typography>
     </Box>
   );

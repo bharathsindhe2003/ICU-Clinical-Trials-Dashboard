@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-export default function Navbar() {
+export default function Navbar({ DISPLAY_MODE }) {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("section1");
 
@@ -83,67 +83,205 @@ export default function Navbar() {
       </Box>
       {/* Section tabs */}
       <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 1, alignItems: "center" }}>
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={() => {
-            setActiveSection("section1");
-            scrollToSection("section1");
-          }}
-          sx={{
-            textTransform: "none",
-            fontWeight: 600,
-            px: 1.5,
-            ...(activeSection === "section1" && {
-              boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
-              borderRadius: 4,
-              backgroundColor: "#ffffff",
-              color: "#00458b",
-            }),
-          }}>
-          Overview
-        </Button>
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={() => {
-            setActiveSection("section2");
-            scrollToSection("section2");
-          }}
-          sx={{
-            textTransform: "none",
-            fontWeight: 600,
-            px: 1.5,
-            ...(activeSection === "section2" && {
-              boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
-              borderRadius: 4,
-              backgroundColor: "#ffffff",
-              color: "#00458b",
-            }),
-          }}>
-          Cohort
-        </Button>
-        <Button
-          variant="text"
-          color="inherit"
-          onClick={() => {
-            setActiveSection("section3");
-            scrollToSection("section3");
-          }}
-          sx={{
-            textTransform: "none",
-            fontWeight: 600,
-            px: 1.5,
-            ...(activeSection === "section3" && {
-              boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
-              borderRadius: 4,
-              backgroundColor: "#ffffff",
-              color: "#00458b",
-            }),
-          }}>
-          Accuracy
-
-        </Button>
+        {DISPLAY_MODE === 0 || DISPLAY_MODE === 1 ? (
+          <>
+            {/* OverView Button */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section1");
+                scrollToSection("section1");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section1" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Overview
+            </Button>
+            {/* Cohort Button  */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section2");
+                scrollToSection("section2");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section2" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Cohort
+            </Button>
+            {/* Accuracy Button */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section3");
+                scrollToSection("section3");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section3" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Accuracy
+            </Button>
+          </>
+        ) : DISPLAY_MODE === 2 ? (
+          <>
+            {/* Accuracy Button */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section3");
+                scrollToSection("section3");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section3" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Accuracy
+            </Button>
+            {/* Overview Button */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section1");
+                scrollToSection("section1");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section1" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Overview
+            </Button>
+            {/* Cohort Button  */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section2");
+                scrollToSection("section2");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section2" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Cohort
+            </Button>
+          </>
+        ) : DISPLAY_MODE === 3 ? (
+          <>
+            {/* Overview Button */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section1");
+                scrollToSection("section1");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section1" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Overview
+            </Button>
+            {/* Cohort Button  */}
+            {/* <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section2");
+                scrollToSection("section2");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section2" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Cohort
+            </Button> */}
+            {/* Accuracy Button */}
+            <Button
+              variant="text"
+              color="inherit"
+              onClick={() => {
+                setActiveSection("section3");
+                scrollToSection("section3");
+              }}
+              sx={{
+                textTransform: "none",
+                fontWeight: 600,
+                px: 1.5,
+                ...(activeSection === "section3" && {
+                  boxShadow: "0 6px 22px -6px rgba(0,69,139,0.34)",
+                  borderRadius: 4,
+                  backgroundColor: "#ffffff",
+                  color: "#00458b",
+                }),
+              }}>
+              Accuracy
+            </Button>
+          </>
+        ) : null}
       </Box>
       <Button
         variant="outlined"

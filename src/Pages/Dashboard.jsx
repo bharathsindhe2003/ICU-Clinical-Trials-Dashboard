@@ -1,56 +1,16 @@
-import { useState, useEffect } from "react";
-import FetchExcel from "../Services/Dashborad/FetchExcel";
-import FetchDatafromFB from "../Services/Dashborad/FetchData";
-
-// MUI Imports
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Section1 from "../Components/Section1";
-import Section2 from "../Components/Section2";
-import Section3 from "../Components/Section3";
-import Navbar from "../Components/UI/Navbar";
-import Footer from "../Components/UI/Footer";
-export default function Dashboard() {
-  // const [excelData, setExcelData] = useState([]);
-
-  // useEffect(() => {
-  //   async function loadData() {
-  //     const result = await FetchExcel();
-  //     setExcelData(result);
-  //   }
-  //   loadData();
-  // }, []); // run only once when the component mounts
-
-  const [vdaMetrics, setVdaMetrics] = useState(null);
-  const [slectedVital, setSelectedVital] = useState("HR");
-  const [lastUpdated, setLastUpdated] = useState(null);
-  useEffect(() => {
-    async function getExcelData() {
-      await FetchDatafromFB(setVdaMetrics, setLastUpdated);
-    }
-    getExcelData();
-  }, []);
-
-  const handleVitalChange = (event) => {
-    setSelectedVital(event.target.value);
-  };
-  return (
-    <Box
-      sx={{
-        p: 2,
-        g: 2,
-        minHeight: "100vh",
-        background: "linear-gradient(135deg, #e3f2fd 0%, #f3f7fb 50%, #e0f7fa 100%)",
-      }}>
-      {/* section 0: heading*/}
-      <Navbar />
-      {/* section 1 */}
-      <Section1 lastUpdated={lastUpdated} />
-      {/* section 2 */}
-      <Section2 lastUpdated={lastUpdated} />
-      {/* section 3 */}
-      <Section3 selectedVital={slectedVital} onVitalChange={handleVitalChange} vdaMetrics={vdaMetrics} lastUpdated={lastUpdated} />
-      <Footer />
-    </Box>
-  );
+import Page0 from "../Components/Page0";
+import Page1 from "../Components/Page1";
+import Page2 from "../Components/Page2";
+import Page3 from "../Components/Page3";
+export default function Dashboard({ DISPLAY_MODE }) {
+  console.log(DISPLAY_MODE);
+  return DISPLAY_MODE === 0 ? (
+    <Page0 DISPLAY_MODE={DISPLAY_MODE} />
+  ) : DISPLAY_MODE === 1 ? (
+    <Page1 DISPLAY_MODE={DISPLAY_MODE} />
+  ) : DISPLAY_MODE === 2 ? (
+    <Page2 DISPLAY_MODE={DISPLAY_MODE} />
+  ) : DISPLAY_MODE === 3 ? (
+    <Page3 DISPLAY_MODE={DISPLAY_MODE} />
+  ) : null;
 }

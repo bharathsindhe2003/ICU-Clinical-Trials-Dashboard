@@ -1,13 +1,14 @@
-import { database } from "../Firebase/config";
+import { database } from "../Firebase/config.js";
 import { ref, query, limitToLast, get } from "firebase/database";
 import { orderByKey } from "firebase/database";
 import * as echarts from "echarts";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
 import { plotPCDNOP, plotPCDADMF } from "./Echarts/PCD/PlotPCDcharts.js";
 import { plotVDA1, plotVDA2, plotVDA3, plotVDA4 } from "./Echarts/VCA/PlotVDAChart.js";
-export default async function FetchDatafromFB(setSelectedVital, setLastUpdated) {
+export default async function FetchDatafromFB(setSelectedVital, setLastUpdated, DISPLAY_MODE) {
   try {
-    const dashStatsRef = ref(database, "/dash_stats");
+    const path = DISPLAY_MODE === 0 ? "/dash_stats_1" : "/dash_stats";
+    const dashStatsRef = ref(database, path);
     const dashStatsQuery = query(dashStatsRef, orderByKey(), limitToLast(1));
     const snapshot = await get(dashStatsQuery);
     const snapshotVal = snapshot.val();

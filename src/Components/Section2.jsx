@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import Heading from "./UI/Heading";
 import LastUpdated from "./UI/LastUpdated";
-export default function Section2({ lastUpdated }) {
+
+export default function Section2({ DISPLAY_MODE, lastUpdated }) {
   return (
     <Box
       id="section2"
@@ -12,7 +13,7 @@ export default function Section2({ lastUpdated }) {
         gap: 2,
         p: 2,
         pt: 4,
-        mb: 4,
+        mb: DISPLAY_MODE === 2 ? 2 : 4,
         background: "linear-gradient(135deg, #ffffff 0%, #e3f2fd 60%, #ffffff 100%)",
         border: 1,
         borderColor: "#b2dfdb",

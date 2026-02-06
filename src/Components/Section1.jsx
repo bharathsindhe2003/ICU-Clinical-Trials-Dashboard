@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 // Custom Components
 import Heading from "./UI/Heading";
 import LastUpdated from "./UI/LastUpdated";
-export default function Section1({ lastUpdated }) {
+export default function Section1({ DISPLAY_MODE, lastUpdated }) {
   return (
     <Box
       id="section1"
@@ -36,95 +36,99 @@ export default function Section1({ lastUpdated }) {
       </Box>
       <Box sx={{ mb: 0.5 }} />
       {/* Row 1 & 2: side by side (30% / 70%) */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          gap: 2,
-        }}>
-        {/* First: 30% width */}
+      {DISPLAY_MODE === 3 ? (
+        <></>
+      ) : (
         <Box
           sx={{
-            flexBasis: { xs: "100%", md: "20%" },
-            flexGrow: 0,
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            gap: 2,
           }}>
+          {/* First: 30% width */}
           <Box
             sx={{
-              position: "relative",
-              border: 1,
-              borderColor: "#bbdefb",
-              borderRadius: 2,
-              // p: 2,
-              pt: 2,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              flexBasis: { xs: "100%", md: "20%" },
+              flexGrow: 0,
             }}>
             <Box
               sx={{
-                position: "absolute",
-                top: 0,
+                position: "relative",
+                border: 1,
+                borderColor: "#bbdefb",
                 borderRadius: 2,
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                px: 1.5,
-                bgcolor: "background.paper",
+                // p: 2,
+                pt: 2,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}>
-              <Heading text="Trial Completion Status" size="subtitle1" type="normal" />
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  borderRadius: 2,
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  px: 1.5,
+                  bgcolor: "background.paper",
+                }}>
+                <Heading text="Trial Completion Status" size="subtitle1" type="normal" />
+              </Box>
+              <Box
+                id="VDPCOT"
+                className="echart-container"
+                sx={{
+                  width: "100%",
+                  minHeight: { xs: 200, sm: 240 },
+                }}
+              />
             </Box>
-            <Box
-              id="VDPCOT"
-              className="echart-container"
-              sx={{
-                width: "100%",
-                minHeight: { xs: 200, sm: 240 },
-              }}
-            />
           </Box>
-        </Box>
 
-        {/* Second: 70% width */}
-        <Box
-          sx={{
-            flexBasis: { xs: "100%", md: "80%" },
-            flexGrow: 0,
-            minWidth: 0,
-          }}>
+          {/* Second: 70% width */}
           <Box
             sx={{
-              position: "relative",
-              border: 1,
-              borderColor: "#bbdefb",
-              borderRadius: 2,
-              // p: 2,
-              pt: 2,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              flexBasis: { xs: "100%", md: "80%" },
+              flexGrow: 0,
+              minWidth: 0,
             }}>
             <Box
               sx={{
-                position: "absolute",
-                top: 0,
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                px: 1.5,
-                bgcolor: "background.paper",
+                position: "relative",
+                border: 1,
+                borderColor: "#bbdefb",
                 borderRadius: 2,
+                // p: 2,
+                pt: 2,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}>
-              <Heading text="Trial Progression" size="subtitle1" type="normal" />
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  px: 1.5,
+                  bgcolor: "background.paper",
+                  borderRadius: 2,
+                }}>
+                <Heading text="Trial Progression" size="subtitle1" type="normal" />
+              </Box>
+              <Box
+                id="VDPVC"
+                className="echart-container"
+                sx={{
+                  minHeight: { xs: 200, sm: 240 },
+                  width: "100%",
+                }}
+              />
             </Box>
-            <Box
-              id="VDPVC"
-              className="echart-container"
-              sx={{
-                minHeight: { xs: 200, sm: 240 },
-                width: "100%",
-              }}
-            />
           </Box>
         </Box>
-      </Box>
+      )}
       <Box sx={{ mb: 0.5 }} />
       {/* Row 3: four pie charts in a single box with centered legend-style heading */}
       <Box

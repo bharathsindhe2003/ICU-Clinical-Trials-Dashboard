@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 import Heading from "./UI/Heading";
 import PLotVDA from "./UI/PlotVDA";
 import LastUpdated from "./UI/LastUpdated";
-export default function Section3({ selectedVital, onVitalChange, vdaMetrics, lastUpdated }) {
+export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, vdaMetrics, lastUpdated }) {
   const vitals = ["HR", "SPO2", "RR", "SBP", "DBP"];
   const currentIndex = Math.max(0, vitals.indexOf(selectedVital));
 
@@ -18,7 +18,7 @@ export default function Section3({ selectedVital, onVitalChange, vdaMetrics, las
         gap: 2,
         p: 2,
         pt: 4,
-        mb: 2,
+        mb: DISPLAY_MODE == 2 ? 4 : 2,
         border: 1,
         borderColor: "#b3e5fc",
         background: "linear-gradient(135deg, #ffffff 0%, #e0f7fa 60%, #ffffff 100%)",

@@ -49,16 +49,35 @@ function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
           type: "cross",
         },
         formatter(params) {
-          const pt = params.find((p) => p.seriesType === "scatter");
-          if (!pt) return "";
-          return `Avg: ${pt.value[0]}<br/>Diff: ${pt.value[1]}`;
+          if (!params || !params.length) return "";
+
+          const lines = [];
+
+          // Group all scatter points (multiple y-values for same x) into one line
+          const scatterPoints = params.filter((p) => p && p.seriesType === "scatter" && p.value);
+
+          if (scatterPoints.length) {
+            const avg = scatterPoints[0].value[0];
+            const diffs = scatterPoints.map((p) => p.value[1]).join(", ");
+            lines.push(`Average: ${avg},<br/>Difference: ${diffs}`);
+          }
+
+          // Lines (mean and limits)
+          params
+            .filter((p) => p && p.seriesType === "line" && p.value != null)
+            .forEach((p) => {
+              const yVal = Array.isArray(p.value) ? p.value[1] : p.value;
+              lines.push(`<b>${p.seriesName}</b>: ${yVal}`);
+            });
+
+          return lines.join("<br/>");
         },
       },
       grid: {
         top: "15%",
-        left: "5%",
-        right: "3%",
-        bottom: "10%",
+        left: "4%",
+        right: "7%",
+        bottom: "19%",
         containLabel: true,
       },
       dataZoom: [
@@ -175,7 +194,6 @@ function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
       });
 
     if (points.length === 0) return;
-
     const allVals = [...points.map((p) => p[0]), ...points.map((p) => p[1])];
     const minVal = Math.min(...allVals);
     const maxVal = Math.max(...allVals);
@@ -193,16 +211,27 @@ function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
           type: "cross",
         },
         formatter(params) {
-          const pt = params.find((p) => p.seriesType === "scatter");
-          if (!pt) return "";
-          return `Ref: ${pt.value[0]}<br/>Meas: ${pt.value[1]}`;
+          if (!params || !params.length) return "";
+
+          const lines = [];
+
+          // Group all scatter points (multiple y-values for same x) into one line
+          const scatterPoints = params.filter((p) => p && p.seriesType === "scatter" && p.value);
+
+          if (scatterPoints.length) {
+            const ms = scatterPoints[0].value[0];
+            const reg = scatterPoints.map((p) => p.value[1]).join(", ");
+            lines.push(`Measure: ${ms},<br/>Reference: ${reg}`);
+          }
+
+          return lines.join("<br/>");
         },
       },
       grid: {
         top: "15%",
-        left: "5%",
-        right: "3%",
-        bottom: "10%",
+        left: "4%",
+        right: "7%",
+        bottom: "19%",
         containLabel: true,
       },
       dataZoom: [
