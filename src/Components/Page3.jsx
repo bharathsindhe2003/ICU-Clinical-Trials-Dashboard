@@ -5,6 +5,8 @@ import FetchDatafromFB from "../Services/Dashboard/FetchData";
 import Box from "@mui/material/Box";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+
+// Custom UI componentes
 import Section1 from "../Components/Section1";
 // import Section2 from "../Components/Section2";
 import Section3 from "../Components/Section3";

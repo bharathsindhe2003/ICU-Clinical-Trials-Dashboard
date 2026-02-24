@@ -30,11 +30,11 @@ function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
 
     const lowerLimit = data.clf.lloa;
     const upperLimit = data.clf.uloa;
-    console.log("UPPER LOWER", upperLimit, lowerLimit);
+    // console.log("UPPER LOWER", upperLimit, lowerLimit);
 
     const minX = Math.min(...xValues);
     const maxX = Math.max(...xValues);
-    console.log("MIN MAX", minX, maxX);
+    // console.log("MIN MAX", minX, maxX);
 
     const chart = echarts.getInstanceByDom(plot) || echarts.init(plot, null, { renderer: "canvas" });
 

@@ -1,5 +1,6 @@
-import { database } from "../Firebase/config.js";
+import { database, storage } from "../Firebase/config.js";
 import { ref, query, limitToLast, get } from "firebase/database";
+import { ref as storageRef, listAll, getDownloadURL } from "firebase/storage";
 import { orderByKey } from "firebase/database";
 import * as echarts from "echarts";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
@@ -8,16 +9,18 @@ import { plotVDA1, plotVDA2, plotVDA3, plotVDA4 } from "./Echarts/VCA/PlotVDACha
 export default async function FetchDatafromFB(setSelectedVital, setLastUpdated, DISPLAY_MODE) {
   try {
     const path = DISPLAY_MODE === 0 ? "/dash_stats_1" : "/dash_stats";
-    const dashStatsRef = ref(database, path);
-    const dashStatsQuery = query(dashStatsRef, orderByKey(), limitToLast(1));
-    const snapshot = await get(dashStatsQuery);
+    const dashStatsQuery = query(ref(database, path), orderByKey(), limitToLast(1));
+
+    const ecgFolderRef = storageRef(storage, "ecg/");
+    // eslint-disable-next-line no-unused-vars
+    const [snapshot, ecgList] = await Promise.all([get(dashStatsQuery), listAll(ecgFolderRef)]);
+
     const snapshotVal = snapshot.val();
     const maxKey = Object.keys(snapshotVal)[0]; // since we limited to last 1, this is the only key
     const data = snapshotVal[maxKey];
 
     // Firebase key looks like a Unix timestamp in seconds (e.g., 1769587560)
     const tsSeconds = Number(maxKey);
-    console.log("Timestamp Seconds:", maxKey, tsSeconds);
     let formatted = String(maxKey);
 
     if (!Number.isNaN(tsSeconds)) {
@@ -150,7 +153,28 @@ function computeSection2Data(data) {
     console.error("Error in computeSection2Data:", error);
   }
 }
-function computeSection3Data(data, setSelectedVital) {
+async function computeSection3Data(data, setSelectedVital) {
+  async function getPdfUrl(path) {
+    if (!path) return null;
+
+    const cleanPath = path.trim();
+
+    // console.log("🔍 Checking file:", JSON.stringify(cleanPath));
+
+    try {
+      const fileRef = storageRef(storage, cleanPath);
+      const url = await getDownloadURL(fileRef);
+      return url;
+    } catch (e) {
+      if (e.code === "storage/object-not-found") {
+        console.log("❌ File DOES NOT exist:", cleanPath);
+        return null;
+      }
+
+      console.error("🔥 Unexpected error:", e);
+      return null;
+    }
+  }
   try {
     // Plot table data for selected vital
     const VDA_HR = {
@@ -184,12 +208,39 @@ function computeSection3Data(data, setSelectedVital) {
       "P value": data?.acc_metrics?.dbp?.table?.pv,
     };
 
+    // Build VDA_ECG as { Normal: { uuid1: {...}, uuid2: {...} }, ... } with download URLs
+    const VDA_ECG = { Normal: {}, Tachycardia: {}, Bradycardia: {} };
+    const rawECG = data?.acc_metrics?.ecglst || {};
+    const ecgTypes = Object.keys(rawECG);
+    const ecgPromises = [];
+    ecgTypes.forEach((type) => {
+      const uuidData = rawECG[type] || {};
+      const typeText = type === "nrml" ? "Normal" : type === "tcrda" ? "Tachycardia" : type === "brda" ? "Bradycardia" : null;
+      if (!typeText) return;
+      Object.keys(uuidData).forEach((uuid) => {
+        ecgPromises.push(
+          (async () => {
+            const svsPath = uuidData[uuid].svs; // Already includes .pdf
+            const icuPath = uuidData[uuid].icu; // Already includes .pdf
+            console.log("Fetching PDF URLs for", uuid, "SVS:", svsPath, "ICU:", icuPath);
+            const [svsUrl, icuUrl] = await Promise.all([getPdfUrl(svsPath), getPdfUrl(icuPath)]);
+            VDA_ECG[typeText][uuid] = {
+              svs_pdfURL: svsUrl,
+              icu_pdfURL: icuUrl,
+            };
+          })(),
+        );
+      });
+    });
+    await Promise.all(ecgPromises);
+
     setSelectedVital({
       HR: VDA_HR,
       SPO2: VDA_SPO2,
       RR: VDA_RR,
       SBP: VDA_SBP,
       DBP: VDA_DBP,
+      ECG: VDA_ECG,
     });
     // Plot charts
 

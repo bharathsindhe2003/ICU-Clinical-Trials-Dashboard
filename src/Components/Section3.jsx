@@ -4,8 +4,9 @@ import Tab from "@mui/material/Tab";
 import Heading from "./UI/Heading";
 import PLotVDA from "./UI/PlotVDA";
 import LastUpdated from "./UI/LastUpdated";
+import PlotECG from "./UI/PlotECG";
 export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, vdaMetrics, lastUpdated }) {
-  const vitals = ["HR", "SPO2", "RR", "SBP", "DBP"];
+  const vitals = ["HR", "SPO2", "RR", "SBP", "DBP", "ECG"];
   const currentIndex = Math.max(0, vitals.indexOf(selectedVital));
 
   return (
@@ -119,6 +120,9 @@ export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, v
               </Box>
               <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
                 <PLotVDA id={"VDADBP"} data={vdaMetrics?.DBP} isVisible={selectedVital === "DBP"} />
+              </Box>
+              <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
+                <PlotECG data={vdaMetrics?.ECG} isVisible={selectedVital === "ECG"} />
               </Box>
             </Box>
           </Box>
