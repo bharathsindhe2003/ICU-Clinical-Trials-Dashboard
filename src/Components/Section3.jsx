@@ -92,12 +92,13 @@ export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, v
               ))}
             </Tabs>
           </Box>
-          <Box sx={{ height: 28 }} />
+          {/* <Box sx={{ height: 20 }} /> */}
           <Box
             id="VDA"
             sx={{
               width: "100%",
               overflow: "hidden",
+              mt: "2rem",
             }}>
             <Box
               sx={{
@@ -127,7 +128,7 @@ export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, v
             </Box>
           </Box>
         </Box>
-      </Box>{" "}
+      </Box>
       <LastUpdated lastUpdated={lastUpdated} />
     </Box>
   );

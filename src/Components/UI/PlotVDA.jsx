@@ -70,7 +70,7 @@ export default function PLotVDA({ id, data, isVisible = true }) {
               className="echart-container"
               sx={{
                 width: "100%",
-                height: { xs: 400, sm: 400 },
+                height: 400,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
