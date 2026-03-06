@@ -21,8 +21,8 @@ export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, v
       "Medical Regulatory Standard": "IEC 60601-2-27",
       "RMS Error": "< 2bpm",
     },
-    SBP: {},
-    DBP: {},
+    SBP: { NIBP: "ISO 81060-3:2022", "Mean Error": "< +/- 5mmHg", SD: "< 8 mmHg" },
+    DBP: { NIBP: "ISO 81060-3:2022", "Mean Error": "< +/- 5mmHg", SD: "< 8 mmHg" },
   };
   return (
     <Box
