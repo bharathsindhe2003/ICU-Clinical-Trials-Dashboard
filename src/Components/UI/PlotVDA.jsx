@@ -32,22 +32,8 @@ export default function PLotVDA({ id, table_data, data }) {
           gap: 2,
           mt: 2,
         }}>
-        {layout.map((item, idx) => (
-          <Box
-            key={item.idNumber}
-            sx={{
-              position: "relative",
-              mt: 2,
-              minWidth: 0,
-              minHeight: { xs: 400, sm: 400 },
-              border: 1,
-              borderRadius: 2,
-              borderColor: "#bbdefb",
-              ...(idx === layout.length - 1 && {
-                gridColumn: { xs: "auto", sm: "1 / -1" },
-                justifySelf: { xs: "auto", sm: "center" },
-              }),
-            }}>
+        {layout.map((item) => (
+          <Box key={item.idNumber} sx={{ position: "relative", mt: 2, minWidth: 0, minHeight: { xs: 400, sm: 400 }, border: 1, borderRadius: 2, borderColor: "#bbdefb" }}>
             <Box
               sx={{
                 position: "absolute",
