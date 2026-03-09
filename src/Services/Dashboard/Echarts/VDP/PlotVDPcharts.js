@@ -123,6 +123,7 @@ function plotVDPVC(main_bar, { time_dist }) {
         // Array of month short names
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const m = months[date.getMonth()]; // get month short name
+        // const m = date.getMonth() + 1; // get month in number
 
         return `${d}/${m}`;
       };
@@ -163,11 +164,17 @@ function plotVDPVC(main_bar, { time_dist }) {
         name: "Date",
         data: weekLabels,
         axisTick: { alignWithLabel: true },
+        axisLabel: {
+          fontSize: 8,
+        },
       },
       yAxis: {
         type: "value",
         name: "Data Points",
         min: 0,
+        axisLabel: {
+          fontSize: 8,
+        },
       },
       series: [
         {
