@@ -12,17 +12,23 @@ import { useState } from "react";
 // import Tooltip from "@mui/material/Tooltip";
 
 // import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 
 export default function ECG({ pdfData, isVisible }) {
   const [selectedUuid, setSelectedUuid] = useState(null);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState({ svs: false, icu: false });
+  if (!isVisible) return <></>;
+
+  // When there is no data, show a simple message
+  if (!pdfData || Object.keys(pdfData).length === 0) {
+    return <Box>No Data</Box>;
+  }
+
   const uuids = Object.keys(pdfData);
   const PAGE_SIZE = 4;
   const maxPage = Math.ceil(uuids.length / PAGE_SIZE) - 1;
   const visibleUuids = uuids.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
-
-  if (!isVisible || !pdfData) return null;
 
   return (
     <Box sx={{ height: { xs: "70vh", md: "100vh" }, overflowY: "hidden", overflowX: "auto", overscrollBehavior: "contain" }}>

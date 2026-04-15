@@ -20,9 +20,14 @@ export default function Page1({ DISPLAY_MODE }) {
 
   useEffect(() => {
     async function getExcelData() {
-      setLoading(true);
-      await FetchDatafromFB(setVdaMetrics, setLastUpdated, DISPLAY_MODE);
-      setLoading(false);
+      try {
+        setLoading(true);
+        await FetchDatafromFB(setVdaMetrics, setLastUpdated, DISPLAY_MODE);
+      } catch (error) {
+        console.error("Error fetching data from Firebase:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     getExcelData();
   }, [DISPLAY_MODE]);
