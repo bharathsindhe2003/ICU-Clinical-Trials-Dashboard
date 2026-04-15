@@ -37,7 +37,7 @@ export default function PlotECG({ data, isVisible }) {
       </Box>
       {/* Show only the selected ECG type */}
       <Box sx={{ flex: `0 0 ${100 / ecg_type.length}%`, minWidth: 0 }}>
-        <ECG key={ecgTabKey} pdfData={data[selectedECG]} isVisible={true} />
+        <ECG key={ecgTabKey} pdfData={data?.[selectedECG]} isVisible={true} />
       </Box>
     </Box>
   );

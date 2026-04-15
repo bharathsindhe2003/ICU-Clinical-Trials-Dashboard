@@ -1,34 +1,220 @@
-// pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
-// import { Document, Page, pdfjs } from "react-pdf";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useState } from "react";
-// import * as pdfjsLib from "pdfjs-dist";
-// import pdfWorker from "pdfjs-dist/build/pdf.worker.mjs?url";
-// import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 
-// pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
-// import IconButton from "@mui/material/IconButton";
-// import Tooltip from "@mui/material/Tooltip";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+import RotateRightIcon from "@mui/icons-material/RotateRight";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import ZoomOutIcon from "@mui/icons-material/ZoomOut";
+import { useMemo, useState } from "react";
 
-// import pdfWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+const CROP_PRESETS = {
+  fit: { label: "Fit", scale: 1, x: 0, y: 0 },
+  center: { label: "Center crop", scale: 1.2, x: 0, y: 0 },
+  top: { label: "Top crop", scale: 1.35, x: 0, y: 14 },
+  bottom: { label: "Bottom crop", scale: 1.35, x: 0, y: -14 },
+  left: { label: "Left crop", scale: 1.25, x: 10, y: 0 },
+  right: { label: "Right crop", scale: 1.25, x: -10, y: 0 },
+};
+
+function clampZoom(value) {
+  return Math.min(2.5, Math.max(0.8, value));
+}
+
+function PDFViewport({ title, url, type }) {
+  const defaultCropMode = "fit";
+  const defaultZoom = type === 1 ? 2 : 1;
+  const defaultRotation = type === 2 ? -90 : 0;
+  const [loading, setLoading] = useState(Boolean(url));
+  const [zoom, setZoom] = useState(defaultZoom);
+  const [rotation, setRotation] = useState(defaultRotation);
+  const [cropMode, setCropMode] = useState(defaultCropMode);
+
+  const cropPreset = CROP_PRESETS[cropMode] ?? CROP_PRESETS.fit;
+  const effectiveScale = clampZoom(zoom * cropPreset.scale);
+  const transform = useMemo(() => `translate(${cropPreset.x}%, ${cropPreset.y}%) scale(${effectiveScale}) rotate(${rotation}deg)`, [cropPreset.x, cropPreset.y, effectiveScale, rotation]);
+
+  if (!url) {
+    return (
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 360,
+          borderRadius: 3,
+          border: "1px dashed #b3e5fc",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          bgcolor: "#f7fbfd",
+        }}>
+        <Typography variant="body2" color="text.secondary">
+          PDF not available
+        </Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      sx={{
+        flex: 1,
+        minWidth: 0,
+        borderRadius: 3,
+        border: "1px solid #d3edf7",
+        bgcolor: "#f8fcfe",
+        overflow: "hidden",
+      }}>
+      <Stack
+        direction={{ xs: "column", lg: "row" }}
+        spacing={1}
+        sx={{
+          px: 1.5,
+          py: 1,
+          borderBottom: "1px solid #d3edf7",
+          bgcolor: "#eef8fc",
+          alignItems: { xs: "stretch", lg: "center" },
+          justifyContent: "space-between",
+        }}>
+        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+          {title}
+        </Typography>
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center", flexWrap: "wrap" }}>
+          <Tooltip title="Zoom out">
+            <span>
+              <IconButton size="small" onClick={() => setZoom((current) => clampZoom(current - 0.1))}>
+                <ZoomOutIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Typography variant="caption" sx={{ minWidth: 44, textAlign: "center" }}>
+            {Math.round(effectiveScale * 100)}%
+          </Typography>
+          <Tooltip title="Zoom in">
+            <span>
+              <IconButton size="small" onClick={() => setZoom((current) => clampZoom(current + 0.1))}>
+                <ZoomInIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Divider flexItem orientation="vertical" sx={{ display: { xs: "none", sm: "block" } }} />
+          <Tooltip title="Rotate left">
+            <span>
+              <IconButton size="small" onClick={() => setRotation((current) => current - 90)}>
+                <RotateLeftIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Tooltip title="Rotate right">
+            <span>
+              <IconButton size="small" onClick={() => setRotation((current) => current + 90)}>
+                <RotateRightIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          {type !== 1 && (
+            <Select size="small" value={cropMode} onChange={(event) => setCropMode(event.target.value)} sx={{ minWidth: 132, bgcolor: "#fff", height: 34 }}>
+              {Object.entries(CROP_PRESETS).map(([value, preset]) => (
+                <MenuItem key={value} value={value}>
+                  {preset.label}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+          <Tooltip title="Reset view">
+            <span>
+              <IconButton
+                size="small"
+                onClick={() => {
+                  setZoom(1);
+                  setRotation(defaultRotation);
+                  setCropMode(defaultCropMode);
+                }}>
+                <RestartAltIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Button size="small" endIcon={<OpenInNewIcon fontSize="small" />} href={url} target="_blank" rel="noreferrer noopener">
+            Open
+          </Button>
+        </Stack>
+      </Stack>
+      <Box
+        sx={{
+          position: "relative",
+          height: { xs: 420, md: 640 },
+          overflow: "hidden",
+          bgcolor: "#dfeef6",
+        }}>
+        {loading && (
+          <Box
+            sx={{
+              position: "absolute",
+              inset: 0,
+              zIndex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              bgcolor: "rgba(248, 252, 254, 0.7)",
+            }}>
+            <CircularProgress />
+          </Box>
+        )}
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            overflow: "hidden",
+          }}>
+          <iframe
+            src={url}
+            style={{
+              border: 0,
+              width: "100%",
+              height: "100%",
+              transform,
+              transformOrigin: type === 1 ? "center bottom" : "center center",
+              visibility: loading ? "hidden" : "visible",
+              transition: "transform 220ms ease",
+              overflow: "auto"
+            }}
+            title={`${title}-pdf`}
+            onLoad={() => setLoading(false)}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
+}
 
 export default function ECG({ pdfData, isVisible }) {
   const [selectedUuid, setSelectedUuid] = useState(null);
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState({ svs: false, icu: false });
+  const uuids = useMemo(() => Object.keys(pdfData ?? {}), [pdfData]);
+  const PAGE_SIZE = 6;
+  const maxPage = Math.ceil(uuids.length / PAGE_SIZE) - 1;
+  const safePage = Math.min(page, Math.max(maxPage, 0));
+  const visibleUuids = useMemo(() => uuids.slice(safePage * PAGE_SIZE, safePage * PAGE_SIZE + PAGE_SIZE), [safePage, uuids]);
+  const firstUuid = uuids[0] ?? null;
+  const firstVisibleUuid = visibleUuids[0] ?? firstUuid;
+  const activeUuid = selectedUuid && pdfData?.[selectedUuid] ? selectedUuid : firstVisibleUuid;
+
   if (!isVisible) return <></>;
 
-  // When there is no data, show a simple message
-  if (!pdfData || Object.keys(pdfData).length === 0) {
+  if (!pdfData || uuids.length === 0) {
     return <Box>No Data</Box>;
   }
-
-  const uuids = Object.keys(pdfData);
-  const PAGE_SIZE = 4;
-  const maxPage = Math.ceil(uuids.length / PAGE_SIZE) - 1;
-  const visibleUuids = uuids.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   return (
     <Box sx={{ height: { xs: "70vh", md: "100vh" }, overflowY: "hidden", overflowX: "auto", overscrollBehavior: "contain" }}>
@@ -36,26 +222,26 @@ export default function ECG({ pdfData, isVisible }) {
       <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 2, mb: 3, justifyContent: "center" }}>
         {/* Left navigation button */}
         <Box
-          sx={{ cursor: page > 0 ? "pointer" : "not-allowed", fontSize: 32, px: 1, color: page > 0 ? "primary.main" : "grey.400", userSelect: "none" }}
-          onClick={() => page > 0 && setPage(page - 1)}>
+          sx={{ cursor: safePage > 0 ? "pointer" : "not-allowed", fontSize: 32, px: 1, color: safePage > 0 ? "primary.main" : "grey.400", userSelect: "none" }}
+          onClick={() => safePage > 0 && setPage(safePage - 1)}>
           {"<"}
         </Box>
         {/* Previews for visible UUIDs */}
         <Box sx={{ display: "flex", flexDirection: "row", gap: 3, flexWrap: "wrap", justifyContent: "center" }}>
-          {visibleUuids.map((uuid) => (
+          {visibleUuids.map((uuid, idx) => (
             <Box
               key={uuid}
               component="button"
               sx={{
                 cursor: "pointer",
-                border: selectedUuid === uuid ? 2 : 1,
-                borderColor: selectedUuid === uuid ? "primary.main" : "#b3e5fc",
+                border: activeUuid === uuid ? 2 : 1,
+                borderColor: activeUuid === uuid ? "primary.main" : "#b3e5fc",
                 borderRadius: 2,
                 p: 1,
-                bgcolor: selectedUuid === uuid ? "#e3f2fd" : "#fafafa",
+                bgcolor: activeUuid === uuid ? "#e3f2fd" : "#fafafa",
                 minWidth: 25,
                 outline: "none",
-                boxShadow: selectedUuid === uuid ? 2 : 0,
+                boxShadow: activeUuid === uuid ? 2 : 0,
                 transition: "box-shadow 0.2s",
                 "&:hover": {
                   boxShadow: 4,
@@ -64,56 +250,21 @@ export default function ECG({ pdfData, isVisible }) {
               }}
               onClick={() => {
                 setSelectedUuid(uuid);
-                setLoading({
-                  svs: !!pdfData[uuid].svs_pdfURL,
-                  icu: !!pdfData[uuid].icu_pdfURL,
-                });
               }}>
-              <Box sx={{ overflow: "hidden", width: "100%" }}>
-                {pdfData[uuid].svs_pdfURL ? (
-                  <Box
-                    sx={{
-                      border: 0,
-                      overflow: "hidden",
-                      position: "relative",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      pointerEvents: "none",
-                    }}>
-                    <iframe src={pdfData[uuid].svs_pdfURL} width="100%" height="100px" title="svs-pdf" style={{ overflow: "hidden" }} />
-                  </Box>
-                ) : pdfData[uuid].icu_pdfURL ? (
-                  <Box
-                    sx={{
-                      border: 0,
-                      minWidth: 0,
-                      overflow: "hidden",
-                      position: "relative",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      pointerEvents: "none",
-                    }}>
-                    <iframe src={pdfData[uuid].icu_pdfURL} width="100%" height="100px" title="icu-pdf" style={{ overflow: "hidden" }} />
-                  </Box>
-                ) : (
-                  <PictureAsPdfIcon color={selectedUuid === uuid ? "primary" : "action"} fontSize="large" />
-                )}
-              </Box>
+              <Box sx={{ overflow: "hidden", width: "100%" }}>{idx + 1}</Box>
             </Box>
           ))}
         </Box>
         {/* Right navigation button */}
         <Box
-          sx={{ cursor: page < maxPage ? "pointer" : "not-allowed", fontSize: 32, px: 1, color: page < maxPage ? "primary.main" : "grey.400", userSelect: "none" }}
-          onClick={() => page < maxPage && setPage(page + 1)}>
+          sx={{ cursor: safePage < maxPage ? "pointer" : "not-allowed", fontSize: 32, px: 1, color: safePage < maxPage ? "primary.main" : "grey.400", userSelect: "none" }}
+          onClick={() => safePage < maxPage && setPage(safePage + 1)}>
           {">"}
         </Box>
       </Box>
       {/* Show full PDFs for selected UUID */}
       <Box sx={{ height: { xs: "100vh", md: "70vh" }, overscrollBehavior: "contain" }}>
-        {selectedUuid && pdfData[selectedUuid] && (
+        {activeUuid && pdfData[activeUuid] && (
           <Box
             sx={{
               display: "flex",
@@ -124,60 +275,8 @@ export default function ECG({ pdfData, isVisible }) {
               mt: 2,
               height: "100%",
             }}>
-            <Box
-              sx={{
-                flex: 1,
-                minWidth: 0,
-                overflow: "hidden",
-                position: "relative",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-              }}>
-              {pdfData[selectedUuid].svs_pdfURL && (
-                <>
-                  {loading.svs && (
-                    <Box sx={{ position: "absolute", zIndex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                      <CircularProgress />
-                    </Box>
-                  )}
-                  <iframe
-                    src={`${pdfData[selectedUuid].svs_pdfURL}`}
-                    style={{ border: 0, visibility: loading.svs ? "hidden" : "visible", width: "100%", height: "100%" }}
-                    title="svs-pdf"
-                    onLoad={() => setLoading((prev) => ({ ...prev, svs: false }))}
-                  />
-                </>
-              )}
-            </Box>
-            <Box
-              sx={{
-                flex: 1,
-                minWidth: 0,
-                overflow: "hidden",
-                position: "relative",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-              }}>
-              {pdfData[selectedUuid].icu_pdfURL && (
-                <>
-                  {loading.icu && (
-                    <Box sx={{ position: "absolute", zIndex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                      <CircularProgress />
-                    </Box>
-                  )}
-                  <iframe
-                    src={`${pdfData[selectedUuid].icu_pdfURL}`}
-                    style={{ border: 0, visibility: loading.icu ? "hidden" : "visible", width: "100%", height: "100%" }}
-                    title="icu-pdf"
-                    onLoad={() => setLoading((prev) => ({ ...prev, icu: false }))}
-                  />
-                </>
-              )}
-            </Box>
+            <PDFViewport key={`svs-${activeUuid}`} url={pdfData[activeUuid].svs_pdfURL} type={0} />
+            <PDFViewport key={`icu-${activeUuid}`} url={pdfData[activeUuid].icu_pdfURL} type={2} />
           </Box>
         )}
       </Box>

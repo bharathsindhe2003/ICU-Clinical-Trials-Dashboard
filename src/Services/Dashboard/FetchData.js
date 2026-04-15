@@ -10,7 +10,6 @@ export default async function FetchDatafromFB(setSelectedVital, setLastUpdated, 
     const path = DISPLAY_MODE === 0 ? "/dash_stats_1" : "/dash_stats";
     const dashStatsQuery = query(ref(database, path), orderByKey(), limitToLast(1));
 
-    // eslint-disable-next-line no-unused-vars
     const snapshot = await get(dashStatsQuery);
 
     const snapshotVal = snapshot.val();
