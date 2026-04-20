@@ -5,6 +5,74 @@ import * as echarts from "echarts";
 import { plotVDPCOT, plotVDPVC, plotVDPHR, plotVDPSPO2, plotVDPRR, plotVDPBP } from "./Echarts/VDP/PlotVDPcharts.js";
 import { plotPCDNOP, plotPCDADMF } from "./Echarts/PCD/PlotPCDcharts.js";
 import { plotVDA1, plotVDA2, plotVDA3, plotVDA4, plotVDA5 } from "./Echarts/VCA/PlotVDAChart.js";
+
+const VITAL_CHART_CONFIG = {
+  HR: {
+    idPrefix: "VDAHR",
+    xAxisLabel1: "heart Rate in bpm",
+    yAxisLabel1: "Error",
+    xAxisLabel2: "Measured Heart Rate",
+    yAxisLabel2: "Reference Heart Rate",
+    xAxisLabel3: "",
+    yAxisLabel3: "Heart Rate in bpm",
+    xAxisLabel4: "Error in bpm",
+    yAxisLabel4: "Samples",
+    xAxisLabel5: "Error in bpm",
+    yAxisLabel5: "Samples",
+  },
+  SPO2: {
+    idPrefix: "VDASPO2",
+    xAxisLabel1: "SPO2 in %",
+    yAxisLabel1: "Error",
+    xAxisLabel2: "Measured SPO2",
+    yAxisLabel2: "Reference SPO2",
+    xAxisLabel3: "",
+    yAxisLabel3: "SPO2",
+    xAxisLabel4: "Error in %",
+    yAxisLabel4: "Samples",
+    xAxisLabel5: "Error in %",
+    yAxisLabel5: "Samples",
+  },
+  RR: {
+    idPrefix: "VDARR",
+    xAxisLabel1: "Respiratory Rate in bpm",
+    yAxisLabel1: "Error",
+    xAxisLabel2: "Measured Respiratory Rate",
+    yAxisLabel2: "Reference Respiratory Rate",
+    xAxisLabel3: "",
+    yAxisLabel3: "Respiratory Rate in bpm",
+    xAxisLabel4: "Error in bpm",
+    yAxisLabel4: "Samples",
+    xAxisLabel5: "Error in bpm",
+    yAxisLabel5: "Samples",
+  },
+  SBP: {
+    idPrefix: "VDASBP",
+    xAxisLabel1: "Refrence SBP",
+    yAxisLabel1: "Error in mmHg",
+    xAxisLabel2: "Measured SBP",
+    yAxisLabel2: "Reference SBP",
+    xAxisLabel3: "",
+    yAxisLabel3: "SBP in mmHg",
+    xAxisLabel4: "Error in mmHg",
+    yAxisLabel4: "Samples",
+    xAxisLabel5: "Error in mmHg",
+    yAxisLabel5: "Samples",
+  },
+  DBP: {
+    idPrefix: "VDADBP",
+    xAxisLabel1: "Reference DBP",
+    yAxisLabel1: "Error in mmHg",
+    xAxisLabel2: "Measured DBP",
+    yAxisLabel2: "Reference DBP",
+    xAxisLabel3: "",
+    yAxisLabel3: "DBP in mmHg",
+    xAxisLabel4: "Error in mmHg",
+    yAxisLabel4: "Samples",
+    xAxisLabel5: "Error in mmHg",
+    yAxisLabel5: "Samples",
+  },
+};
 export default async function FetchDatafromFB(setSelectedVital, setLastUpdated, DISPLAY_MODE) {
   try {
     const path = DISPLAY_MODE === 0 ? "/dash_stats_1" : "/dash_stats";
@@ -150,6 +218,26 @@ function computeSection2Data(data) {
     console.error("Error in computeSection2Data:", error);
   }
 }
+export function renderSection3Charts(selectedVital, vdaMetrics) {
+  if (!selectedVital || selectedVital === "ECG" || !vdaMetrics?.[selectedVital]?.plots) return;
+
+  const config = VITAL_CHART_CONFIG[selectedVital];
+  const metric = vdaMetrics[selectedVital];
+  if (!config || !metric) return;
+
+  const chart1 = document.getElementById(`${config.idPrefix}1`);
+  const chart2 = document.getElementById(`${config.idPrefix}2`);
+  const chart3 = document.getElementById(`${config.idPrefix}3`);
+  const chart4 = document.getElementById(`${config.idPrefix}4`);
+  const chart5 = document.getElementById(`${config.idPrefix}5`);
+
+  plotVDA1(chart1, metric.plots?.ba, metric.table, config.xAxisLabel1, config.yAxisLabel1);
+  plotVDA2(chart2, metric.plots?.corr, config.xAxisLabel2, config.yAxisLabel2);
+  plotVDA3(chart3, metric.plots?.ed, config.xAxisLabel3, config.yAxisLabel3);
+  plotVDA4(chart4, metric.plots?.eh, config.xAxisLabel4, config.yAxisLabel4);
+  plotVDA5(chart5, metric.plots?.bwp, config.xAxisLabel5);
+}
+
 async function computeSection3Data(data, setSelectedVital) {
   try {
     // Plot table data for selected vital
@@ -209,74 +297,28 @@ async function computeSection3Data(data, setSelectedVital) {
     });
 
     setSelectedVital({
-      HR: VDA_HR,
-      SPO2: VDA_SPO2,
-      RR: VDA_RR,
-      SBP: VDA_SBP,
-      DBP: VDA_DBP,
+      HR: {
+        table: VDA_HR,
+        plots: data?.acc_metrics?.hr?.plots,
+      },
+      SPO2: {
+        table: VDA_SPO2,
+        plots: data?.acc_metrics?.spo2?.plots,
+      },
+      RR: {
+        table: VDA_RR,
+        plots: data?.acc_metrics?.rr?.plots,
+      },
+      SBP: {
+        table: VDA_SBP,
+        plots: data?.acc_metrics?.sbp?.plots,
+      },
+      DBP: {
+        table: VDA_DBP,
+        plots: data?.acc_metrics?.dbp?.plots,
+      },
       ECG: VDA_ECG,
     });
-    // Plot charts
-
-    // HR
-    const vda_chart_hr1 = document.getElementById("VDAHR1");
-    const vda_chart_hr2 = document.getElementById("VDAHR2");
-    const vda_chart_hr3 = document.getElementById("VDAHR3");
-    const vda_chart_hr4 = document.getElementById("VDAHR4");
-    const vda_chart_hr5 = document.getElementById("VDAHR5");
-    plotVDA1(vda_chart_hr1, data?.acc_metrics?.hr?.plots?.ba, VDA_HR, "heart Rate in bpm", "Error");
-    plotVDA2(vda_chart_hr2, data?.acc_metrics?.hr?.plots?.corr, "Measured Heart Rate", "Reference Heart Rate");
-    plotVDA3(vda_chart_hr3, data?.acc_metrics?.hr?.plots?.ed, "", "Heart Rate in bpm");
-    plotVDA4(vda_chart_hr4, data?.acc_metrics?.hr?.plots?.eh, "Error in bpm", "Samples");
-    plotVDA5(vda_chart_hr5, data?.acc_metrics?.hr?.plots?.bwp, "Error in bpm", "Samples");
-
-    // SPO2
-    const vda_chart_spo21 = document.getElementById("VDASPO21");
-    const vda_chart_spo22 = document.getElementById("VDASPO22");
-    const vda_chart_spo23 = document.getElementById("VDASPO23");
-    const vda_chart_spo24 = document.getElementById("VDASPO24");
-    const vda_chart_spo25 = document.getElementById("VDASPO25");
-    plotVDA1(vda_chart_spo21, data?.acc_metrics?.spo2?.plots?.ba, VDA_SPO2, "SPO2 in %", "Error");
-    plotVDA2(vda_chart_spo22, data?.acc_metrics?.spo2?.plots?.corr, "Measured SPO2", "Reference SPO2");
-    plotVDA3(vda_chart_spo23, data?.acc_metrics?.spo2?.plots?.ed, "", "SPO2");
-    plotVDA4(vda_chart_spo24, data?.acc_metrics?.spo2?.plots?.eh, "Error in %", "Samples");
-    plotVDA5(vda_chart_spo25, data?.acc_metrics?.spo2?.plots?.bwp, "Error in %", "Samples");
-
-    // RR
-    const vda_chart_rr1 = document.getElementById("VDARR1");
-    const vda_chart_rr2 = document.getElementById("VDARR2");
-    const vda_chart_rr3 = document.getElementById("VDARR3");
-    const vda_chart_rr4 = document.getElementById("VDARR4");
-    const vda_chart_rr5 = document.getElementById("VDARR5");
-    plotVDA1(vda_chart_rr1, data?.acc_metrics?.rr?.plots?.ba, VDA_RR, "Respiratory Rate in bpm", "Error");
-    plotVDA2(vda_chart_rr2, data?.acc_metrics?.rr?.plots?.corr, "Measured Respiratory Rate", "Reference Respiratory Rate");
-    plotVDA3(vda_chart_rr3, data?.acc_metrics?.rr?.plots?.ed, "", "Respiratory Rate in bpm");
-    plotVDA4(vda_chart_rr4, data?.acc_metrics?.rr?.plots?.eh, "Error in bpm", "Samples");
-    plotVDA5(vda_chart_rr5, data?.acc_metrics?.rr?.plots?.bwp, "Error in bpm", "Samples");
-
-    // SBP
-    const vda_chart_sbp1 = document.getElementById("VDASBP1");
-    const vda_chart_sbp2 = document.getElementById("VDASBP2");
-    const vda_chart_sbp3 = document.getElementById("VDASBP3");
-    const vda_chart_sbp4 = document.getElementById("VDASBP4");
-    const vda_chart_sbp5 = document.getElementById("VDASBP5");
-    plotVDA1(vda_chart_sbp1, data?.acc_metrics?.sbp?.plots?.ba, VDA_SBP, "Refrence SBP", "Error in mmHg");
-    plotVDA2(vda_chart_sbp2, data?.acc_metrics?.sbp?.plots?.corr, "Measured SBP", "Reference SBP");
-    plotVDA3(vda_chart_sbp3, data?.acc_metrics?.sbp?.plots?.ed, "", "SBP in mmHg");
-    plotVDA4(vda_chart_sbp4, data?.acc_metrics?.sbp?.plots?.eh, "Error in mmHg", "Samples");
-    plotVDA5(vda_chart_sbp5, data?.acc_metrics?.sbp?.plots?.bwp, "Error in mmHg", "Samples");
-
-    // DBP
-    const vda_chart_dbp1 = document.getElementById("VDADBP1");
-    const vda_chart_dbp2 = document.getElementById("VDADBP2");
-    const vda_chart_dbp3 = document.getElementById("VDADBP3");
-    const vda_chart_dbp4 = document.getElementById("VDADBP4");
-    const vda_chart_dbp5 = document.getElementById("VDADBP5");
-    plotVDA1(vda_chart_dbp1, data?.acc_metrics?.dbp?.plots?.ba, VDA_DBP, "Reference DBP", "Error in mmHg");
-    plotVDA2(vda_chart_dbp2, data?.acc_metrics?.dbp?.plots?.corr, "Measured DBP", "Reference DBP");
-    plotVDA3(vda_chart_dbp3, data?.acc_metrics?.dbp?.plots?.ed, "", "DBP in mmHg");
-    plotVDA4(vda_chart_dbp4, data?.acc_metrics?.dbp?.plots?.eh, "Error in mmHg", "Samples");
-    plotVDA5(vda_chart_dbp5, data?.acc_metrics?.dbp?.plots?.bwp, "Error in mmHg", "Samples");
   } catch (error) {
     console.error("Error in computeSection3Data:", error);
   }

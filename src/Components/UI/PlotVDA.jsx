@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import TableComponent from "./TableComponent";
 import Heading from "./Heading";
-export default function PLotVDA({ id, table_data, data }) {
+export default function PLotVDA({ id, table_data, data, isVisible = true }) {
   const layout = [
     { name: "Bland-Altman Plot", idNumber: 1 },
     { name: "Box and Whisker Plot", idNumber: 5 },
@@ -9,6 +9,8 @@ export default function PLotVDA({ id, table_data, data }) {
     { name: "Error Histogram", idNumber: 4 },
     { name: "Correlation Plot", idNumber: 2 },
   ];
+
+  if (!isVisible) return null;
 
   return (
     <Box id={id} sx={{ display: "block" }}>

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -5,6 +6,7 @@ import Heading from "./UI/Heading";
 import PLotVDA from "./UI/PlotVDA";
 import LastUpdated from "./UI/LastUpdated";
 import PlotECG from "./UI/PlotECG";
+import { renderSection3Charts } from "../Services/Dashboard/FetchData";
 export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, vdaMetrics, lastUpdated }) {
   const vitals = ["HR", "SPO2", "RR", "SBP", "DBP", "ECG"];
   const currentIndex = Math.max(0, vitals.indexOf(selectedVital));
@@ -24,6 +26,11 @@ export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, v
     SBP: { NIBP: "ISO 81060-3:2022", "Mean Error": "< +/- 5mmHg", SD: "< 8 mmHg" },
     DBP: { NIBP: "ISO 81060-3:2022", "Mean Error": "< +/- 5mmHg", SD: "< 8 mmHg" },
   };
+
+  useEffect(() => {
+    renderSection3Charts(selectedVital, vdaMetrics);
+  }, [selectedVital, vdaMetrics]);
+
   return (
     <Box
       id="section3"
@@ -115,27 +122,21 @@ export default function Section3({ DISPLAY_MODE, selectedVital, onVitalChange, v
               overflow: "hidden",
               mt: "2rem",
             }}>
-            <Box
-              sx={{
-                display: "flex",
-                width: `${vitals.length * 100}%`,
-                transform: `translateX(-${currentIndex * (100 / vitals.length)}%)`,
-                transition: "transform 350ms ease",
-              }}>
+            <Box sx={{ width: "100%" }}>
               <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
-                <PLotVDA id={"VDAHR"} table_data={reference_vitals.HR} data={vdaMetrics?.HR} isVisible={selectedVital === "HR"} />
+                <PLotVDA id={"VDAHR"} table_data={reference_vitals.HR} data={vdaMetrics?.HR?.table} isVisible={selectedVital === "HR"} />
               </Box>
               <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
-                <PLotVDA id={"VDASPO2"} table_data={reference_vitals.SPO2} data={vdaMetrics?.SPO2} isVisible={selectedVital === "SPO2"} />
+                <PLotVDA id={"VDASPO2"} table_data={reference_vitals.SPO2} data={vdaMetrics?.SPO2?.table} isVisible={selectedVital === "SPO2"} />
               </Box>
               <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
-                <PLotVDA id={"VDARR"} table_data={reference_vitals.RR} data={vdaMetrics?.RR} isVisible={selectedVital === "RR"} />
+                <PLotVDA id={"VDARR"} table_data={reference_vitals.RR} data={vdaMetrics?.RR?.table} isVisible={selectedVital === "RR"} />
               </Box>
               <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
-                <PLotVDA id={"VDASBP"} table_data={reference_vitals.SBP} data={vdaMetrics?.SBP} isVisible={selectedVital === "SBP"} />
+                <PLotVDA id={"VDASBP"} table_data={reference_vitals.SBP} data={vdaMetrics?.SBP?.table} isVisible={selectedVital === "SBP"} />
               </Box>
               <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
-                <PLotVDA id={"VDADBP"} table_data={reference_vitals.DBP} data={vdaMetrics?.DBP} isVisible={selectedVital === "DBP"} />
+                <PLotVDA id={"VDADBP"} table_data={reference_vitals.DBP} data={vdaMetrics?.DBP?.table} isVisible={selectedVital === "DBP"} />
               </Box>
               <Box sx={{ flex: `0 0 ${100 / vitals.length}%`, minWidth: 0 }}>
                 <PlotECG data={vdaMetrics?.ECG} isVisible={selectedVital === "ECG"} />

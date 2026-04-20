@@ -4,7 +4,7 @@ import * as echarts from "echarts";
 // data: { pts: [{ x: avg_val, y: diff_val }, ...] }
 function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
   try {
-    //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
+    if (!plot || !data || !Array.isArray(data.pts) || !otherValues) return;
     const points = data.pts
       .filter((p) => p != null && p.x != null && p.y != null)
       .flatMap((p) => {
@@ -177,7 +177,7 @@ function plotVDA1(plot, data, otherValues, xAxisLabel, yAxisLabel) {
 // data: { pts: [{ x: ref_val, y: meas_val }, ...] }
 function plotVDA2(plot, data, xAxisLabel, yAxisLabel) {
   try {
-    //   if (!plot || !data || !Array.isArray(data.pts) || data.pts.length === 0) return;
+    if (!plot || !data || !Array.isArray(data.pts)) return;
 
     const points = data.pts
       .filter((p) => p != null && p.x != null && p.y != null)
@@ -432,7 +432,7 @@ function plotVDA3(plot, data, xAxisLabel, yAxisLabel) {
 // data: { bins: [...], vals: [...] }
 function plotVDA4(plot, data, xAxisLabel, yAxisLabel) {
   try {
-    //   if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
+    if (!plot || !data || !Array.isArray(data.bins) || !Array.isArray(data.vals)) return;
 
     const bins = data.bins;
     const vals = data.vals.map((v) => Number(v) || 0);
@@ -491,8 +491,9 @@ function plotVDA4(plot, data, xAxisLabel, yAxisLabel) {
   }
 }
 
-function plotVDA5(plot, data, xAxisLabel, yAxisLabel) {
+function plotVDA5(plot, data, xAxisLabel) {
   try {
+    if (!plot || !Array.isArray(data) || data.length < 5) return;
     // Ensure data is a single array of 5 values
     // if (!Array.isArray(data) || data.length !== 5) return;
 
