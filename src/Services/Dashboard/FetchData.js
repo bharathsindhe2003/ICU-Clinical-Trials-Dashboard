@@ -277,6 +277,18 @@ async function computeSection3Data(data, setSelectedVital) {
       "RMS Error": data?.acc_metrics?.dbp?.table?.rms,
     };
 
+    function normalizeDriveImageUrl(url) {
+      if (!url || typeof url !== "string") return url;
+      const trimmed = url.trim();
+      const fileIdMatch =
+        trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) ||
+        trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (fileIdMatch) {
+        return `https://drive.google.com/uc?export=view&id=${fileIdMatch[1]}`;
+      }
+      return trimmed;
+    }
+
     // Build VDA_ECG as { Normal: { uuid1: {...}, uuid2: {...} }, ... } with download URLs
     const VDA_ECG = { Normal: {}, Tachycardia: {}, Bradycardia: {} };
     const rawECG = data?.acc_metrics?.ecglst || {};
@@ -288,10 +300,13 @@ async function computeSection3Data(data, setSelectedVital) {
       Object.keys(uuidData).forEach((uuid) => {
         const svsPath = uuidData[uuid].svs; // Already includes .pdf
         const icuPath = uuidData[uuid].icu; // Already includes .pdf
-        console.log("Fetching PDF URLs for", uuid, "SVS:", svsPath, "ICU:", icuPath);
+        //const ecgPath = normalizeDriveImageUrl(uuidData[uuid].ecgm);
+        const ecgPath = uuidData[uuid].ecgm;
+        console.log("Fetching PDF URLs for", uuid, "SVS:", svsPath, "ICU:", icuPath, "ECG:", ecgPath);
         VDA_ECG[typeText][uuid] = {
           svs_pdfURL: svsPath,
           icu_pdfURL: icuPath,
+          ecg_pdfURL: ecgPath,
         };
       });
     });
