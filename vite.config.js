@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 
-// add ip base path for gh pages deployment
+// Use the below code for github hosting also can be used for local hosting
 export default defineConfig({
   base: "/ICU-Clinical-Trials-Statistics/",
   plugins: [react()],
@@ -11,7 +11,7 @@ export default defineConfig({
   },
 });
 
-// For Godaddy Production
+// For Godaddy Production also can be use for local hosting
 // import { defineConfig } from "vite";
 // import react from "@vitejs/plugin-react-swc";
 

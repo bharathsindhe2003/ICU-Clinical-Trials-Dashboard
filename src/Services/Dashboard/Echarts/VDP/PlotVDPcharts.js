@@ -108,7 +108,11 @@ function plotVDPVC(main_bar, { time_dist }) {
     if (!main_bar || !time_dist) return;
 
     const weekKeys = Object.keys(time_dist);
-
+    // console.log("Week Keys:", weekKeys); // Debugging line to check the week keys
+    weekKeys.sort((a, b) => {
+      return parseInt(a.slice(1)) - parseInt(b.slice(1));
+    });
+    // console.log("Week Keys:", weekKeys); // Debugging line to check the week keys
     const weekLabels = weekKeys.map((w, idx) => {
       const entry = time_dist[w];
       if (!entry || !entry.tmsp) return `Week ${idx + 1}`;
